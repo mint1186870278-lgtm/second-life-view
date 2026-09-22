@@ -23,7 +23,7 @@ class BailianClient:
         if json_mode:
             payload["response_format"] = {"type": "json_object"}
         headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json"}
-        async with httpx.AsyncClient(timeout=45, trust_env=False) as client:
+        async with httpx.AsyncClient(timeout=self.settings.dashscope_chat_timeout, trust_env=False) as client:
             response = await client.post(f"{self.settings.dashscope_base_url.rstrip('/')}/chat/completions", headers=headers, json=payload)
             response.raise_for_status()
             data = response.json()
@@ -76,7 +76,17 @@ class BailianClient:
                 {"type": "image_url", "image_url": {"url": image_reference}},
             ],
         }
-        return await self.chat([{"role": "system", "content": "只输出可解析JSON。"}, prompt], vision=True)
+        result = await self.chat([{"role": "system", "content": "只输出可解析JSON。"}, prompt], vision=True)
+        # Qwen occasionally follows the prompt literally and returns a JSON
+        # array instead of the documented object wrapper. Normalize both
+        # shapes so the graph can still align results with detections.
+        if isinstance(result, list):
+            return {"objects": result}
+        if not isinstance(result, dict):
+            return {"objects": [], "raw": result}
+        if "objects" not in result and all(isinstance(v, dict) for v in result.values()):
+            return {"objects": list(result.values()), "raw": result}
+        return result
 
     async def generate_image(self, prompt: str, reference_image_url: str | None = None) -> dict[str, Any]:
         """Call a DashScope image endpoint when configured; otherwise return a traceable mock."""
@@ -91,7 +101,10 @@ class BailianClient:
         payload: dict[str, Any] = {
             "model": self.settings.dashscope_image_model,
             "input": {"messages": [{"role": "user", "content": content}]},
-            "parameters": {"size": "1024*1024"},
+            # Match the official multimodal-generation example.  ``size`` is
+            # optional and is omitted because some workspaces reject it for
+            # qwen-image-3.0-pro.
+            "parameters": {"prompt_extend": True},
         }
         headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json"}
         if self.settings.dashscope_image_async:
@@ -103,4 +116,38 @@ class BailianClient:
             except httpx.HTTPStatusError as exc:
                 detail = response.text[:500]
                 raise RuntimeError(f"Bailian image request failed ({response.status_code}): {detail}") from exc
-            return response.json()
+            result = response.json()
+            # qwen-image-3.0-pro synchronous responses place the generated
+            # image under output.choices[0].message.content[*].image. Keep
+            # the raw response for provenance but expose a stable image_url
+            # for DesignProposal and API clients.
+            image_url = self._extract_generated_image_url(result)
+            if image_url:
+                result["image_url"] = image_url
+            return result
+
+    @staticmethod
+    def _extract_generated_image_url(result: dict[str, Any]) -> str | None:
+        output = result.get("output") if isinstance(result, dict) else None
+        if not isinstance(output, dict):
+            return None
+        choices = output.get("choices") or []
+        for choice in choices if isinstance(choices, list) else []:
+            message = choice.get("message") if isinstance(choice, dict) else None
+            content = message.get("content") if isinstance(message, dict) else None
+            for part in content if isinstance(content, list) else []:
+                if not isinstance(part, dict):
+                    continue
+                candidate = part.get("image") or part.get("image_url") or part.get("url")
+                if isinstance(candidate, dict):
+                    candidate = candidate.get("url")
+                if isinstance(candidate, str) and candidate.startswith(("http://", "https://")):
+                    return candidate
+        # Some gateway versions return the image in output.results.
+        results = output.get("results")
+        if isinstance(results, list) and results:
+            first = results[0] if isinstance(results[0], dict) else {}
+            candidate = first.get("url") or first.get("image")
+            if isinstance(candidate, str):
+                return candidate
+        return None

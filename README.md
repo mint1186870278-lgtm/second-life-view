@@ -8,9 +8,9 @@
 2. Perception Agent 把目标变成结构化 `SpatialObject`，并标记材质、状态、再利用判断和证据来源。
 3. Evidence Agent 检查置信度与必填字段；如果柜体背面、材质或结构状态不确定，图在证据闸门暂停，并返回 `capture_actions`。
 4. Windows bridge 执行 `zoom_region`/`request_user_photo`，把新图和 YOLO JSON 回传；同一个 run 恢复。
-5. Research Agent 返回带来源和事实类型的再利用依据；Design Agent 生成“保留结构、替换表面”的翻新方案。
+5. Research Agent 从本地材料知识库检索依据，并可显式开启网页搜索和本地机会连接器；每条结果标注 `verified`、`inferred` 或 `to_confirm`，再传给 Design Agent 生成“保留结构、替换表面”的翻新方案。
 6. 可选调用国内 Lux3D：`POST /api/v1/reconstruct`，提交图片 URL 后返回异步任务 ID；默认 mock 便于离线展示。
-7. Windows 将原始 `.insv`、全景图和 YOLO crop 上传到 `POST /api/v1/assets/upload`；Linux 返回私有 OSS 的短时签名 URL，后续模型无需访问 Windows 文件系统。
+7. Windows 的素材演示可以直接使用 Linux 本地文件；OSS 适配器保留为可选部署能力，不影响本地 demo。
 
 ## 运行
 
@@ -47,15 +47,44 @@ curl -s -X POST http://localhost:8000/api/v1/reconstruct \
   -H 'content-type: application/json' \
   -d '{"run_id":"<run_id>","image_url":"https://edge.example/frame-close.jpg","version":"G1-Turbo"}' | jq
 
-# 上传相机素材到私有阿里云 OSS（返回 url 可作为模型输入）
-curl -s -X POST http://localhost:8000/api/v1/assets/upload \
-  -F 'session_id=demo-001' -F 'file=@./frame-00042.jpg' | jq
-
 # Tripo V3 对象级异步建模；输入应是 YOLO crop 的实体图 URL
 curl -s -X POST http://localhost:8000/api/v1/tripo/reconstruct \
   -H 'content-type: application/json' \
   -d '{"image_url":"https://signed-oss-url/object.jpg","wait":false}' | jq
+
+# Windows CameraSDK bridge：首帧直接创建 run，并把相机元数据写入审计状态
+curl -s -X POST http://localhost:8000/api/v1/camera/frame \
+  -H 'content-type: application/json' \
+  -d '{"image_url":"https://signed-oss-url/room.jpg","detections":[{"class":"wood_cabinet","bbox":[0.1,0.2,0.4,0.8],"confidence":0.9}],"metadata":{"camera_model":"Insta360 X5","projection":"equirectangular","frame_id":"f-001"}}' | jq
+
+# 查询 Lux3D 对象建模任务（使用国内 Skill 的 task_id）
+curl -s http://localhost:8000/api/v1/reconstruct/<task_id> | jq
+
+# MP4/INSV 直接上传 Aholo Asset 并提交 World 3DGS
+curl -s -X POST http://localhost:8000/api/v1/3dgs/reconstruct-upload \
+  -F 'file=@./room.mp4' -F 'quality=low' | jq
+
+# 本地 JPG + prompt → Aholo Spatial Gen（AI 空间改造生成）
+curl -s -X POST http://localhost:8000/api/v1/3dgs/spatial-gen-upload \
+  -F 'file=@./room.jpg' \
+  -F 'prompt=保留房间布局，将沙发替换成深蓝色布艺，增加现代低碳家具和暖色灯光' | jq
+
+# World 完成后下载本地可视化文件
+curl -s -X POST http://localhost:8000/api/v1/3dgs/world/3FO4K4QU7R1T/download | jq
+
+# 直接在官方 Aholo Viewer 打开完成的 SPZ（浏览器会收到 307 跳转）
+open "http://localhost:8000/api/v1/3dgs/world/3FO4K4QU7R1T/open?asset=spz"
+
+# Research Agent：默认本地 RAG + 本地机会记录；include_web=true 才访问网页搜索
+curl -s -X POST http://localhost:8000/api/v1/research \
+  -H 'content-type: application/json' \
+  -d '{"run_id":"<run_id>","query":"旧木柜翻新和本地回收","region":"本地","include_web":false}' | jq
 ```
+
+`/open?asset=spz`、`ply`、`lod` 会直接跳转到 Aholo Viewer；`pano` 会打开
+Spatial Gen 返回的全景图。这个路径不需要把文件再次拖入网页。Studio 的
+`/editor?projectId=...` 是另一套登录后的项目编辑器，不能把 World ID 当作
+Project ID 使用；如果需要 Studio 项目，必须在 Studio 登录态下创建或导入项目。
 
 `GET /api/v1/runs/{run_id}/events` 返回审计事件；`GET /api/v1/runs/{run_id}/stream` 提供 SSE，便于未来前端实时显示“相机补拍 → VLM → 检索 → 设计”的过程。
 
@@ -63,19 +92,29 @@ curl -s -X POST http://localhost:8000/api/v1/tripo/reconstruct \
 
 `spatial_agent/graph.py` 使用 LangGraph `StateGraph`：`supervisor → perception → evidence`，证据不足时结束本轮并等待 `/capture/complete`；证据充分后进入 `research → design`。`RunState` 同时保存对象、Evidence、空间关系、待执行 CaptureAction、来源、设计结果、错误和事件，所以每一次判断都可以回放和解释。
 
+当前能力边界：YOLO-World 已验证“ERP 全景 → 透视视图 → 检测框 → 跨视角 ComponentBatch → 实体 crop”；路径判断是可解释规则引擎。Agent 契约预留 `segmentation`，但当前 Pipeline B 尚未把像素级 mask 接入后端。图片翻新可以调用 qwen-image 生成效果图；若需要严格只修改 bbox 内区域，还需要增加 mask/inpainting 适配。
+
+Research Agent 当前采用离线优先的轻量检索：`data/knowledge/material_reuse.json` 作为本地语料，按关键词召回；`local_opportunities.json` 是可替换的机会连接器示例。`include_web=true` 会尝试网页搜索。它不是生产级向量数据库或真实城市商家 API，网页结果和机会记录分别标记为 `inferred` 与 `to_confirm`。
+
 外部模型适配器在 `spatial_agent/providers/`：
 
 - 百炼 OpenAI-compatible：文本 `deepseek-v4-pro`，视觉 `qwen3.8-max`，图片生成 `qwen-image-3.0-pro`。
 - Aholo Lux3D 国内 Skill：使用 `/root/.codex/skills/lux3d-cn/lux3d_client.py`，固定 `LUX3D_REGION=cn` 和 `https://api.aholo3d.cn`，不会使用海外端点。
 - Aholo World：通过国内 Asset/World SDK 或 REST 提交空间重建。
+- Aholo Spatial Gen：`POST /api/v1/3dgs/spatial-gen-upload` 对应 MCP 的 `world_generate(localPath, prompt)`，用于 AI 生成/改造空间；结果仍返回 World ID，可查询 `imagery.panoUrl`（AI 全景改造效果）、SPZ 和 PLY。
+- Research Agent：本地 `data/knowledge/material_reuse.json` 是离线 RAG 语料，`local_opportunities.json` 是可替换的城市机会连接器；`include_web=true` 时增加网页检索线索。网页结果只标记为 `inferred`，实时商家记录标记为 `to_confirm`。
 - Tripo V3：`POST /api/v1/tripo/reconstruct`，适合单个实体图或同一物体的 2-4 个视角；任务查询为 `GET /api/v1/tripo/tasks/{task_id}`。Tripo 官方 API 没有房间级全景视频重建接口。
-- OSS：`OSS_ACCESS_KEY_ID`、`OSS_ACCESS_KEY_SECRET`、`OSS_BUCKET`、`OSS_ENDPOINT` 只放 `.env`；桶建议保持私有，用服务端签名 URL 交给模型。
+- OSS：作为可选扩展保留；没有 RAM AccessKey 时不影响本地文件演示。
 
 默认关闭外部调用。配置 `DASHSCOPE_API_KEY`/`LUX3D_API_KEY` 后，再显式设置 `USE_LLM=true` 或 `USE_EXTERNAL_TOOLS=true`。
 
 ## Windows bridge 契约
 
 相机不应通过 SSH 让 Linux 加载 Windows DLL。建议 Windows 进程暴露：
+
+黑客松最短路径也可以直接调用 Linux 的 `POST /api/v1/camera/frame`：首帧只需
+`image_url` 和 `detections[]`，补拍帧再携带 `run_id` 与 `action_id`，服务会自动恢复同一个
+LangGraph run。这样 CameraSDK/MediaSDK 只存在于 Windows bridge，Linux 只接收稳定的 JSON。
 
 - `GET /health`、`GET /camera/status`
 - `POST /capture`：接收 `action_type`、`target_bbox`、分辨率和任务 ID，调用 CameraSDK `TakePhoto`/`StartLiveStreaming`。
@@ -110,13 +149,18 @@ curl -s -X POST http://localhost:8000/api/v1/runs \
 
 当前服务器已经安装 `ultralytics`，并下载 `weights/yolov8s-worldv2.pt`。RTX 5090 上的 `hotel_room` smoke test 已完成 10 个透视视角、25 个检测对象和 14 个 ComponentBatch。权重文件被 `.gitignore` 忽略，部署时由安装脚本或模型制品提供。
 
+对 `data/samples/pictures` 中的 11 张新全景图批量运行时，结果为 589 个原始检测框、263 个跨视角 ComponentBatch；每张图片使用 10 个 ERP 投影视角。这个目录的输入不要求与 TAY-LI fixture 同名，接入 Windows 时只需把检测 JSON 映射到 `Detection` 契约即可。
+
 ### 3DGS 与 Lux3D 的区别
 
 Aholo 有两条不同能力链，接口不能混用：
 
 - `POST /api/v1/reconstruct`：Lux3D G1/G1-Turbo，适合单个柜体、门、椅子等物体图生 3D；国内 Skill 直接提交公开图片 URL。
 - `POST /api/v1/3dgs/reconstruct`：Aholo World，适合室内空间 3DGS。全景 `INSV` 或普通视频可单条提交；纯图片重建必须至少 20 张。World 的本地文件必须先经过 Aholo Asset 上传，代码提供 `AholoWorldClient.upload_local_file()`。
-- `POST /api/v1/3dgs/world/{world_id}`：查询 World 异步状态。
+- `GET /api/v1/3dgs/world/{world_id}`：查询 World 异步状态。
+- `GET /api/v1/3dgs/world/{world_id}/open?asset=spz|ply|lod|pano`：就绪后 307 跳转到官方 Viewer 或全景图。
+- `POST /api/v1/3dgs/world/{world_id}/download`：任务成功后把 `cover`、`spz`、`ply`、`lod-meta` 下载到本地 `run_artifacts/`。
+- `GET /api/v1/3dgs/world/{world_id}/asset/{asset_name}`：按需代理 `cover`/`spz`/`ply`/`lod-meta`，便于前端或展示页读取。
 
 已用国内 Key 做过真实连通性验证：Lux3D G1-Turbo 返回 task `3687106`（创建请求已受理；用室内全景直接作为物体输入，后续任务终态为失败，说明应先裁剪单个构件再调用）；World 文生空间返回 world ID `3FO4K4XJJEQP`，状态查询返回 `PENDING`；World 单图外部 URL 被服务拒绝，这是预期的资产上传约束。
 
@@ -124,7 +168,7 @@ Aholo 有两条不同能力链，接口不能混用：
 
 - 百炼 `deepseek-v4-pro`：真实文本 JSON 调用成功；
 - 百炼 `qwen3.8-max`：用 TAY-LI 的 `hotel_room.jpg` 真实图像调用成功，返回 `objects`；
-- 百炼 `qwen-image-3.0-pro`：请求体已改为 `multimodal-generation` 的 `input.messages` schema。当前 workspace 返回 `AccessDenied: current user api does not support asynchronous calls`；同步请求会进入生成超时，说明模型网关可达但该 workspace 尚未开通对应生成权限。生成结果会以 `submitted` task ID 保存在 DesignProposal，待权限开通后可直接轮询；
+- 百炼 `qwen-image-3.0-pro`：使用官方 `multimodal-generation` 的 `input.messages` schema 和 `parameters.prompt_extend=true`。当前账号不支持异步请求，因此 `DASHSCOPE_IMAGE_ASYNC=false`；同步请求已验证成功，通常耗时约 90–110 秒，响应图片位于 `output.choices[0].message.content[*].image`，适配器会同时暴露稳定的 `image_url` 字段。返回图片 URL 是临时签名地址，应立即下载或复制到自己的 OSS。
 - Aholo Lux3D/World：国内端点、key、任务创建与状态查询均通过。
 
 要在 Linux GPU 上重新执行 TAY-LI 的 YOLO-World 检测，可安装可选依赖：
@@ -136,6 +180,35 @@ python3 pipeline/run_demo.py --scene hotel_room
 ```
 
 World 的真实本地资源链也已验证：通过官方 `manycore-aholo-sdk-asset` 将 `hotel_room.jpg` 上传到国内 OUS，再提交 World 生成任务；因此 Windows bridge 后续可以把 CameraSDK 下载的 `.insv`/关键帧直接交给 `upload_local_file()`，不会把本地路径误传给 World API。
+
+最近一次 MP4 任务 `3FO4K4QU7R1T` 已返回成功结果。典型 World 状态响应包含：
+
+```json
+{
+  "worldId": "3FO4K4QU7R1T",
+  "status": "SUCCEEDED",
+  "progress": 1.0,
+  "cover": "https://...jpg",
+  "assets": {
+    "splats": {
+      "urls": {
+        "plyPath": "https://...point_cloud.ply",
+        "spzPath": "https://...compressed.spz",
+        "lodMetaPath": "https://...lod-meta.json"
+      }
+    },
+    "semanticsMetadata": {"upAxis": "Z"}
+  }
+}
+```
+
+`plyPath` 可用于离线点云处理，`spzPath` 适合压缩后的 Gaussian Splat 查看，`cover` 可用于演示封面。URL 是服务端资源地址，应在业务系统中保存任务 ID 和状态，不要把临时 URL 当作永久凭证。
+
+`cover` 只是重建结果的预览图，不能替代三维模型。对实景重建，优先保存 `spz`；对 Spatial Gen，优先保存 `imagery.panoUrl` 和 `spz`：前者是 AI 改造后的全景效果图，后者是可交互的 Gaussian Splat。它们都可以由 MCP/后端直接返回，不需要停留在网页端。没有 Splat viewer 时，可先展示 `imagery.panoUrl`，同时保留 `ply` 供 Three.js、SuperSplat 或离线工具转换/查看。完成任务后可以运行：
+
+```bash
+curl -X POST http://localhost:8000/api/v1/3dgs/world/3FO4K4QU7R1T/download | jq
+```
 
 ### 输入选择速查
 

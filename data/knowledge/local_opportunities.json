@@ -1,0 +1,18 @@
+[
+  {
+    "name": "演示：城市家具再制造合作社",
+    "region": "本地",
+    "materials": "木柜 家具 木材",
+    "services": "拆卸评估、翻新、再制造",
+    "url": "local://opportunities/demo-furniture-coop",
+    "text": "演示连接器记录：可接收木质家具并提供翻新评估；营业时间、价格、运输和实际接收能力待确认。"
+  },
+  {
+    "name": "演示：建筑材料回收站",
+    "region": "本地",
+    "materials": "门窗 金属 玻璃 木材",
+    "services": "分类回收、拆除后分拣",
+    "url": "local://opportunities/demo-material-recycler",
+    "text": "演示连接器记录：可查询门窗、金属和木材的接收类别；当前库存、污染限制和上门服务待确认。"
+  }
+]

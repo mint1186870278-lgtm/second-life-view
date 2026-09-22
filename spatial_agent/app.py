@@ -2,14 +2,15 @@ from __future__ import annotations
 import asyncio
 import json
 from typing import AsyncIterator
+import httpx
 from fastapi import File, Form, UploadFile, FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import RedirectResponse, StreamingResponse
 from spatial_agent.config import get_settings
 from spatial_agent.graph import SpatialAgentGraph
 from spatial_agent.providers.aholo_world import AholoWorldClient
 from spatial_agent.providers.oss import OSSClient, save_upload_to_temp
 from spatial_agent.providers.tripo import TripoClient
-from spatial_agent.models import AnalyzeRequest, CaptureRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest
+from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest, SpatialGenRequest
 from spatial_agent.yolo_adapter import available_scenes, load_scene
 
 settings = get_settings()
@@ -24,6 +25,12 @@ app = FastAPI(title="Second Life View · Spatial Agent", version="0.1.0", descri
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
+
+
+@app.get("/api/v1/assets/config")
+def asset_config() -> dict:
+    """Safe OSS diagnostic; never returns access keys or secrets."""
+    return oss.validate_config()
 
 
 @app.post("/api/v1/assets/upload")
@@ -94,11 +101,54 @@ async def create_run(request: AnalyzeRequest) -> RunState:
         detections = detections or scene["detections"]
         image_urls = image_urls or [scene["image_url"]]
         metadata.update({"scene_slug": scene["scene_slug"], "scene_id": scene["scene_id"], "panorama_id": scene["panorama_id"], "yolo_batches": scene["batches"], "yolo_source": "TAY-LI Pipeline B"})
+    if request.region:
+        metadata["region"] = request.region
+    metadata["include_web"] = request.include_web
     init = {"user_goal": request.user_goal, "image_urls": image_urls, "detections": detections, "metadata": metadata}
     if request.run_id:
         init["run_id"] = request.run_id
     state = RunState(**init)
-    result = await agent.run(state, enable_research=request.enable_research, enable_design=request.enable_design, enable_3d=request.enable_3d)
+    result = await agent.run(state, enable_research=request.enable_research, enable_design=request.enable_design, enable_3d=request.enable_3d, include_web=request.include_web)
+    runs[result.run_id] = result
+    return result
+
+
+@app.post("/api/v1/camera/frame", response_model=RunState)
+async def camera_frame(request: CameraFrameRequest) -> RunState:
+    """Accept a frame and YOLO JSON from the Windows CameraSDK bridge.
+
+    The bridge never needs to import CameraSDK on Linux.  A first frame starts
+    a run; a frame tied to an Evidence Agent action resumes that run.  This
+    single endpoint is convenient for the demo bridge while the lower-level
+    ``/runs`` and ``/capture/complete`` endpoints remain available for clients
+    that want explicit control.
+    """
+    if request.run_id:
+        state = runs.get(request.run_id)
+        if not state:
+            raise HTTPException(404, "run not found")
+        if not request.action_id:
+            raise HTTPException(400, "action_id is required when run_id is supplied")
+        result = await complete_capture(
+            request.run_id,
+            CaptureRequest(
+                run_id=request.run_id,
+                action_id=request.action_id,
+                image_url=request.image_url,
+                detections=request.detections,
+            ),
+        )
+        result.metadata.setdefault("camera", {}).update(request.metadata)
+        runs[result.run_id] = result
+        return result
+
+    init = AnalyzeRequest(
+        user_goal=request.user_goal,
+        image_urls=[request.image_url],
+        detections=request.detections,
+    )
+    result = await create_run(init)
+    result.metadata["camera"] = request.metadata
     runs[result.run_id] = result
     return result
 
@@ -157,7 +207,7 @@ async def complete_capture(run_id: str, payload: CaptureRequest) -> RunState:
     state.sources.clear()
     state.status = "running"
     state.iteration = 0
-    result = await agent.run(state)
+    result = await agent.run(state, include_web=bool(state.metadata.get("include_web", False)))
     runs[result.run_id] = result
     return result
 
@@ -194,12 +244,199 @@ async def reconstruct_world(request: WorldRequest) -> dict:
     return result
 
 
+@app.post("/api/v1/3dgs/reconstruct-upload")
+async def reconstruct_world_upload(
+    file: UploadFile = File(...),
+    quality: str = Form(default="low"),
+    run_id: str | None = Form(default=None),
+) -> dict:
+    """Upload an MP4/INSV (or one image) through Aholo Asset and submit World.
+
+    This is the convenient Windows-to-Linux demo path. Aholo World accepts a
+    single video/INSV resource; image-only reconstruction should use the URL
+    endpoint with at least 20 overlapping perspective images.
+    """
+    if not aholo_world.enabled:
+        raise HTTPException(503, "Aholo World is disabled; set AHOLO_API_KEY and USE_EXTERNAL_TOOLS=true")
+    if quality not in {"low", "normal", "high"}:
+        raise HTTPException(400, "quality must be low, normal or high")
+    if not file.filename:
+        raise HTTPException(400, "filename is required")
+    temporary_path = None
+    try:
+        temporary_path, _ = await asyncio.to_thread(
+            save_upload_to_temp,
+            file,
+            int(settings.oss_max_upload_mb) * 1024 * 1024,
+        )
+        asset_url = await aholo_world.upload_local_file(temporary_path)
+        result = await aholo_world.reconstruct([asset_url], quality=quality, wait=False)
+        result["asset_url"] = asset_url
+        if run_id and run_id in runs:
+            runs[run_id].metadata["aholo_world"] = result
+        return result
+    except ValueError as exc:
+        raise HTTPException(413, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo World upload or submission failed: {exc}") from exc
+    finally:
+        if temporary_path:
+            try:
+                import os
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
+
+
+@app.post("/api/v1/3dgs/spatial-gen")
+async def spatial_gen(request: SpatialGenRequest) -> dict:
+    """Prompt or prompt + an already uploaded HTTP image → Spatial Gen."""
+    if not request.prompt.strip():
+        raise HTTPException(400, "prompt is required")
+    try:
+        result = await aholo_world.generate(request.prompt.strip(), request.image_url)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    if request.run_id and request.run_id in runs:
+        runs[request.run_id].metadata["aholo_spatial_gen"] = result
+    return result
+
+
+@app.post("/api/v1/3dgs/spatial-gen-upload")
+async def spatial_gen_upload(
+    file: UploadFile = File(...),
+    prompt: str = Form(...),
+    run_id: str | None = Form(default=None),
+) -> dict:
+    """Local JPG/PNG + prompt → Aholo Spatial Gen World.
+
+    This mirrors the MCP ``world_generate(localPath=..., prompt=...)`` path,
+    but exposes the result to the backend directly. It is a generative design
+    result and should be labelled separately from measured scene reconstruction.
+    """
+    if not aholo_world.enabled:
+        raise HTTPException(503, "Aholo World is disabled; set AHOLO_API_KEY and USE_EXTERNAL_TOOLS=true")
+    if not file.filename or not prompt.strip():
+        raise HTTPException(400, "filename and prompt are required")
+    temporary_path = None
+    try:
+        temporary_path, _ = await asyncio.to_thread(
+            save_upload_to_temp,
+            file,
+            int(settings.oss_max_upload_mb) * 1024 * 1024,
+        )
+        result = await aholo_world.generate_from_local_file(temporary_path, prompt.strip())
+        if run_id and run_id in runs:
+            runs[run_id].metadata["aholo_spatial_gen"] = result
+        return result
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo Spatial Gen failed: {exc}") from exc
+    finally:
+        if temporary_path:
+            try:
+                import os
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
+
+
 @app.get("/api/v1/3dgs/world/{world_id}")
 async def world_status(world_id: str) -> dict:
     try:
         return await aholo_world.world_status(world_id)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
+
+
+@app.get("/api/v1/3dgs/world/{world_id}/open")
+async def open_world_asset(world_id: str, asset: str = "spz") -> RedirectResponse:
+    """Open a completed World result in Aholo's hosted viewer.
+
+    The World API returns a world asset, rather than a Studio project.  This
+    redirect is the no-upload demo path: a browser can open this endpoint and
+    the official viewer loads the remote SPZ/PLY/LOD file directly.  ``pano``
+    opens the generated/reconstructed panorama image instead.
+    """
+    if asset not in {"spz", "ply", "lod", "pano"}:
+        raise HTTPException(400, "asset must be spz, ply, lod or pano")
+    try:
+        result = await aholo_world.world_status(world_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo World status failed: {exc}") from exc
+
+    status = str(result.get("status") or "").upper()
+    if status not in {"SUCCEEDED", "SUCCESS", "COMPLETED"}:
+        raise HTTPException(409, f"World {world_id} is not ready (status={status or 'UNKNOWN'})")
+    viewers = result.get("viewer_urls") or {}
+    imagery_url = result.get("imagery_url")
+    target = imagery_url if asset == "pano" else viewers.get(asset)
+    if not target:
+        raise HTTPException(404, f"{asset} is not available for world {world_id}")
+    # 307 preserves the browser GET and works for both a normal link and an
+    # iframe.  The target is an Aholo-hosted URL, never a local filesystem
+    # path, so no server-side file upload is needed at viewing time.
+    return RedirectResponse(target, status_code=307)
+
+
+@app.get("/api/v1/3dgs/world/{world_id}/asset/{asset_name}")
+async def world_asset(world_id: str, asset_name: str) -> StreamingResponse:
+    """Proxy a completed World visualization asset through this API.
+
+    ``cover`` is a normal preview JPEG. ``spz`` is the preferred compact
+    Gaussian-Splat payload for a compatible viewer; ``ply`` is a larger point
+    cloud useful for offline processing. The endpoint keeps the provider URL
+    out of a browser/client and streams the temporary Aholo URL directly.
+    """
+    if asset_name not in {"cover", "pano", "spz", "ply", "lod-meta"}:
+        raise HTTPException(400, "asset_name must be cover, pano, spz, ply or lod-meta")
+    try:
+        status = await aholo_world.world_status(world_id)
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo World status failed: {exc}") from exc
+    urls = ((status.get("assets") or {}).get("splats") or {}).get("urls") or {}
+    key = {"cover": "cover", "pano": "imagery_url", "spz": "spzPath", "ply": "plyPath", "lod-meta": "lodMetaPath"}[asset_name]
+    imagery_url = ((status.get("assets") or {}).get("imagery") or {}).get("panoUrl") or status.get("imagery_url")
+    url = status.get(key) if key == "cover" else imagery_url if key == "imagery_url" else urls.get(key)
+    if not url:
+        raise HTTPException(404, f"{asset_name} is not available for world {world_id}")
+    try:
+        async def body():
+            async with httpx.AsyncClient(timeout=180, trust_env=False) as client:
+                async with client.stream("GET", url) as response:
+                    if response.status_code >= 400:
+                        raise RuntimeError(f"HTTP {response.status_code}")
+                    async for chunk in response.aiter_bytes(1024 * 1024):
+                        yield chunk
+
+        media = {
+            "cover": "image/jpeg",
+            "pano": "image/jpeg",
+            "spz": "application/octet-stream",
+            "ply": "application/octet-stream",
+            "lod-meta": "application/json",
+        }[asset_name]
+        return StreamingResponse(body(), media_type=media, headers={"Content-Disposition": f'inline; filename="{world_id}.{asset_name}"'})
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo asset download failed: {exc}") from exc
+
+
+@app.post("/api/v1/3dgs/world/{world_id}/download")
+async def download_world_assets(world_id: str) -> dict:
+    """Download all available completed World assets into run_artifacts."""
+    try:
+        return await aholo_world.download_assets(world_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(502, f"Aholo asset download failed: {exc}") from exc
 
 @app.post("/api/v1/reconstruct")
 async def reconstruct(request: ReconstructRequest) -> dict:
@@ -217,6 +454,17 @@ async def reconstruct(request: ReconstructRequest) -> dict:
         state.evidence.append(Evidence(kind="3d", source="lux3d-cn", uri=image_urls[0], confidence=0.8 if result.get("status") == "submitted" else 0.3, claims=result, provenance="verified" if result.get("status") == "submitted" else "to_confirm"))
         runs[state.run_id] = state
     return result
+
+
+@app.get("/api/v1/reconstruct/{task_id}")
+async def lux3d_status(task_id: str) -> dict:
+    """Query a domestic Lux3D task created by ``/api/v1/reconstruct``."""
+    try:
+        return await agent.lux3d.get_task(task_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(502, f"Lux3D task query failed: {exc}") from exc
 
 
 @app.post("/api/v1/tripo/reconstruct")
@@ -250,8 +498,12 @@ async def research(request: ResearchRequest) -> dict:
     state = runs.get(request.run_id)
     if not state:
         raise HTTPException(404, "run not found")
-    # The graph's research node is deterministic and source-labelled today; this endpoint keeps the tool boundary explicit.
     state.sources = []
     state.user_goal = request.query
-    await agent.research({"state": state, "enable_research": True, "enable_design": False})
+    if request.region:
+        state.metadata["region"] = request.region
+    # Explicit request-level web opt-in keeps the default demo offline and
+    # prevents accidental outbound search calls.
+    await agent.research({"state": state, "enable_research": True, "enable_design": False, "include_web": request.include_web})
+    runs[state.run_id] = state
     return {"run_id": state.run_id, "sources": [s.model_dump(mode="json") for s in state.sources]}

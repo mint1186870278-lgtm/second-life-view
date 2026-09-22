@@ -94,6 +94,10 @@ class SearchSource(BaseModel):
     snippet: str
     source_type: Literal["knowledge_base", "web", "local_opportunity"]
     confidence: float = 0.0
+    # verified: curated or directly cited fact; inferred: search lead or
+    # model-supported interpretation; to_confirm: live opportunity or claim
+    # that still needs field confirmation.
+    provenance: Literal["verified", "inferred", "to_confirm"] = "inferred"
 
 class DesignProposal(BaseModel):
     title: str
@@ -140,6 +144,8 @@ class AnalyzeRequest(BaseModel):
     enable_research: bool = True
     enable_design: bool = True
     enable_3d: bool = False
+    region: str | None = None
+    include_web: bool = False
 
 class DesignRequest(BaseModel):
     run_id: str | None = None
@@ -160,6 +166,24 @@ class CaptureRequest(BaseModel):
     image_url: str | None = None
     detections: list[Detection] = Field(default_factory=list)
 
+
+class CameraFrameRequest(BaseModel):
+    """Payload emitted by the Windows CameraSDK bridge.
+
+    ``run_id``/``action_id`` are present when the Evidence Agent requested a
+    targeted recapture.  For the first frame they can be omitted and the
+    bridge creates a new run.  ``metadata`` carries camera-side details such
+    as model, projection, frame id and capture timestamp without coupling the
+    Linux service to the Windows SDK ABI.
+    """
+
+    run_id: str | None = None
+    action_id: str | None = None
+    user_goal: str = "评估空间构件的再利用机会，并提出下一步需要采集的证据"
+    image_url: str
+    detections: list[Detection] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
 class WorldRequest(BaseModel):
     run_id: str | None = None
     resources: list[str] = Field(default_factory=list)
@@ -168,6 +192,13 @@ class WorldRequest(BaseModel):
     quality: Literal["low", "normal", "high"] = "low"
     wait: bool = False
 
+class SpatialGenRequest(BaseModel):
+    run_id: str | None = None
+    prompt: str
+    image_url: str | None = None
+
 class ResearchRequest(BaseModel):
     run_id: str
     query: str
+    region: str | None = None
+    include_web: bool = False

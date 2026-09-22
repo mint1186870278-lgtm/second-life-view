@@ -9,8 +9,12 @@ class Settings(BaseSettings):
     dashscope_text_model: str = "deepseek-v4-pro"
     dashscope_vision_model: str = "qwen3.8-max"
     dashscope_image_model: str = "qwen-image-3.0-pro"
-    dashscope_image_async: bool = True
-    dashscope_image_timeout: float = 90.0
+    # qwen-image-3.0-pro is account-dependent: this workspace accepts the
+    # synchronous request from the official example but rejects the async
+    # header with AccessDenied. Keep async opt-in rather than defaulting it on.
+    dashscope_image_async: bool = False
+    dashscope_image_timeout: float = 240.0
+    dashscope_chat_timeout: float = 120.0
     lux3d_api_key: str = ""
     aholo_api_key: str = ""
     tripo_api_key: str = ""
@@ -30,6 +34,7 @@ class Settings(BaseSettings):
     use_llm: bool = False
     use_external_tools: bool = False
     evidence_confidence_threshold: float = 0.78
+    research_web_enabled: bool = False
 
 @lru_cache
 def get_settings() -> Settings:

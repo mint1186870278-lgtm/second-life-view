@@ -32,6 +32,17 @@ class OSSClient:
             and self.settings.oss_endpoint
         )
 
+    def validate_config(self) -> dict[str, Any]:
+        """Return a safe diagnostic without exposing credentials."""
+        return {
+            "enabled": self.enabled,
+            "bucket": self.settings.oss_bucket or None,
+            "endpoint": self.endpoint or None,
+            "region": self.settings.oss_region or None,
+            "access_key_configured": bool(self.settings.oss_access_key_id),
+            "secret_configured": bool(self.settings.oss_access_key_secret),
+        }
+
     @property
     def endpoint(self) -> str:
         endpoint = self.settings.oss_endpoint.strip()

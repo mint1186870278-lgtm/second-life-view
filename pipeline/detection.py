@@ -23,6 +23,8 @@ CLASS_PROMPTS = [
     "desk",
     "cabinet",
     "wardrobe",
+    "sofa",
+    "couch",
 ]
 
 CATEGORY_MAP = {
@@ -34,9 +36,11 @@ CATEGORY_MAP = {
     "desk": "table",
     "cabinet": "cabinet",
     "wardrobe": "cabinet",
+    "sofa": "sofa",
+    "couch": "sofa",
 }
 
-CLASSES = ["door", "window", "chair", "table", "cabinet"]
+CLASSES = ["door", "window", "chair", "table", "cabinet", "sofa"]
 
 
 def load_yolo_world(weights: str | None = None):

@@ -7,12 +7,14 @@ from spatial_agent.models import (
     RunState, SearchSource, SpatialObject, SpatialRelation,
 )
 from spatial_agent.providers import BailianClient, Lux3DClient
+from spatial_agent.providers.research import ResearchClient
 
 class GraphState(TypedDict, total=False):
     state: RunState
     enable_research: bool
     enable_design: bool
     enable_3d: bool
+    include_web: bool
 
 class SpatialAgentGraph:
     """A cooperative graph with explicit evidence gates and resumable state."""
@@ -20,6 +22,7 @@ class SpatialAgentGraph:
         self.settings = settings
         self.bailian = BailianClient(settings)
         self.lux3d = Lux3DClient(settings)
+        self.research_client = ResearchClient(settings)
         try:
             from langgraph.graph import StateGraph, START, END
             builder = StateGraph(GraphState)
@@ -86,17 +89,39 @@ class SpatialAgentGraph:
             # pipeline; VLM is an optional enrichment layer on top.
             material = vr.get("material") or detection.material
             condition = vr.get("condition") or detection.visible_condition
-            if not material and detection.source == "windows_yolo_gateway":
-                material = "实木/木饰面" if "wood" in category or "cabinet" in category else None
             if not condition and state.metadata.get("capture_confirmed"):
                 condition = "补拍确认：结构/表面状态已观察"
-            if not condition and detection.source == "windows_yolo_gateway":
-                condition = "表面磨损，结构完整" if "cabinet" in category else "待现场确认"
-            reuse = vr.get("reuse_potential") or ("refurbish" if "cabinet" in category else "unknown")
+            raw_reuse = str(vr.get("reuse_potential") or "").lower()
+            # VLMs often use natural-language grades (high/medium/low) or
+            # pathway names. Keep the state contract intentionally small.
+            reuse_map = {
+                "high": "reuse", "medium": "refurbish", "low": "recycle",
+                "direct_reuse": "reuse", "reuse": "reuse", "refurbish": "refurbish",
+                "recycle": "recycle", "material_recovery": "recycle",
+            }
+            reuse = reuse_map.get(raw_reuse, "refurbish" if "cabinet" in category else "unknown")
             confidence = float(vr.get("confidence", detection.confidence))
-            missing = list(vr.get("missing_fields", []))
-            if not material: missing.append("material")
-            if not condition or condition == "待现场确认": missing.append("condition")
+            # Keep the evidence gate about fields we can actually collect in
+            # this workflow. VLMs may return bookkeeping fields such as
+            # component_batch_id or visible_damage_clue even after giving a
+            # usable material/condition answer; those should not create a
+            # false recapture request.
+            aliases = {"visible_condition": "condition", "state": "condition", "damage": "visible_damage_clue"}
+            missing = []
+            for field in vr.get("missing_fields", []) if isinstance(vr.get("missing_fields", []), list) else []:
+                normalized = aliases.get(str(field), str(field))
+                if normalized in {"material", "condition", "dimensions", "visible_damage_clue"} and normalized not in missing:
+                    missing.append(normalized)
+            if material:
+                missing = [field for field in missing if field != "material"]
+            else:
+                missing.append("material")
+            if condition and condition != "待现场确认":
+                missing = [field for field in missing if field != "condition"]
+            else:
+                missing.append("condition")
+            if detection.visible_damage_clue:
+                missing = [field for field in missing if field != "visible_damage_clue"]
             if state.metadata.get("capture_confirmed") and not vr.get("missing_fields"):
                 missing = []
             obj = SpatialObject(id=detection.id or detection.track_id or f"obj_{idx}", category=category, bbox=detection.bbox, bbox_xyxy=detection.bbox_xyxy, segmentation=detection.segmentation, confidence=confidence, source=detection.source, raw_label=detection.raw_label, yaw=detection.yaw, pitch=detection.pitch, material=material, condition=condition, visible_damage_clue=detection.visible_damage_clue, component_batch_id=detection.component_batch_id, pathway_assessment=detection.pathway_assessment, recommended_pathway=detection.recommended_pathway, reuse_potential=("reuse" if detection.recommended_pathway == "DIRECT_REUSE" else "refurbish" if detection.recommended_pathway == "REFURBISH" else "recycle" if detection.recommended_pathway == "MATERIAL_RECOVERY" else reuse), missing_fields=list(dict.fromkeys(missing)))
@@ -144,12 +169,16 @@ class SpatialAgentGraph:
     async def research(self, data: GraphState) -> GraphState:
         state = data["state"]
         query = state.user_goal + " " + ", ".join(f"{o.category} {o.material or ''}" for o in state.objects)
-        # Replace with a search/RAG MCP tool in production. Sources are explicit and labelled.
-        state.sources = [
-            SearchSource(title="材料再利用评估清单（演示知识库）", url="kb://circular-construction/material-reuse", snippet="先核验尺寸、连接方式、污染/霉变和拆卸损伤，再决定原位再用、翻新或材料回收。", source_type="knowledge_base", confidence=0.88),
-            SearchSource(title="本地回收机会（演示连接器）", url="local://opportunities?query=" + query[:80], snippet="可在接入城市回收商 API 后返回距离、接收类别、价格和预约状态。", source_type="local_opportunity", confidence=0.55),
-        ]
-        self._event(state, "research", "retrieve", "返回带来源的再利用依据", query=query)
+        categories = [o.category for o in state.objects]
+        state.sources = await self.research_client.retrieve(
+            query, categories, region=state.metadata.get("region"), include_web=data.get("include_web")
+        )
+        state.evidence.extend(
+            Evidence(kind="search", source=item.source_type, uri=item.url, confidence=item.confidence,
+                     claims={"title": item.title, "snippet": item.snippet}, provenance=item.provenance)
+            for item in state.sources
+        )
+        self._event(state, "research", "retrieve", "检索知识库与本地机会，并标注来源状态", query=query, count=len(state.sources))
         return data
 
     async def design(self, data: GraphState) -> GraphState:
@@ -160,7 +189,10 @@ class SpatialAgentGraph:
             return data
         objects = list(state.objects)
         target_ids = [o.id for o in objects]
+        source_context = "；".join(f"{s.title}: {s.snippet} [{s.provenance}]" for s in state.sources[:6])
         prompt = f"{state.user_goal}；目标构件：" + "、".join(f"{o.category}（{o.material or '材质待定'}，{o.condition or '状态待定'}）" for o in objects)
+        if source_context:
+            prompt += f"；研究依据（不得把待确认信息写成事实）：{source_context}"
         generation_task_id = None
         if self.bailian.enabled and state.image_urls:
             try:
@@ -183,15 +215,18 @@ class SpatialAgentGraph:
         self._event(state, "design", "propose", "生成可追溯的改造方案", design_status=status)
         return data
 
-    async def run(self, state: RunState, *, enable_research: bool = True, enable_design: bool = True, enable_3d: bool = False) -> RunState:
-        result = await self.compiled.ainvoke({"state": state, "enable_research": enable_research, "enable_design": enable_design, "enable_3d": enable_3d})
+    async def run(self, state: RunState, *, enable_research: bool = True, enable_design: bool = True, enable_3d: bool = False, include_web: bool = False) -> RunState:
+        result = await self.compiled.ainvoke({"state": state, "enable_research": enable_research, "enable_design": enable_design, "enable_3d": enable_3d, "include_web": include_web})
         return result["state"]
 
     async def generate_design(self, state: RunState, brief: str, object_ids: list[str] | None = None, reference_image_url: str | None = None) -> RunState:
         """Regenerate only the design node for an interactive design iteration."""
         selected = object_ids or [o.id for o in state.objects]
         selected_objects = [o for o in state.objects if o.id in selected] or state.objects
+        source_context = "；".join(f"{s.title}: {s.snippet} [{s.provenance}]" for s in state.sources[:6])
         prompt = f"{brief}。目标构件：" + "、".join(f"{o.category}（材质：{o.material or '待确认'}；状态：{o.condition or '待确认'}）" for o in selected_objects)
+        if source_context:
+            prompt += f"。参考研究依据（待确认内容需明确标记）：{source_context}"
         result = await self.bailian.generate_image(prompt, reference_image_url or (state.image_urls[0] if state.image_urls else None))
         image_url = None
         generation_task_id = None

@@ -90,3 +90,25 @@ class Lux3DClient:
                 interval=0,
             )
         return result
+
+    async def get_task(self, task_id: str) -> dict[str, Any]:
+        """Query one Lux3D task using the installed domestic Skill client."""
+        if not task_id:
+            raise ValueError("task_id is required")
+        if not self.enabled:
+            return {
+                "status": "mock",
+                "region": "cn",
+                "task_id": task_id,
+                "message": "Set LUX3D_API_KEY and USE_EXTERNAL_TOOLS=true to query a domestic Lux3D task.",
+            }
+        os.environ["LUX3D_API_KEY"] = self.settings.lux3d_api_key
+        os.environ["LUX3D_REGION"] = "cn"
+        os.environ["LUX3D_BASE_URL"] = CN_BASE_URL
+        module = self._load()
+        return await asyncio.to_thread(
+            module.get_task,
+            task_id,
+            base_url=CN_BASE_URL,
+            region="cn",
+        )
