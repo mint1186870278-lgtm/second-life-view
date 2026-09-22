@@ -1,0 +1,65 @@
+"""Bailian adapters. They are deliberately optional: the demo remains runnable offline."""
+from __future__ import annotations
+import json
+from typing import Any
+import httpx
+from spatial_agent.config import Settings
+
+class BailianClient:
+    def __init__(self, settings: Settings):
+        self.settings = settings
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self.settings.dashscope_api_key and self.settings.use_llm)
+
+    async def chat(self, messages: list[dict[str, Any]], *, vision: bool = False, json_mode: bool = True) -> dict[str, Any]:
+        if not self.enabled:
+            raise RuntimeError("Bailian is disabled; set DASHSCOPE_API_KEY and USE_LLM=true")
+        model = self.settings.dashscope_vision_model if vision else self.settings.dashscope_text_model
+        payload: dict[str, Any] = {"model": model, "messages": messages, "temperature": 0.2}
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+        headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json"}
+        async with httpx.AsyncClient(timeout=90) as client:
+            response = await client.post(f"{self.settings.dashscope_base_url.rstrip('/')}/chat/completions", headers=headers, json=payload)
+            response.raise_for_status()
+            data = response.json()
+        content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+        if isinstance(content, list):
+            content = "".join(part.get("text", "") for part in content if isinstance(part, dict))
+        if json_mode:
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                return {"raw": content}
+        return {"text": content}
+
+    async def inspect_space(self, image_url: str, detections: list[dict[str, Any]], goal: str) -> dict[str, Any]:
+        prompt = {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": (
+                    "你是建筑改造空间感知专家。根据全景图和YOLO检测结果，返回JSON数组 objects。"
+                    "每个对象包含 detection_index, material, condition, reuse_potential, confidence, missing_fields。"
+                    f"用户目标：{goal}；检测：{json.dumps(detections, ensure_ascii=False)}"
+                )},
+                {"type": "image_url", "image_url": {"url": image_url}},
+            ],
+        }
+        return await self.chat([{"role": "system", "content": "只输出可解析JSON。"}, prompt], vision=True)
+
+    async def generate_image(self, prompt: str, reference_image_url: str | None = None) -> dict[str, Any]:
+        """Call a DashScope image endpoint when configured; otherwise return a traceable mock."""
+        if not (self.settings.dashscope_api_key and self.settings.use_external_tools):
+            return {"status": "mock", "image_url": None, "prompt": prompt}
+        # Keep the endpoint configurable because model rollout paths differ by workspace.
+        endpoint = self.settings.dashscope_api_host.rstrip("/") + "/api/v1/services/aigc/image-generation/generation"
+        payload: dict[str, Any] = {"model": self.settings.dashscope_image_model, "input": {"prompt": prompt}, "parameters": {"size": "1024*1024"}}
+        if reference_image_url:
+            payload["input"]["img_url"] = reference_image_url
+        headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json", "X-DashScope-Async": "enable"}
+        async with httpx.AsyncClient(timeout=90) as client:
+            response = await client.post(endpoint, headers=headers, json=payload)
+            response.raise_for_status()
+            return response.json()

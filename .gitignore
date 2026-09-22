@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
+run_artifacts/
+# Large vendor SDK archives are supplied out-of-band
+CameraSDK_MediaSDK/
+百炼api.txt
+run_artifacts/

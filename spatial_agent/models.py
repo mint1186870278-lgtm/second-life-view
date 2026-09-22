@@ -1,0 +1,127 @@
+from __future__ import annotations
+from datetime import datetime, timezone
+from typing import Any, Literal
+from uuid import uuid4
+from pydantic import BaseModel, Field, ConfigDict
+
+
+def utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+class Detection(BaseModel):
+    model_config = ConfigDict(extra="allow", populate_by_name=True)
+    class_name: str = Field(alias="class")
+    bbox: list[float] = Field(min_length=4, max_length=4)
+    confidence: float = 0.0
+    track_id: str | None = None
+
+class Evidence(BaseModel):
+    id: str = Field(default_factory=lambda: f"ev_{uuid4().hex[:10]}")
+    kind: Literal["image", "video_frame", "detection", "vlm", "user", "search", "3d"]
+    source: str
+    uri: str | None = None
+    observed_at: datetime = Field(default_factory=utcnow)
+    confidence: float = 0.0
+    claims: dict[str, Any] = Field(default_factory=dict)
+    provenance: Literal["verified", "inferred", "to_confirm"] = "inferred"
+
+class SpatialObject(BaseModel):
+    id: str = Field(default_factory=lambda: f"obj_{uuid4().hex[:10]}")
+    category: str
+    bbox: list[float] | None = None
+    confidence: float = 0.0
+    material: str | None = None
+    condition: str | None = None
+    reuse_potential: Literal["reuse", "refurbish", "recycle", "unknown"] = "unknown"
+    dimensions: dict[str, float] | None = None
+    evidence_ids: list[str] = Field(default_factory=list)
+    missing_fields: list[str] = Field(default_factory=list)
+
+class SpatialRelation(BaseModel):
+    subject_id: str
+    predicate: str
+    object_id: str
+    confidence: float = 0.0
+    evidence_ids: list[str] = Field(default_factory=list)
+
+class CaptureAction(BaseModel):
+    id: str = Field(default_factory=lambda: f"act_{uuid4().hex[:10]}")
+    action_type: Literal["rotate_and_capture", "zoom_region", "request_user_photo", "capture_video"]
+    target_object_id: str | None = None
+    target_bbox: list[float] | None = None
+    reason: str
+    priority: Literal["low", "medium", "high"] = "medium"
+    camera_command: dict[str, Any] = Field(default_factory=dict)
+
+class SearchSource(BaseModel):
+    title: str
+    url: str
+    snippet: str
+    source_type: Literal["knowledge_base", "web", "local_opportunity"]
+    confidence: float = 0.0
+
+class DesignProposal(BaseModel):
+    title: str
+    rationale: str
+    prompt: str
+    image_url: str | None = None
+    asset_object_ids: list[str] = Field(default_factory=list)
+    constraints: list[str] = Field(default_factory=list)
+    status: Literal["draft", "generated", "needs_input", "failed"] = "draft"
+
+class AgentEvent(BaseModel):
+    timestamp: datetime = Field(default_factory=utcnow)
+    agent: str
+    action: str
+    message: str
+    data: dict[str, Any] = Field(default_factory=dict)
+
+class RunState(BaseModel):
+    run_id: str = Field(default_factory=lambda: f"run_{uuid4().hex[:10]}")
+    user_goal: str = ""
+    image_urls: list[str] = Field(default_factory=list)
+    detections: list[Detection] = Field(default_factory=list)
+    evidence: list[Evidence] = Field(default_factory=list)
+    objects: list[SpatialObject] = Field(default_factory=list)
+    relations: list[SpatialRelation] = Field(default_factory=list)
+    capture_actions: list[CaptureAction] = Field(default_factory=list)
+    sources: list[SearchSource] = Field(default_factory=list)
+    designs: list[DesignProposal] = Field(default_factory=list)
+    status: Literal["running", "awaiting_evidence", "ready_for_design", "completed", "failed"] = "running"
+    next_agent: str | None = None
+    iteration: int = 0
+    events: list[AgentEvent] = Field(default_factory=list)
+    errors: list[str] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+class AnalyzeRequest(BaseModel):
+    user_goal: str = "评估空间构件的再利用机会，并提出下一步需要采集的证据"
+    image_urls: list[str] = Field(default_factory=list)
+    detections: list[Detection] = Field(default_factory=list)
+    run_id: str | None = None
+    enable_research: bool = True
+    enable_design: bool = True
+    enable_3d: bool = False
+
+class DesignRequest(BaseModel):
+    run_id: str | None = None
+    object_ids: list[str] = Field(default_factory=list)
+    brief: str = "保留原有结构，将旧木柜翻新为现代风格，使用低挥发环保材料"
+    reference_image_url: str | None = None
+
+class ReconstructRequest(BaseModel):
+    run_id: str | None = None
+    image_url: str | None = None
+    image_urls: list[str] = Field(default_factory=list)
+    version: Literal["G1", "G1-Turbo"] = "G1-Turbo"
+    wait: bool = False
+
+class CaptureRequest(BaseModel):
+    run_id: str
+    action_id: str
+    image_url: str | None = None
+    detections: list[Detection] = Field(default_factory=list)
+
+class ResearchRequest(BaseModel):
+    run_id: str
+    query: str

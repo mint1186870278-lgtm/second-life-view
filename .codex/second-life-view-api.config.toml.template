@@ -1,0 +1,13 @@
+# Install this file at ~/.codex/second-life-view-api.config.toml.
+# The key is read from SECOND_LIFE_VIEW_CODEX_API_KEY, never stored here.
+model = "gpt-6-astra"
+model_provider = "second-life-view-api"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[model_providers.second-life-view-api]
+name = "second-life-view API gateway"
+# The gateway's root serves its web UI; OpenAI-compatible endpoints are under /v1.
+base_url = "https://api.openai-next.com/v1"
+env_key = "SECOND_LIFE_VIEW_CODEX_API_KEY"
+wire_api = "responses"

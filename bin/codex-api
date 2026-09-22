@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Start Codex for this repository using its isolated API profile.
+# The credential itself is deliberately kept outside the repository.
+set -euo pipefail
+
+credential_file="${HOME}/.codex/second-life-view-api.env"
+
+if [[ ! -r "$credential_file" ]]; then
+  printf 'Codex API credential is unavailable: %s\n' "$credential_file" >&2
+  exit 1
+fi
+
+# This file is user-owned, permission-restricted configuration installed by setup.
+# shellcheck source=/dev/null
+source "$credential_file"
+
+if [[ -z "${SECOND_LIFE_VIEW_CODEX_API_KEY:-}" ]]; then
+  printf 'SECOND_LIFE_VIEW_CODEX_API_KEY is empty.\n' >&2
+  exit 1
+fi
+
+exec codex --profile second-life-view-api --dangerously-bypass-approvals-and-sandbox "$@"
