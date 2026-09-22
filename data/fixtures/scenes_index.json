@@ -1,0 +1,45 @@
+{
+  "scenes": [
+    {
+      "slug": "hotel_room",
+      "scene_id": "scene_hotel",
+      "title": "Hotel Room",
+      "fixture_dir": "data/fixtures/scenes/hotel_room",
+      "views_dir": "data/samples/runs/hotel_room/views",
+      "panorama": "data/samples/panoramas/hotel_room.jpg"
+    },
+    {
+      "slug": "lythwood_lounge",
+      "scene_id": "scene_lounge",
+      "title": "Lythwood Lounge",
+      "fixture_dir": "data/fixtures/scenes/lythwood_lounge",
+      "views_dir": "data/samples/runs/lythwood_lounge/views",
+      "panorama": "data/samples/panoramas/lythwood_lounge.jpg"
+    },
+    {
+      "slug": "en_suite",
+      "scene_id": "scene_ensuite",
+      "title": "En Suite",
+      "fixture_dir": "data/fixtures/scenes/en_suite",
+      "views_dir": "data/samples/runs/en_suite/views",
+      "panorama": "data/samples/panoramas/en_suite.jpg"
+    },
+    {
+      "slug": "old_room",
+      "scene_id": "scene_old",
+      "title": "Old Room",
+      "fixture_dir": "data/fixtures/scenes/old_room",
+      "views_dir": "data/samples/runs/old_room/views",
+      "panorama": "data/samples/panoramas/old_room.jpg"
+    },
+    {
+      "slug": "combination_room",
+      "scene_id": "scene_combo",
+      "title": "Combination Room",
+      "fixture_dir": "data/fixtures/scenes/combination_room",
+      "views_dir": "data/samples/runs/combination_room/views",
+      "panorama": "data/samples/panoramas/combination_room.jpg"
+    }
+  ],
+  "analysis": "data/fixtures/analysis.json"
+}

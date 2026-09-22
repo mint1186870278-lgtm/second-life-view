@@ -1,0 +1,424 @@
+{
+  "scene_id": "scene_old",
+  "panorama_id": "pano_old",
+  "scene_slug": "old_room",
+  "image": "data/samples/panoramas/old_room.jpg",
+  "width": 8192,
+  "height": 4096,
+  "source": {
+    "title": "Old Room",
+    "page": "https://polyhaven.com/a/old_room",
+    "author": "Poly Haven",
+    "license": "CC0"
+  },
+  "detector": "yolov8s-worldv2",
+  "classes": [
+    "door",
+    "window",
+    "chair",
+    "table",
+    "cabinet"
+  ],
+  "objects": [
+    {
+      "id": "old_room_obj_001",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 33.8,
+        "pitch": 14.6
+      },
+      "detection": {
+        "confidence": 0.189
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_002",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 32.3,
+        "pitch": 15.0
+      },
+      "detection": {
+        "confidence": 0.202
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_003",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 3.4,
+        "pitch": 11.7
+      },
+      "detection": {
+        "confidence": 0.139
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_004",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 69.0,
+        "pitch": 12.0
+      },
+      "detection": {
+        "confidence": 0.143
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_005",
+      "panorama_id": "pano_old",
+      "category": "door",
+      "label": "composite door",
+      "location": {
+        "yaw": 95.1,
+        "pitch": 1.4
+      },
+      "detection": {
+        "confidence": 0.197
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "stains and discoloration"
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_006",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": -142.1,
+        "pitch": 0.5
+      },
+      "detection": {
+        "confidence": 0.486
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_007",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": -142.2,
+        "pitch": -0.1
+      },
+      "detection": {
+        "confidence": 0.297
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_008",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": -142.3,
+        "pitch": -0.4
+      },
+      "detection": {
+        "confidence": 0.35
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_009",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": -142.2,
+        "pitch": 0.2
+      },
+      "detection": {
+        "confidence": 0.212
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_010",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": -53.5,
+        "pitch": 11.0
+      },
+      "detection": {
+        "confidence": 0.284
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_011",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": -70.9,
+        "pitch": 7.3
+      },
+      "detection": {
+        "confidence": 0.16
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_012",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": -54.3,
+        "pitch": 12.4
+      },
+      "detection": {
+        "confidence": 0.217
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_013",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": -3.7,
+        "pitch": 12.1
+      },
+      "detection": {
+        "confidence": 0.13
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_014",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": -37.6,
+        "pitch": 8.3
+      },
+      "detection": {
+        "confidence": 0.125
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_015",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": -0.6,
+        "pitch": 21.1
+      },
+      "detection": {
+        "confidence": 0.266
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "old_room_obj_016",
+      "panorama_id": "pano_old",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 33.2,
+        "pitch": 21.8
+      },
+      "detection": {
+        "confidence": 0.146
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    }
+  ]
+}

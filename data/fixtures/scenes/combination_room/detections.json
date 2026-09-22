@@ -1,0 +1,674 @@
+{
+  "scene_id": "scene_combo",
+  "panorama_id": "pano_combo",
+  "scene_slug": "combination_room",
+  "image": "data/samples/panoramas/combination_room.jpg",
+  "width": 8192,
+  "height": 4096,
+  "source": {
+    "title": "Combination Room",
+    "page": "https://polyhaven.com/a/combination_room",
+    "author": "Poly Haven",
+    "license": "CC0"
+  },
+  "detector": "yolov8s-worldv2",
+  "classes": [
+    "door",
+    "window",
+    "chair",
+    "table",
+    "cabinet"
+  ],
+  "objects": [
+    {
+      "id": "combination_room_obj_001",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "composite window",
+      "location": {
+        "yaw": -40.5,
+        "pitch": 11.3
+      },
+      "detection": {
+        "confidence": 0.266
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges"
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_002",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 14.8,
+        "pitch": 6.4
+      },
+      "detection": {
+        "confidence": 0.155
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_003",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "composite window",
+      "location": {
+        "yaw": -18.7,
+        "pitch": 41.5
+      },
+      "detection": {
+        "confidence": 0.128
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_004",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 48.5,
+        "pitch": -3.5
+      },
+      "detection": {
+        "confidence": 0.123
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_005",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 128.9,
+        "pitch": -29.3
+      },
+      "detection": {
+        "confidence": 0.883
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_006",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 80.6,
+        "pitch": 4.8
+      },
+      "detection": {
+        "confidence": 0.187
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_007",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 128.9,
+        "pitch": -33.6
+      },
+      "detection": {
+        "confidence": 0.176
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_008",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 139.5,
+        "pitch": -33.7
+      },
+      "detection": {
+        "confidence": 0.916
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges on the cushion"
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_009",
+      "panorama_id": "pano_combo",
+      "category": "table",
+      "label": "composite table",
+      "location": {
+        "yaw": 171.3,
+        "pitch": -31.4
+      },
+      "detection": {
+        "confidence": 0.846
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_010",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "composite window",
+      "location": {
+        "yaw": 146.5,
+        "pitch": 42.4
+      },
+      "detection": {
+        "confidence": 0.131
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_011",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -169.3,
+        "pitch": -22.9
+      },
+      "detection": {
+        "confidence": 0.931
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_012",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 144.3,
+        "pitch": -30.5
+      },
+      "detection": {
+        "confidence": 0.854
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_013",
+      "panorama_id": "pano_combo",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 170.9,
+        "pitch": -31.8
+      },
+      "detection": {
+        "confidence": 0.729
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_014",
+      "panorama_id": "pano_combo",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 171.0,
+        "pitch": -31.7
+      },
+      "detection": {
+        "confidence": 0.372
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_015",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "metal chair",
+      "location": {
+        "yaw": -139.3,
+        "pitch": -5.5
+      },
+      "detection": {
+        "confidence": 0.313
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_016",
+      "panorama_id": "pano_combo",
+      "category": "door",
+      "label": "timber door",
+      "location": {
+        "yaw": -165.5,
+        "pitch": 0.3
+      },
+      "detection": {
+        "confidence": 0.173
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_017",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -171.0,
+        "pitch": -23.4
+      },
+      "detection": {
+        "confidence": 0.93
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_018",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -96.5,
+        "pitch": -28.0
+      },
+      "detection": {
+        "confidence": 0.716
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_019",
+      "panorama_id": "pano_combo",
+      "category": "table",
+      "label": "plastic table",
+      "location": {
+        "yaw": -178.7,
+        "pitch": -30.9
+      },
+      "detection": {
+        "confidence": 0.246
+      },
+      "material": {
+        "value": "plastic",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "faded color"
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_020",
+      "panorama_id": "pano_combo",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -178.7,
+        "pitch": -30.8
+      },
+      "detection": {
+        "confidence": 0.238
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_021",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -139.3,
+        "pitch": -5.3
+      },
+      "detection": {
+        "confidence": 0.137
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_022",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "metal window",
+      "location": {
+        "yaw": -90.6,
+        "pitch": 8.0
+      },
+      "detection": {
+        "confidence": 0.123
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "scratches"
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_023",
+      "panorama_id": "pano_combo",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -73.2,
+        "pitch": -30.4
+      },
+      "detection": {
+        "confidence": 0.798
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "stains"
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_024",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 37.3,
+        "pitch": 25.2
+      },
+      "detection": {
+        "confidence": 0.144
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_025",
+      "panorama_id": "pano_combo",
+      "category": "door",
+      "label": "timber door",
+      "location": {
+        "yaw": 39.0,
+        "pitch": -32.9
+      },
+      "detection": {
+        "confidence": 0.463
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "combination_room_obj_026",
+      "panorama_id": "pano_combo",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 39.1,
+        "pitch": -32.9
+      },
+      "detection": {
+        "confidence": 0.168
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    }
+  ]
+}

@@ -1,0 +1,2174 @@
+{
+  "scene_id": "scene_lounge",
+  "panorama_id": "pano_lounge",
+  "scene_slug": "lythwood_lounge",
+  "image": "data/samples/panoramas/lythwood_lounge.jpg",
+  "width": 8192,
+  "height": 4096,
+  "source": {
+    "title": "Lythwood Lounge",
+    "page": "https://polyhaven.com/a/lythwood_lounge",
+    "author": "Poly Haven",
+    "license": "CC0"
+  },
+  "detector": "yolov8s-worldv2",
+  "classes": [
+    "door",
+    "window",
+    "chair",
+    "table",
+    "cabinet"
+  ],
+  "objects": [
+    {
+      "id": "lythwood_lounge_obj_001",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "glass chair",
+      "location": {
+        "yaw": 43.2,
+        "pitch": -8.6
+      },
+      "detection": {
+        "confidence": 0.591
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_002",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -16.4,
+        "pitch": -14.6
+      },
+      "detection": {
+        "confidence": 0.571
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_003",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 42.0,
+        "pitch": -24.1
+      },
+      "detection": {
+        "confidence": 0.564
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_004",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 27.0,
+        "pitch": -14.7
+      },
+      "detection": {
+        "confidence": 0.53
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_005",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "fabric table",
+      "location": {
+        "yaw": 33.5,
+        "pitch": -8.2
+      },
+      "detection": {
+        "confidence": 0.391
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_006",
+      "panorama_id": "pano_lounge",
+      "category": "door",
+      "label": "timber door",
+      "location": {
+        "yaw": -37.1,
+        "pitch": -4.0
+      },
+      "detection": {
+        "confidence": 0.217
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_007",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 74.5,
+        "pitch": -8.2
+      },
+      "detection": {
+        "confidence": 0.587
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_008",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 81.7,
+        "pitch": -27.2
+      },
+      "detection": {
+        "confidence": 0.552
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_009",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 48.0,
+        "pitch": -23.1
+      },
+      "detection": {
+        "confidence": 0.537
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_010",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 46.7,
+        "pitch": -8.3
+      },
+      "detection": {
+        "confidence": 0.531
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_011",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "composite chair",
+      "location": {
+        "yaw": 85.3,
+        "pitch": -10.7
+      },
+      "detection": {
+        "confidence": 0.477
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_012",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "fabric table",
+      "location": {
+        "yaw": 83.0,
+        "pitch": -6.9
+      },
+      "detection": {
+        "confidence": 0.388
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_013",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 40.7,
+        "pitch": -1.0
+      },
+      "detection": {
+        "confidence": 0.36
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_014",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 85.3,
+        "pitch": -12.7
+      },
+      "detection": {
+        "confidence": 0.319
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_015",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 33.3,
+        "pitch": -8.1
+      },
+      "detection": {
+        "confidence": 0.229
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_016",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 24.6,
+        "pitch": -14.1
+      },
+      "detection": {
+        "confidence": 0.224
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_017",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": 78.8,
+        "pitch": -11.9
+      },
+      "detection": {
+        "confidence": 0.222
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_018",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 76.0,
+        "pitch": -1.1
+      },
+      "detection": {
+        "confidence": 0.178
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_019",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "glass window",
+      "location": {
+        "yaw": 84.9,
+        "pitch": -1.8
+      },
+      "detection": {
+        "confidence": 0.129
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_020",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "plastic table",
+      "location": {
+        "yaw": 47.2,
+        "pitch": -13.1
+      },
+      "detection": {
+        "confidence": 0.12
+      },
+      "material": {
+        "value": "plastic",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_021",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 121.6,
+        "pitch": -14.0
+      },
+      "detection": {
+        "confidence": 0.728
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_022",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 74.2,
+        "pitch": -7.8
+      },
+      "detection": {
+        "confidence": 0.59
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_023",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": 103.5,
+        "pitch": -11.7
+      },
+      "detection": {
+        "confidence": 0.434
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_024",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 48.3,
+        "pitch": -8.3
+      },
+      "detection": {
+        "confidence": 0.4
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_025",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 82.6,
+        "pitch": -7.2
+      },
+      "detection": {
+        "confidence": 0.282
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_026",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 50.5,
+        "pitch": -20.8
+      },
+      "detection": {
+        "confidence": 0.277
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_027",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 85.9,
+        "pitch": -10.1
+      },
+      "detection": {
+        "confidence": 0.19
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_028",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 116.3,
+        "pitch": -20.8
+      },
+      "detection": {
+        "confidence": 0.179
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_029",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "composite chair",
+      "location": {
+        "yaw": 132.7,
+        "pitch": -19.5
+      },
+      "detection": {
+        "confidence": 0.17
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_030",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 82.6,
+        "pitch": -7.1
+      },
+      "detection": {
+        "confidence": 0.146
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_031",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 85.4,
+        "pitch": -12.0
+      },
+      "detection": {
+        "confidence": 0.143
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_032",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 87.3,
+        "pitch": -7.4
+      },
+      "detection": {
+        "confidence": 0.127
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_033",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 120.3,
+        "pitch": -13.4
+      },
+      "detection": {
+        "confidence": 0.6
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_034",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "timber chair",
+      "location": {
+        "yaw": 90.8,
+        "pitch": -8.8
+      },
+      "detection": {
+        "confidence": 0.578
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_035",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 108.6,
+        "pitch": -32.5
+      },
+      "detection": {
+        "confidence": 0.576
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_036",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "metal cabinet",
+      "location": {
+        "yaw": 103.2,
+        "pitch": -11.6
+      },
+      "detection": {
+        "confidence": 0.564
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_037",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "composite cabinet",
+      "location": {
+        "yaw": 176.1,
+        "pitch": -7.6
+      },
+      "detection": {
+        "confidence": 0.467
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_038",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": 114.4,
+        "pitch": -19.8
+      },
+      "detection": {
+        "confidence": 0.324
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_039",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "composite table",
+      "location": {
+        "yaw": 156.9,
+        "pitch": -29.1
+      },
+      "detection": {
+        "confidence": 0.316
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_040",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "composite cabinet",
+      "location": {
+        "yaw": 156.9,
+        "pitch": -29.1
+      },
+      "detection": {
+        "confidence": 0.289
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_041",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 172.8,
+        "pitch": -22.0
+      },
+      "detection": {
+        "confidence": 0.189
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_042",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "metal window",
+      "location": {
+        "yaw": 179.4,
+        "pitch": 8.1
+      },
+      "detection": {
+        "confidence": 0.173
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "scratches"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_043",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "timber cabinet",
+      "location": {
+        "yaw": -162.5,
+        "pitch": -2.1
+      },
+      "detection": {
+        "confidence": 0.529
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_044",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -171.9,
+        "pitch": -26.0
+      },
+      "detection": {
+        "confidence": 0.437
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_045",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 154.2,
+        "pitch": -28.7
+      },
+      "detection": {
+        "confidence": 0.293
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_046",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -160.3,
+        "pitch": -14.7
+      },
+      "detection": {
+        "confidence": 0.233
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_047",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -142.7,
+        "pitch": -21.1
+      },
+      "detection": {
+        "confidence": 0.201
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_048",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 138.1,
+        "pitch": -19.0
+      },
+      "detection": {
+        "confidence": 0.137
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_049",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "timber cabinet",
+      "location": {
+        "yaw": -138.9,
+        "pitch": -5.9
+      },
+      "detection": {
+        "confidence": 0.134
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_050",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -167.5,
+        "pitch": -26.2
+      },
+      "detection": {
+        "confidence": 0.644
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_051",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -163.2,
+        "pitch": -0.7
+      },
+      "detection": {
+        "confidence": 0.497
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_052",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -99.2,
+        "pitch": -24.4
+      },
+      "detection": {
+        "confidence": 0.487
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_053",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -141.0,
+        "pitch": -18.4
+      },
+      "detection": {
+        "confidence": 0.342
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_054",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": -161.6,
+        "pitch": -14.8
+      },
+      "detection": {
+        "confidence": 0.253
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_055",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -108.9,
+        "pitch": -9.7
+      },
+      "detection": {
+        "confidence": 0.25
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_056",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "metal chair",
+      "location": {
+        "yaw": -93.6,
+        "pitch": -8.3
+      },
+      "detection": {
+        "confidence": 0.199
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_057",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "metal table",
+      "location": {
+        "yaw": -92.4,
+        "pitch": -6.8
+      },
+      "detection": {
+        "confidence": 0.185
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "rust"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_058",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -150.6,
+        "pitch": -9.2
+      },
+      "detection": {
+        "confidence": 0.166
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_059",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -103.9,
+        "pitch": -14.0
+      },
+      "detection": {
+        "confidence": 0.165
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_060",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "composite window",
+      "location": {
+        "yaw": -127.5,
+        "pitch": 0.4
+      },
+      "detection": {
+        "confidence": 0.131
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_061",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -132.2,
+        "pitch": -20.1
+      },
+      "detection": {
+        "confidence": 0.721
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_062",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -68.3,
+        "pitch": -14.0
+      },
+      "detection": {
+        "confidence": 0.566
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_063",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "timber cabinet",
+      "location": {
+        "yaw": -62.6,
+        "pitch": -10.1
+      },
+      "detection": {
+        "confidence": 0.424
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_064",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -110.7,
+        "pitch": -10.7
+      },
+      "detection": {
+        "confidence": 0.3
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_065",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "composite cabinet",
+      "location": {
+        "yaw": -53.9,
+        "pitch": -27.6
+      },
+      "detection": {
+        "confidence": 0.255
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_066",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "timber cabinet",
+      "location": {
+        "yaw": -126.3,
+        "pitch": -9.8
+      },
+      "detection": {
+        "confidence": 0.217
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_067",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -91.4,
+        "pitch": -22.7
+      },
+      "detection": {
+        "confidence": 0.199
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_068",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -62.5,
+        "pitch": -10.2
+      },
+      "detection": {
+        "confidence": 0.178
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_069",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": -103.6,
+        "pitch": -13.9
+      },
+      "detection": {
+        "confidence": 0.171
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_070",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -91.5,
+        "pitch": -6.9
+      },
+      "detection": {
+        "confidence": 0.146
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_071",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "timber chair",
+      "location": {
+        "yaw": -63.0,
+        "pitch": -10.8
+      },
+      "detection": {
+        "confidence": 0.443
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "scuffed surface"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_072",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -13.8,
+        "pitch": -13.4
+      },
+      "detection": {
+        "confidence": 0.418
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_073",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -68.5,
+        "pitch": -14.2
+      },
+      "detection": {
+        "confidence": 0.411
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_074",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": -86.2,
+        "pitch": -8.4
+      },
+      "detection": {
+        "confidence": 0.288
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_075",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -63.0,
+        "pitch": -10.8
+      },
+      "detection": {
+        "confidence": 0.209
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_076",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "composite table",
+      "location": {
+        "yaw": -54.6,
+        "pitch": -29.6
+      },
+      "detection": {
+        "confidence": 0.171
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_077",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -54.5,
+        "pitch": -29.6
+      },
+      "detection": {
+        "confidence": 0.15
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_078",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "timber chair",
+      "location": {
+        "yaw": -89.0,
+        "pitch": -7.1
+      },
+      "detection": {
+        "confidence": 0.147
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_079",
+      "panorama_id": "pano_lounge",
+      "category": "door",
+      "label": "composite door",
+      "location": {
+        "yaw": -0.1,
+        "pitch": 60.3
+      },
+      "detection": {
+        "confidence": 0.197
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_080",
+      "panorama_id": "pano_lounge",
+      "category": "window",
+      "label": "composite window",
+      "location": {
+        "yaw": -0.3,
+        "pitch": 60.4
+      },
+      "detection": {
+        "confidence": 0.171
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_081",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": 28.6,
+        "pitch": -17.9
+      },
+      "detection": {
+        "confidence": 0.607
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "faded pattern"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_082",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "fabric chair",
+      "location": {
+        "yaw": -18.7,
+        "pitch": -18.4
+      },
+      "detection": {
+        "confidence": 0.574
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_083",
+      "panorama_id": "pano_lounge",
+      "category": "cabinet",
+      "label": "metal cabinet",
+      "location": {
+        "yaw": -35.1,
+        "pitch": -14.9
+      },
+      "detection": {
+        "confidence": 0.168
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "damaged",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "bent edge"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_084",
+      "panorama_id": "pano_lounge",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 40.3,
+        "pitch": -22.2
+      },
+      "detection": {
+        "confidence": 0.163
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_085",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "composite table",
+      "location": {
+        "yaw": -63.3,
+        "pitch": -45.2
+      },
+      "detection": {
+        "confidence": 0.135
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "damaged",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edge"
+      },
+      "spatial": null
+    },
+    {
+      "id": "lythwood_lounge_obj_086",
+      "panorama_id": "pano_lounge",
+      "category": "table",
+      "label": "composite table",
+      "location": {
+        "yaw": 40.4,
+        "pitch": -22.3
+      },
+      "detection": {
+        "confidence": 0.125
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "frayed edges"
+      },
+      "spatial": null
+    }
+  ]
+}
