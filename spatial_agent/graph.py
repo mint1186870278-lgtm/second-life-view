@@ -82,8 +82,16 @@ class SpatialAgentGraph:
         for idx, detection in enumerate(detections):
             vr = vlm_results[idx] if idx < len(vlm_results) else {}
             category = detection.class_name
-            material = vr.get("material") or ("实木/木饰面" if "wood" in category or "cabinet" in category else None)
-            condition = vr.get("condition") or ("表面磨损，结构完整" if "cabinet" in category else ("补拍确认：结构/表面状态已观察" if state.metadata.get("capture_confirmed") else "待现场确认"))
+            # TAY-LI semantic facts are authoritative observations from its fixture
+            # pipeline; VLM is an optional enrichment layer on top.
+            material = vr.get("material") or detection.material
+            condition = vr.get("condition") or detection.visible_condition
+            if not material and detection.source == "windows_yolo_gateway":
+                material = "实木/木饰面" if "wood" in category or "cabinet" in category else None
+            if not condition and state.metadata.get("capture_confirmed"):
+                condition = "补拍确认：结构/表面状态已观察"
+            if not condition and detection.source == "windows_yolo_gateway":
+                condition = "表面磨损，结构完整" if "cabinet" in category else "待现场确认"
             reuse = vr.get("reuse_potential") or ("refurbish" if "cabinet" in category else "unknown")
             confidence = float(vr.get("confidence", detection.confidence))
             missing = list(vr.get("missing_fields", []))
@@ -91,14 +99,25 @@ class SpatialAgentGraph:
             if not condition or condition == "待现场确认": missing.append("condition")
             if state.metadata.get("capture_confirmed") and not vr.get("missing_fields"):
                 missing = []
-            obj = SpatialObject(category=category, bbox=detection.bbox, confidence=confidence, material=material, condition=condition, reuse_potential=reuse, missing_fields=list(dict.fromkeys(missing)))
+            obj = SpatialObject(id=detection.id or detection.track_id or f"obj_{idx}", category=category, bbox=detection.bbox, bbox_xyxy=detection.bbox_xyxy, segmentation=detection.segmentation, confidence=confidence, source=detection.source, raw_label=detection.raw_label, yaw=detection.yaw, pitch=detection.pitch, material=material, condition=condition, visible_damage_clue=detection.visible_damage_clue, component_batch_id=detection.component_batch_id, pathway_assessment=detection.pathway_assessment, recommended_pathway=detection.recommended_pathway, reuse_potential=("reuse" if detection.recommended_pathway == "DIRECT_REUSE" else "refurbish" if detection.recommended_pathway == "REFURBISH" else "recycle" if detection.recommended_pathway == "MATERIAL_RECOVERY" else reuse), missing_fields=list(dict.fromkeys(missing)))
             obj.evidence_ids.append(f"det_{idx}")
             state.objects.append(obj)
-            state.evidence.append(Evidence(id=f"det_{idx}", kind="detection", source="windows_yolo_gateway", uri=state.image_urls[0] if state.image_urls else None, confidence=detection.confidence, claims={"class": category, "bbox": detection.bbox}, provenance="verified"))
+            state.evidence.append(Evidence(id=f"det_{idx}", kind="detection", source=detection.source, uri=state.image_urls[0] if state.image_urls else None, confidence=detection.confidence, claims={"class": category, "bbox": detection.bbox, "yaw": detection.yaw, "pitch": detection.pitch, "component_batch_id": detection.component_batch_id, "recommended_pathway": detection.recommended_pathway}, provenance="verified"))
             if vr:
                 state.evidence.append(Evidence(kind="vlm", source="bailian_qwen3.8-max", uri=state.image_urls[0], confidence=confidence, claims=vr, provenance="inferred"))
         if len(state.objects) >= 2:
             state.relations.append(SpatialRelation(subject_id=state.objects[0].id, predicate="inside_same_space_as", object_id=state.objects[1].id, confidence=0.72))
+        if data.get("enable_3d"):
+            public_urls = [u for u in state.image_urls if isinstance(u, str) and u.startswith(("http://", "https://"))]
+            if public_urls:
+                try:
+                    state.metadata["lux3d"] = await self.lux3d.image_to_3d(public_urls[:4], version="G1-Turbo", wait=False)
+                    state.evidence.append(Evidence(kind="3d", source="aholo:lux3d-cn", uri=public_urls[0], confidence=0.8, claims=state.metadata["lux3d"], provenance="verified"))
+                    self._event(state, "perception", "reconstruct_3d", "提交 Aholo Lux3D 国内图生 3D 任务", task=state.metadata["lux3d"])
+                except Exception as exc:
+                    state.errors.append(f"Lux3D failed: {exc}")
+            else:
+                state.metadata["lux3d"] = {"status": "needs_public_url", "message": "Lux3D requires an HTTP(S) image URL; upload the Windows frame first."}
         self._event(state, "perception", "understand", f"建立 {len(state.objects)} 个空间资产", objects=len(state.objects), detections=len(detections))
         return data
 
@@ -142,21 +161,24 @@ class SpatialAgentGraph:
         objects = list(state.objects)
         target_ids = [o.id for o in objects]
         prompt = f"{state.user_goal}；目标构件：" + "、".join(f"{o.category}（{o.material or '材质待定'}，{o.condition or '状态待定'}）" for o in objects)
+        generation_task_id = None
         if self.bailian.enabled and state.image_urls:
             try:
                 result = await self.bailian.generate_image(prompt, state.image_urls[0])
                 image_url = result.get("image_url") if isinstance(result, dict) else None
                 output = (result or {}).get("output") or {} if isinstance(result, dict) else {}
                 results = output.get("results") if isinstance(output, dict) else None
+                generation_task_id = output.get("task_id") if isinstance(output, dict) else None
                 if not image_url and isinstance(results, list) and results:
                     image_url = results[0].get("url")
-                status = "generated" if image_url else "draft"
+                status = "generated" if image_url else ("submitted" if generation_task_id else "draft")
+                state.metadata["bailian_image_generation"] = result
             except Exception as exc:
                 state.errors.append(f"image generation failed: {exc}")
                 image_url, status = None, "failed"
         else:
             image_url, status = None, "draft"
-        state.designs = [DesignProposal(title="保留结构的低碳翻新方案", rationale="先保留可逆连接与主体骨架，再对表面材料和五金进行可替换升级。", prompt=prompt, image_url=image_url, asset_object_ids=target_ids, constraints=["不改变主体尺寸与开合关系", "输出标注推测区域并保留人工确认点"], status=status)]
+        state.designs = [DesignProposal(title="保留结构的低碳翻新方案", rationale="先保留可逆连接与主体骨架，再对表面材料和五金进行可替换升级。", prompt=prompt, image_url=image_url, generation_task_id=generation_task_id, asset_object_ids=target_ids, constraints=["不改变主体尺寸与开合关系", "输出标注推测区域并保留人工确认点"], status=status)]
         state.status = "completed"
         self._event(state, "design", "propose", "生成可追溯的改造方案", design_status=status)
         return data
@@ -172,13 +194,15 @@ class SpatialAgentGraph:
         prompt = f"{brief}。目标构件：" + "、".join(f"{o.category}（材质：{o.material or '待确认'}；状态：{o.condition or '待确认'}）" for o in selected_objects)
         result = await self.bailian.generate_image(prompt, reference_image_url or (state.image_urls[0] if state.image_urls else None))
         image_url = None
+        generation_task_id = None
         if isinstance(result, dict):
             image_url = result.get("image_url")
             output = result.get("output") or {}
             results = output.get("results") if isinstance(output, dict) else None
+            generation_task_id = output.get("task_id") if isinstance(output, dict) else None
             if not image_url and isinstance(results, list) and results:
                 image_url = results[0].get("url")
-        state.designs = [DesignProposal(title="交互式构件翻新效果", rationale="把结构保持、材料替换和可逆施工约束写入生成提示词。", prompt=prompt, image_url=image_url, asset_object_ids=[o.id for o in selected_objects], constraints=["保留原始结构", "保持原空间位置与比例", "标注不确定区域"], status="generated" if image_url else "draft")]
+        state.designs = [DesignProposal(title="交互式构件翻新效果", rationale="把结构保持、材料替换和可逆施工约束写入生成提示词。", prompt=prompt, image_url=image_url, generation_task_id=generation_task_id, asset_object_ids=[o.id for o in selected_objects], constraints=["保留原始结构", "保持原空间位置与比例", "标注不确定区域"], status="generated" if image_url else ("submitted" if generation_task_id else "draft"))]
         state.status = "completed"
         self._event(state, "design", "regenerate", "基于用户 brief 生成翻新方案", object_ids=selected)
         return state

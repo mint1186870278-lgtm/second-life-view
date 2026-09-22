@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any, Literal
 from uuid import uuid4
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, model_validator
 
 
 def utcnow() -> datetime:
@@ -10,10 +10,35 @@ def utcnow() -> datetime:
 
 class Detection(BaseModel):
     model_config = ConfigDict(extra="allow", populate_by_name=True)
+    id: str | None = None
     class_name: str = Field(alias="class")
-    bbox: list[float] = Field(min_length=4, max_length=4)
+    bbox: list[float] = Field(default_factory=lambda: [0.0, 0.0, 0.0, 0.0], min_length=4, max_length=4)
+    bbox_xyxy: list[float] | None = Field(default=None, min_length=4, max_length=4)
+    segmentation: dict[str, Any] | list[Any] | None = None
     confidence: float = 0.0
     track_id: str | None = None
+    source: str = "windows_yolo_gateway"
+    raw_label: str | None = None
+    yaw: float | None = None
+    pitch: float | None = None
+    material: str | None = None
+    visible_condition: str | None = None
+    visible_damage_clue: str | None = None
+    component_batch_id: str | None = None
+    pathway_assessment: dict[str, Any] = Field(default_factory=dict)
+    recommended_pathway: str | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_yolo_payload(cls, value: Any) -> Any:
+        if not isinstance(value, dict):
+            return value
+        data = dict(value)
+        if "class" not in data and "class_name" not in data:
+            data["class"] = data.get("label") or data.get("category") or "unknown"
+        if "bbox" not in data and data.get("bbox_xyxy") is not None:
+            data["bbox"] = data["bbox_xyxy"]
+        return data
 
 class Evidence(BaseModel):
     id: str = Field(default_factory=lambda: f"ev_{uuid4().hex[:10]}")
@@ -29,7 +54,17 @@ class SpatialObject(BaseModel):
     id: str = Field(default_factory=lambda: f"obj_{uuid4().hex[:10]}")
     category: str
     bbox: list[float] | None = None
+    bbox_xyxy: list[float] | None = Field(default=None, min_length=4, max_length=4)
+    segmentation: dict[str, Any] | list[Any] | None = None
     confidence: float = 0.0
+    source: str = "perception"
+    raw_label: str | None = None
+    yaw: float | None = None
+    pitch: float | None = None
+    visible_damage_clue: str | None = None
+    component_batch_id: str | None = None
+    pathway_assessment: dict[str, Any] = Field(default_factory=dict)
+    recommended_pathway: str | None = None
     material: str | None = None
     condition: str | None = None
     reuse_potential: Literal["reuse", "refurbish", "recycle", "unknown"] = "unknown"
@@ -65,9 +100,10 @@ class DesignProposal(BaseModel):
     rationale: str
     prompt: str
     image_url: str | None = None
+    generation_task_id: str | None = None
     asset_object_ids: list[str] = Field(default_factory=list)
     constraints: list[str] = Field(default_factory=list)
-    status: Literal["draft", "generated", "needs_input", "failed"] = "draft"
+    status: Literal["draft", "submitted", "generated", "needs_input", "failed"] = "draft"
 
 class AgentEvent(BaseModel):
     timestamp: datetime = Field(default_factory=utcnow)
@@ -98,6 +134,8 @@ class AnalyzeRequest(BaseModel):
     user_goal: str = "评估空间构件的再利用机会，并提出下一步需要采集的证据"
     image_urls: list[str] = Field(default_factory=list)
     detections: list[Detection] = Field(default_factory=list)
+    scene_slug: str | None = None
+    use_yolo_fixture: bool = False
     run_id: str | None = None
     enable_research: bool = True
     enable_design: bool = True
@@ -121,6 +159,14 @@ class CaptureRequest(BaseModel):
     action_id: str
     image_url: str | None = None
     detections: list[Detection] = Field(default_factory=list)
+
+class WorldRequest(BaseModel):
+    run_id: str | None = None
+    resources: list[str] = Field(default_factory=list)
+    prompt: str | None = None
+    image_url: str | None = None
+    quality: Literal["low", "normal", "high"] = "low"
+    wait: bool = False
 
 class ResearchRequest(BaseModel):
     run_id: str

@@ -1,0 +1,499 @@
+{
+  "scene_id": "scene_ensuite",
+  "panorama_id": "pano_ensuite",
+  "scene_slug": "en_suite",
+  "image": "data/samples/panoramas/en_suite.jpg",
+  "width": 8192,
+  "height": 4096,
+  "source": {
+    "title": "En Suite",
+    "page": "https://polyhaven.com/a/en_suite",
+    "author": "Poly Haven",
+    "license": "CC0"
+  },
+  "detector": "yolov8s-worldv2",
+  "classes": [
+    "door",
+    "window",
+    "chair",
+    "table",
+    "cabinet"
+  ],
+  "objects": [
+    {
+      "id": "en_suite_obj_001",
+      "panorama_id": "pano_ensuite",
+      "category": "window",
+      "label": "timber window",
+      "location": {
+        "yaw": 9.6,
+        "pitch": 2.7
+      },
+      "detection": {
+        "confidence": 0.65
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_002",
+      "panorama_id": "pano_ensuite",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": 12.0,
+        "pitch": -8.0
+      },
+      "detection": {
+        "confidence": 0.547
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_003",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "composite cabinet",
+      "location": {
+        "yaw": 12.0,
+        "pitch": -7.5
+      },
+      "detection": {
+        "confidence": 0.319
+      },
+      "material": {
+        "value": "composite",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped edges"
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_004",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "fabric cabinet",
+      "location": {
+        "yaw": -25.2,
+        "pitch": 0.0
+      },
+      "detection": {
+        "confidence": 0.221
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_005",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -23.4,
+        "pitch": 0.1
+      },
+      "detection": {
+        "confidence": 0.142
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_006",
+      "panorama_id": "pano_ensuite",
+      "category": "table",
+      "label": "timber table",
+      "location": {
+        "yaw": 11.6,
+        "pitch": -7.4
+      },
+      "detection": {
+        "confidence": 0.599
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "chipped paint"
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_007",
+      "panorama_id": "pano_ensuite",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": 8.1,
+        "pitch": -10.1
+      },
+      "detection": {
+        "confidence": 0.467
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_008",
+      "panorama_id": "pano_ensuite",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 9.5,
+        "pitch": 2.8
+      },
+      "detection": {
+        "confidence": 0.439
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_009",
+      "panorama_id": "pano_ensuite",
+      "category": "window",
+      "label": "timber window",
+      "location": {
+        "yaw": 85.4,
+        "pitch": 29.4
+      },
+      "detection": {
+        "confidence": 0.147
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_010",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "metal cabinet",
+      "location": {
+        "yaw": 3.2,
+        "pitch": -0.2
+      },
+      "detection": {
+        "confidence": 0.131
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_011",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "fabric cabinet",
+      "location": {
+        "yaw": 56.8,
+        "pitch": 10.4
+      },
+      "detection": {
+        "confidence": 0.203
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_012",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": 60.7,
+        "pitch": 10.7
+      },
+      "detection": {
+        "confidence": 0.19
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_013",
+      "panorama_id": "pano_ensuite",
+      "category": "window",
+      "label": "timber window",
+      "location": {
+        "yaw": 115.7,
+        "pitch": 35.6
+      },
+      "detection": {
+        "confidence": 0.242
+      },
+      "material": {
+        "value": "timber",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_014",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "metal cabinet",
+      "location": {
+        "yaw": 178.7,
+        "pitch": 27.6
+      },
+      "detection": {
+        "confidence": 0.163
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "worn",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": "rust"
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_015",
+      "panorama_id": "pano_ensuite",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 142.4,
+        "pitch": 32.0
+      },
+      "detection": {
+        "confidence": 0.166
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_016",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "fabric cabinet",
+      "location": {
+        "yaw": -122.2,
+        "pitch": -0.0
+      },
+      "detection": {
+        "confidence": 0.177
+      },
+      "material": {
+        "value": "fabric",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_017",
+      "panorama_id": "pano_ensuite",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -23.3,
+        "pitch": 0.0
+      },
+      "detection": {
+        "confidence": 0.143
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_018",
+      "panorama_id": "pano_ensuite",
+      "category": "chair",
+      "label": "metal chair",
+      "location": {
+        "yaw": 16.3,
+        "pitch": 25.8
+      },
+      "detection": {
+        "confidence": 0.298
+      },
+      "material": {
+        "value": "metal",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "en_suite_obj_019",
+      "panorama_id": "pano_ensuite",
+      "category": "door",
+      "label": "glass door",
+      "location": {
+        "yaw": -47.8,
+        "pitch": -46.4
+      },
+      "detection": {
+        "confidence": 0.164
+      },
+      "material": {
+        "value": "glass",
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": "apparently_intact",
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    }
+  ]
+}

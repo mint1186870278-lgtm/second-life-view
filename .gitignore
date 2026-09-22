@@ -6,6 +6,8 @@ __pycache__/
 *.py[cod]
 .venv/
 run_artifacts/
+weights/
+*.pt
 # Large vendor SDK archives are supplied out-of-band
 CameraSDK_MediaSDK/
 百炼api.txt

@@ -1,0 +1,3528 @@
+{
+  "scene_id": "scene_lounge",
+  "panorama_id": "pano_lounge",
+  "scene_slug": "lythwood_lounge",
+  "component_batches": [
+    {
+      "id": "lythwood_lounge__batch_cabinet_-160_0",
+      "label": "timber cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_043",
+        "lythwood_lounge_obj_051"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -162.5,
+        "pitch": -2.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-160_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_-140_-5",
+      "label": "timber cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_049"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -138.9,
+        "pitch": -5.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-140_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_-125_-10",
+      "label": "timber cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_066"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -126.3,
+        "pitch": -9.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-125_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_-65_-10",
+      "label": "timber cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_063",
+        "lythwood_lounge_obj_075"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -62.6,
+        "pitch": -10.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-65_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_-55_-30",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_065",
+        "lythwood_lounge_obj_077"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -53.9,
+        "pitch": -27.6
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-55_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_-35_-15",
+      "label": "metal cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_083"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -35.1,
+        "pitch": -14.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_-35_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可见损伤已阻断原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "损伤程度不支持直接再用"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认修复成本与结构安全性"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的尺寸与安全要求"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "MATERIAL_RECOVERY",
+          "alternative_pathways": [
+            "REFURBISH",
+            "REPURPOSE"
+          ],
+          "rationale": "可见状态为 damaged，材质识别为 metal，优先材料回收。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_105_-10",
+      "label": "metal cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_023",
+        "lythwood_lounge_obj_036"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 103.2,
+        "pitch": -11.6
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_105_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_155_-30",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_040"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 156.9,
+        "pitch": -29.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_155_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_cabinet_175_-10",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "lythwood_lounge_obj_037"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 176.1,
+        "pitch": -7.6
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_cabinet_175_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-170_-25",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_044",
+        "lythwood_lounge_obj_050"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -167.5,
+        "pitch": -26.2
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-170_-25",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-150_-10",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_058"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -150.6,
+        "pitch": -9.2
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-150_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-130_-20",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_047",
+        "lythwood_lounge_obj_053",
+        "lythwood_lounge_obj_061"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -132.2,
+        "pitch": -20.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-130_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-110_-10",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_055",
+        "lythwood_lounge_obj_064"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -110.7,
+        "pitch": -10.7
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-110_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-100_-25",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_052",
+        "lythwood_lounge_obj_067"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -99.2,
+        "pitch": -24.4
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-100_-25",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-95_-10",
+      "label": "metal chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_056"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -93.6,
+        "pitch": -8.3
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-95_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-90_-5",
+      "label": "timber chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_078"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -89.0,
+        "pitch": -7.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-90_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-70_-15",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_062",
+        "lythwood_lounge_obj_073"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -68.3,
+        "pitch": -14.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-70_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：frayed edges，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-65_-10",
+      "label": "timber chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_068",
+        "lythwood_lounge_obj_071"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -63.0,
+        "pitch": -10.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-65_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：scuffed surface，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_-20_-20",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_002",
+        "lythwood_lounge_obj_072",
+        "lythwood_lounge_obj_082"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -18.7,
+        "pitch": -18.4
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_-20_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_30_-20",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_003",
+        "lythwood_lounge_obj_004",
+        "lythwood_lounge_obj_009",
+        "lythwood_lounge_obj_016",
+        "lythwood_lounge_obj_026",
+        "lythwood_lounge_obj_081",
+        "lythwood_lounge_obj_084"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 7,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 28.6,
+        "pitch": -17.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_30_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：faded pattern，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_45_-10",
+      "label": "glass chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_001",
+        "lythwood_lounge_obj_010",
+        "lythwood_lounge_obj_024"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 43.2,
+        "pitch": -8.6
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_45_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 glass，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_75_-10",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_007",
+        "lythwood_lounge_obj_022"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 74.2,
+        "pitch": -7.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_75_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_80_-25",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_008"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 81.7,
+        "pitch": -27.2
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_80_-25",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_85_-10",
+      "label": "composite chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_011",
+        "lythwood_lounge_obj_014",
+        "lythwood_lounge_obj_027",
+        "lythwood_lounge_obj_031",
+        "lythwood_lounge_obj_032"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 5,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 85.3,
+        "pitch": -10.7
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_85_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_90_-10",
+      "label": "timber chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_034"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 90.8,
+        "pitch": -8.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_90_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：frayed edges，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_110_-30",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_035"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 108.6,
+        "pitch": -32.5
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_110_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_120_-15",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_021",
+        "lythwood_lounge_obj_033"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 121.6,
+        "pitch": -14.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_120_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_135_-20",
+      "label": "composite chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_029"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 132.7,
+        "pitch": -19.5
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_135_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_140_-20",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_048"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 138.1,
+        "pitch": -19.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_140_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：frayed edges，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_chair_175_-20",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "lythwood_lounge_obj_041"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 172.8,
+        "pitch": -22.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_chair_175_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_door_-35_-5",
+      "label": "timber door",
+      "category": "door",
+      "object_ids": [
+        "lythwood_lounge_obj_006"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -37.1,
+        "pitch": -4.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_door_-35_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "door 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_door_0_60",
+      "label": "composite door",
+      "category": "door",
+      "object_ids": [
+        "lythwood_lounge_obj_079"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -0.1,
+        "pitch": 60.3
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_door_0_60",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "door 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-160_-15",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_046",
+        "lythwood_lounge_obj_054"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -161.6,
+        "pitch": -14.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-160_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-105_-15",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_059",
+        "lythwood_lounge_obj_069"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -103.6,
+        "pitch": -13.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-105_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-90_-5",
+      "label": "metal table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_057",
+        "lythwood_lounge_obj_070"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -92.4,
+        "pitch": -6.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-90_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：rust，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-85_-10",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_074"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -86.2,
+        "pitch": -8.4
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-85_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-65_-45",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_085"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -63.3,
+        "pitch": -45.2
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-65_-45",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可见损伤已阻断原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "损伤程度不支持直接再用"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认修复成本与结构安全性"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的尺寸与安全要求"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "MATERIAL_RECOVERY",
+          "alternative_pathways": [
+            "REFURBISH",
+            "REPURPOSE"
+          ],
+          "rationale": "可见状态为 damaged，材质识别为 composite，优先材料回收。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_-55_-30",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_076"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -54.6,
+        "pitch": -29.6
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_-55_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_35_-10",
+      "label": "fabric table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_005",
+        "lythwood_lounge_obj_015"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 33.5,
+        "pitch": -8.2
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_35_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_40_-20",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_086"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 40.4,
+        "pitch": -22.3
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_40_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：frayed edges，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_45_-15",
+      "label": "plastic table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_020"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 47.2,
+        "pitch": -13.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_45_-15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 plastic，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_80_-10",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_017"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 78.8,
+        "pitch": -11.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_80_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_85_-5",
+      "label": "fabric table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_012",
+        "lythwood_lounge_obj_025",
+        "lythwood_lounge_obj_030"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 83.0,
+        "pitch": -6.9
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_85_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_115_-20",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_028",
+        "lythwood_lounge_obj_038"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 114.4,
+        "pitch": -19.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_115_-20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_table_155_-30",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "lythwood_lounge_obj_039",
+        "lythwood_lounge_obj_045"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 156.9,
+        "pitch": -29.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_table_155_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_-130_0",
+      "label": "composite window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_060"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -127.5,
+        "pitch": 0.4
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_-130_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_0_60",
+      "label": "composite window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_080"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": -0.3,
+        "pitch": 60.4
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_0_60",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_40_0",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_013"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 40.7,
+        "pitch": -1.0
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_40_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_75_0",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_018"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 76.0,
+        "pitch": -1.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_75_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_85_0",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_019"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 84.9,
+        "pitch": -1.8
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_85_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "lythwood_lounge__batch_window_180_10",
+      "label": "metal window",
+      "category": "window",
+      "object_ids": [
+        "lythwood_lounge_obj_042"
+      ],
+      "scene_ids": [
+        "scene_lounge"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_lounge",
+        "yaw": 179.4,
+        "pitch": 8.1
+      },
+      "assessment": {
+        "batch_id": "lythwood_lounge__batch_window_180_10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：scratches，主体仍可修复后继续使用。"
+        }
+      }
+    }
+  ]
+}

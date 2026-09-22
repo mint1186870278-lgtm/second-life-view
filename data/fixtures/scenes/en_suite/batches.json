@@ -1,0 +1,906 @@
+{
+  "scene_id": "scene_ensuite",
+  "panorama_id": "pano_ensuite",
+  "scene_slug": "en_suite",
+  "component_batches": [
+    {
+      "id": "en_suite__batch_cabinet_-120_0",
+      "label": "fabric cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_016"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": -122.2,
+        "pitch": -0.0
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_-120_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_cabinet_-25_0",
+      "label": "fabric cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_004",
+        "en_suite_obj_005",
+        "en_suite_obj_017"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": -25.2,
+        "pitch": 0.0
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_-25_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_cabinet_5_0",
+      "label": "metal cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_010"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 3.2,
+        "pitch": -0.2
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_5_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_cabinet_10_-10",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_003"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 12.0,
+        "pitch": -7.5
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_10_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped edges，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_cabinet_55_10",
+      "label": "fabric cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_011",
+        "en_suite_obj_012"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 56.8,
+        "pitch": 10.4
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_55_10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_cabinet_180_30",
+      "label": "metal cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "en_suite_obj_014"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 178.7,
+        "pitch": 27.6
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_cabinet_180_30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：rust，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_chair_10_-10",
+      "label": "Chair",
+      "category": "chair",
+      "object_ids": [
+        "en_suite_obj_007"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 8.1,
+        "pitch": -10.1
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_chair_10_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "补充分类外的可见状态与固定方式"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "补充材质与拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "补充可见损伤证据"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "补充构件尺寸与材质"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "补充材质识别"
+            ]
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "insufficient_evidence",
+            "conditions": [
+              "仅在更高价值路径均被排除后启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": null,
+          "alternative_pathways": [],
+          "rationale": "当前缺少材质与可见状态，证据不足，需人工复核。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_chair_15_25",
+      "label": "metal chair",
+      "category": "chair",
+      "object_ids": [
+        "en_suite_obj_018"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 16.3,
+        "pitch": 25.8
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_chair_15_25",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_door_-50_-45",
+      "label": "glass door",
+      "category": "door",
+      "object_ids": [
+        "en_suite_obj_019"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": -47.8,
+        "pitch": -46.4
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_door_-50_-45",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "door 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_table_10_-5",
+      "label": "timber table",
+      "category": "table",
+      "object_ids": [
+        "en_suite_obj_002",
+        "en_suite_obj_006"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 11.6,
+        "pitch": -7.4
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_table_10_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "非固定构件，不适用原位保留"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：chipped paint，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_window_10_5",
+      "label": "timber window",
+      "category": "window",
+      "object_ids": [
+        "en_suite_obj_001",
+        "en_suite_obj_008"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 9.6,
+        "pitch": 2.7
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_window_10_5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_window_85_30",
+      "label": "timber window",
+      "category": "window",
+      "object_ids": [
+        "en_suite_obj_009"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 85.4,
+        "pitch": 29.4
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_window_85_30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "en_suite__batch_window_115_35",
+      "label": "timber window",
+      "category": "window",
+      "object_ids": [
+        "en_suite_obj_013",
+        "en_suite_obj_015"
+      ],
+      "scene_ids": [
+        "scene_ensuite"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_ensuite",
+        "yaw": 115.7,
+        "pitch": 35.6
+      },
+      "assessment": {
+        "batch_id": "en_suite__batch_window_115_35",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    }
+  ]
+}

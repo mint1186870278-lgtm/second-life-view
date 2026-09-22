@@ -1,0 +1,573 @@
+{
+  "scene_id": "scene_old",
+  "panorama_id": "pano_old",
+  "scene_slug": "old_room",
+  "component_batches": [
+    {
+      "id": "old_room__batch_door_95_0",
+      "label": "composite door",
+      "category": "door",
+      "object_ids": [
+        "old_room_obj_005"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": 95.1,
+        "pitch": 1.4
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_door_95_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认表面处理与结构完整性"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "supported",
+            "conditions": [
+              "局部打磨与表面重新处理"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "REFURBISH",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "存在磨损或可见损伤线索；线索：stains and discoloration，主体仍可修复后继续使用。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_-140_0",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_006",
+        "old_room_obj_007",
+        "old_room_obj_008",
+        "old_room_obj_009"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 4,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": -142.1,
+        "pitch": 0.5
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_-140_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_-70_5",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_011"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": -70.9,
+        "pitch": 7.3
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_-70_5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_-55_10",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_010",
+        "old_room_obj_012"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": -53.5,
+        "pitch": 11.0
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_-55_10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_-40_10",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_014"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": -37.6,
+        "pitch": 8.3
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_-40_10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_0_20",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_003",
+        "old_room_obj_013",
+        "old_room_obj_015"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": -0.6,
+        "pitch": 21.1
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_0_20",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_30_15",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_001",
+        "old_room_obj_002",
+        "old_room_obj_016"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": 32.3,
+        "pitch": 15.0
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_30_15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "old_room__batch_window_70_10",
+      "label": "glass window",
+      "category": "window",
+      "object_ids": [
+        "old_room_obj_004"
+      ],
+      "scene_ids": [
+        "scene_old"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_old",
+        "yaw": 69.0,
+        "pitch": 12.0
+      },
+      "assessment": {
+        "batch_id": "old_room__batch_window_70_10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    }
+  ]
+}

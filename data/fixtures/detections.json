@@ -1,0 +1,649 @@
+{
+  "scene_id": "scene_hotel",
+  "panorama_id": "pano_hotel",
+  "scene_slug": "hotel_room",
+  "image": "data/samples/panoramas/hotel_room.jpg",
+  "width": 8192,
+  "height": 4096,
+  "source": {
+    "title": "Hotel Room",
+    "page": "https://polyhaven.com/a/hotel_room",
+    "author": "Poly Haven",
+    "license": "CC0"
+  },
+  "detector": "yolov8s-worldv2",
+  "classes": [
+    "door",
+    "window",
+    "chair",
+    "table",
+    "cabinet"
+  ],
+  "objects": [
+    {
+      "id": "hotel_room_obj_001",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -10.5,
+        "pitch": -33.5
+      },
+      "detection": {
+        "confidence": 0.868
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_002",
+      "panorama_id": "pano_hotel",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -38.4,
+        "pitch": -33.2
+      },
+      "detection": {
+        "confidence": 0.561
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_003",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -38.3,
+        "pitch": -33.2
+      },
+      "detection": {
+        "confidence": 0.518
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_004",
+      "panorama_id": "pano_hotel",
+      "category": "window",
+      "label": "window",
+      "location": {
+        "yaw": 121.5,
+        "pitch": -0.5
+      },
+      "detection": {
+        "confidence": 0.121
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_005",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": 148.3,
+        "pitch": 1.9
+      },
+      "detection": {
+        "confidence": 0.253
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_006",
+      "panorama_id": "pano_hotel",
+      "category": "door",
+      "label": "door",
+      "location": {
+        "yaw": 168.0,
+        "pitch": -8.7
+      },
+      "detection": {
+        "confidence": 0.141
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_007",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": 140.4,
+        "pitch": 16.1
+      },
+      "detection": {
+        "confidence": 0.384
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_008",
+      "panorama_id": "pano_hotel",
+      "category": "door",
+      "label": "door",
+      "location": {
+        "yaw": -138.0,
+        "pitch": -5.9
+      },
+      "detection": {
+        "confidence": 0.213
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_009",
+      "panorama_id": "pano_hotel",
+      "category": "door",
+      "label": "door",
+      "location": {
+        "yaw": 167.5,
+        "pitch": -8.4
+      },
+      "detection": {
+        "confidence": 0.198
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_010",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -138.0,
+        "pitch": -6.4
+      },
+      "detection": {
+        "confidence": 0.189
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_011",
+      "panorama_id": "pano_hotel",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -98.9,
+        "pitch": -30.4
+      },
+      "detection": {
+        "confidence": 0.516
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_012",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -99.0,
+        "pitch": -30.5
+      },
+      "detection": {
+        "confidence": 0.361
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_013",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -112.5,
+        "pitch": -29.1
+      },
+      "detection": {
+        "confidence": 0.206
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_014",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -111.1,
+        "pitch": -32.6
+      },
+      "detection": {
+        "confidence": 0.204
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_015",
+      "panorama_id": "pano_hotel",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -72.6,
+        "pitch": -33.1
+      },
+      "detection": {
+        "confidence": 0.791
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_016",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -86.3,
+        "pitch": -38.3
+      },
+      "detection": {
+        "confidence": 0.759
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_017",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -111.5,
+        "pitch": -31.6
+      },
+      "detection": {
+        "confidence": 0.539
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_018",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -11.6,
+        "pitch": -30.1
+      },
+      "detection": {
+        "confidence": 0.876
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_019",
+      "panorama_id": "pano_hotel",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -65.2,
+        "pitch": -33.8
+      },
+      "detection": {
+        "confidence": 0.625
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_020",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -14.7,
+        "pitch": -35.7
+      },
+      "detection": {
+        "confidence": 0.912
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_021",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -47.7,
+        "pitch": -42.2
+      },
+      "detection": {
+        "confidence": 0.356
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_022",
+      "panorama_id": "pano_hotel",
+      "category": "table",
+      "label": "table",
+      "location": {
+        "yaw": -61.3,
+        "pitch": -51.4
+      },
+      "detection": {
+        "confidence": 0.279
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_023",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -87.8,
+        "pitch": -55.7
+      },
+      "detection": {
+        "confidence": 0.222
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_024",
+      "panorama_id": "pano_hotel",
+      "category": "cabinet",
+      "label": "cabinet",
+      "location": {
+        "yaw": -57.7,
+        "pitch": -49.5
+      },
+      "detection": {
+        "confidence": 0.175
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    },
+    {
+      "id": "hotel_room_obj_025",
+      "panorama_id": "pano_hotel",
+      "category": "chair",
+      "label": "chair",
+      "location": {
+        "yaw": -79.9,
+        "pitch": -53.8
+      },
+      "detection": {
+        "confidence": 0.165
+      },
+      "material": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_condition": {
+        "value": null,
+        "confidence": null
+      },
+      "visible_damage_clue": {
+        "value": null
+      },
+      "spatial": null
+    }
+  ]
+}

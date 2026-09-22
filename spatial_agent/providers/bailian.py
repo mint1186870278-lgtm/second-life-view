@@ -1,6 +1,8 @@
 """Bailian adapters. They are deliberately optional: the demo remains runnable offline."""
 from __future__ import annotations
+import base64
 import json
+from pathlib import Path
 from typing import Any
 import httpx
 from spatial_agent.config import Settings
@@ -21,7 +23,7 @@ class BailianClient:
         if json_mode:
             payload["response_format"] = {"type": "json_object"}
         headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json"}
-        async with httpx.AsyncClient(timeout=90) as client:
+        async with httpx.AsyncClient(timeout=45, trust_env=False) as client:
             response = await client.post(f"{self.settings.dashscope_base_url.rstrip('/')}/chat/completions", headers=headers, json=payload)
             response.raise_for_status()
             data = response.json()
@@ -35,7 +37,34 @@ class BailianClient:
                 return {"raw": content}
         return {"text": content}
 
+    @staticmethod
+    def _image_reference(image_url: str) -> str:
+        """Convert TAY-LI local fixture paths to a compact vision data URL."""
+        if image_url.startswith(("http://", "https://", "data:")):
+            return image_url
+        path = Path(image_url)
+        if not path.is_absolute():
+            path = Path.cwd() / path
+        if not path.exists():
+            return image_url
+        try:
+            import cv2
+            image = cv2.imread(str(path))
+            if image is None:
+                return image_url
+            height, width = image.shape[:2]
+            scale = min(1.0, 768.0 / max(width, height))
+            if scale < 1.0:
+                image = cv2.resize(image, (int(width * scale), int(height * scale)))
+            ok, encoded = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
+            if not ok:
+                return image_url
+            return "data:image/jpeg;base64," + base64.b64encode(encoded.tobytes()).decode("ascii")
+        except Exception:
+            return image_url
+
     async def inspect_space(self, image_url: str, detections: list[dict[str, Any]], goal: str) -> dict[str, Any]:
+        image_reference = self._image_reference(image_url)
         prompt = {
             "role": "user",
             "content": [
@@ -44,7 +73,7 @@ class BailianClient:
                     "每个对象包含 detection_index, material, condition, reuse_potential, confidence, missing_fields。"
                     f"用户目标：{goal}；检测：{json.dumps(detections, ensure_ascii=False)}"
                 )},
-                {"type": "image_url", "image_url": {"url": image_url}},
+                {"type": "image_url", "image_url": {"url": image_reference}},
             ],
         }
         return await self.chat([{"role": "system", "content": "只输出可解析JSON。"}, prompt], vision=True)
@@ -53,13 +82,25 @@ class BailianClient:
         """Call a DashScope image endpoint when configured; otherwise return a traceable mock."""
         if not (self.settings.dashscope_api_key and self.settings.use_external_tools):
             return {"status": "mock", "image_url": None, "prompt": prompt}
-        # Keep the endpoint configurable because model rollout paths differ by workspace.
-        endpoint = self.settings.dashscope_api_host.rstrip("/") + "/api/v1/services/aigc/image-generation/generation"
-        payload: dict[str, Any] = {"model": self.settings.dashscope_image_model, "input": {"prompt": prompt}, "parameters": {"size": "1024*1024"}}
+        # qwen-image uses the multimodal-generation messages schema.  Keep the
+        # task asynchronous so the API can return immediately to the Agent.
+        endpoint = self.settings.dashscope_api_host.rstrip("/") + "/api/v1/services/aigc/multimodal-generation/generation"
+        content: list[dict[str, str]] = [{"text": prompt}]
         if reference_image_url:
-            payload["input"]["img_url"] = reference_image_url
-        headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json", "X-DashScope-Async": "enable"}
-        async with httpx.AsyncClient(timeout=90) as client:
+            content.append({"image": self._image_reference(reference_image_url)})
+        payload: dict[str, Any] = {
+            "model": self.settings.dashscope_image_model,
+            "input": {"messages": [{"role": "user", "content": content}]},
+            "parameters": {"size": "1024*1024"},
+        }
+        headers = {"Authorization": f"Bearer {self.settings.dashscope_api_key}", "Content-Type": "application/json"}
+        if self.settings.dashscope_image_async:
+            headers["X-DashScope-Async"] = "enable"
+        async with httpx.AsyncClient(timeout=self.settings.dashscope_image_timeout, trust_env=False) as client:
             response = await client.post(endpoint, headers=headers, json=payload)
-            response.raise_for_status()
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                detail = response.text[:500]
+                raise RuntimeError(f"Bailian image request failed ({response.status_code}): {detail}") from exc
             return response.json()

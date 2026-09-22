@@ -2,21 +2,83 @@ from __future__ import annotations
 import asyncio
 import json
 from typing import AsyncIterator
-from fastapi import FastAPI, HTTPException
+from fastapi import File, Form, UploadFile, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from spatial_agent.config import get_settings
 from spatial_agent.graph import SpatialAgentGraph
-from spatial_agent.models import AnalyzeRequest, CaptureRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState
+from spatial_agent.providers.aholo_world import AholoWorldClient
+from spatial_agent.providers.oss import OSSClient, save_upload_to_temp
+from spatial_agent.providers.tripo import TripoClient
+from spatial_agent.models import AnalyzeRequest, CaptureRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest
+from spatial_agent.yolo_adapter import available_scenes, load_scene
 
 settings = get_settings()
 agent = SpatialAgentGraph(settings)
+aholo_world = AholoWorldClient(settings)
+oss = OSSClient(settings)
+tripo = TripoClient(settings)
 runs: dict[str, RunState] = {}
 
 app = FastAPI(title="Second Life View · Spatial Agent", version="0.1.0", description="Insta360 + YOLO + active perception multi-agent backend")
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "lux3d_region": settings.lux3d_region}
+    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
+
+
+@app.post("/api/v1/assets/upload")
+async def upload_asset(
+    file: UploadFile = File(...),
+    session_id: str | None = Form(default=None),
+) -> dict:
+    """Upload a camera frame, crop, video, or INSV to the configured OSS bucket.
+
+    The response contains a short-lived signed URL suitable for VLM/Lux3D/
+    Tripo inputs.  The object remains private in OSS.
+    """
+    if not oss.enabled:
+        raise HTTPException(503, "OSS is not configured on this server")
+    if not file.filename:
+        raise HTTPException(400, "filename is required")
+    max_bytes = int(settings.oss_max_upload_mb) * 1024 * 1024
+    temporary_path = None
+    try:
+        temporary_path, size = await asyncio.to_thread(save_upload_to_temp, file, max_bytes)
+        result = await asyncio.to_thread(
+            oss.upload_file,
+            temporary_path,
+            session_id=session_id,
+            filename=file.filename,
+            content_type=file.content_type,
+        )
+        result["size_bytes"] = size
+        return result
+    except ValueError as exc:
+        raise HTTPException(413, str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    finally:
+        if temporary_path:
+            try:
+                import os
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
+
+
+@app.get("/api/v1/assets/url")
+def signed_asset_url(key: str, expires: int | None = None) -> dict:
+    if not oss.enabled:
+        raise HTTPException(503, "OSS is not configured on this server")
+    ttl = max(60, min(int(expires or settings.oss_signed_url_ttl), 86400))
+    try:
+        return {"key": key, "url": oss.signed_url(key, expires=ttl), "expires_in": ttl}
+    except Exception as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+@app.get("/api/v1/yolo/scenes")
+def yolo_scenes() -> dict:
+    return {"scenes": available_scenes(), "source": "TAY-LI Pipeline B fixtures"}
 
 @app.get("/api/v1/demo")
 def demo_contract() -> dict:
@@ -24,7 +86,15 @@ def demo_contract() -> dict:
 
 @app.post("/api/v1/runs", response_model=RunState)
 async def create_run(request: AnalyzeRequest) -> RunState:
-    init = {"user_goal": request.user_goal, "image_urls": request.image_urls, "detections": request.detections}
+    detections = request.detections
+    image_urls = request.image_urls
+    metadata: dict = {}
+    if request.scene_slug or request.use_yolo_fixture:
+        scene = load_scene(request.scene_slug or "hotel_room")
+        detections = detections or scene["detections"]
+        image_urls = image_urls or [scene["image_url"]]
+        metadata.update({"scene_slug": scene["scene_slug"], "scene_id": scene["scene_id"], "panorama_id": scene["panorama_id"], "yolo_batches": scene["batches"], "yolo_source": "TAY-LI Pipeline B"})
+    init = {"user_goal": request.user_goal, "image_urls": image_urls, "detections": detections, "metadata": metadata}
     if request.run_id:
         init["run_id"] = request.run_id
     state = RunState(**init)
@@ -100,6 +170,37 @@ async def design_run(run_id: str, request: DesignRequest) -> RunState:
     runs[run_id] = result
     return result
 
+@app.post("/api/v1/3dgs/reconstruct")
+async def reconstruct_world(request: WorldRequest) -> dict:
+    state = runs.get(request.run_id) if request.run_id else None
+    resources = request.resources
+    if request.image_url:
+        resources = resources or [request.image_url]
+    if not resources and state:
+        resources = state.image_urls
+    try:
+        if resources:
+            result = await aholo_world.reconstruct(resources, quality=request.quality, wait=request.wait)
+        elif request.prompt:
+            result = await aholo_world.generate(request.prompt, request.image_url)
+        else:
+            raise HTTPException(400, "resources, image_url or prompt is required")
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    if state:
+        state.metadata["aholo_world"] = result
+        state.evidence.append(Evidence(kind="3d", source="aholo:world-3dgs-cn", uri=resources[0] if resources else None, confidence=0.8 if result.get("status") == "submitted" else 0.3, claims=result, provenance="verified" if result.get("status") == "submitted" else "to_confirm"))
+        runs[state.run_id] = state
+    return result
+
+
+@app.get("/api/v1/3dgs/world/{world_id}")
+async def world_status(world_id: str) -> dict:
+    try:
+        return await aholo_world.world_status(world_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
 @app.post("/api/v1/reconstruct")
 async def reconstruct(request: ReconstructRequest) -> dict:
     state = runs.get(request.run_id) if request.run_id else None
@@ -108,11 +209,41 @@ async def reconstruct(request: ReconstructRequest) -> dict:
         image_urls = state.image_urls
     if not image_urls:
         raise HTTPException(400, "image_url or image_urls is required")
-    result = await agent.lux3d.image_to_3d(image_urls, request.version, request.wait)
+    try:
+        result = await agent.lux3d.image_to_3d(image_urls, request.version, request.wait)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
     if state:
         state.evidence.append(Evidence(kind="3d", source="lux3d-cn", uri=image_urls[0], confidence=0.8 if result.get("status") == "submitted" else 0.3, claims=result, provenance="verified" if result.get("status") == "submitted" else "to_confirm"))
         runs[state.run_id] = state
     return result
+
+
+@app.post("/api/v1/tripo/reconstruct")
+async def reconstruct_tripo(request: ReconstructRequest) -> dict:
+    state = runs.get(request.run_id) if request.run_id else None
+    image_urls = request.image_urls or ([request.image_url] if request.image_url else [])
+    if not image_urls and state:
+        image_urls = state.image_urls
+    if not image_urls:
+        raise HTTPException(400, "image_url or image_urls is required")
+    try:
+        result = await tripo.image_to_model(image_urls, wait=request.wait)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    if state:
+        state.metadata["tripo"] = result
+        state.evidence.append(Evidence(kind="3d", source="tripo-v3", uri=image_urls[0], confidence=0.8 if result.get("status") == "submitted" else 0.3, claims=result, provenance="verified" if result.get("status") == "submitted" else "to_confirm"))
+        runs[state.run_id] = state
+    return result
+
+
+@app.get("/api/v1/tripo/tasks/{task_id}")
+async def tripo_status(task_id: str) -> dict:
+    try:
+        return await tripo.get(task_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
 
 @app.post("/api/v1/research")
 async def research(request: ResearchRequest) -> dict:

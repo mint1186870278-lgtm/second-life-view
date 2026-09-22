@@ -26,3 +26,25 @@ def test_lux3d_domestic_mock_does_not_call_network():
     response = TestClient(app).post("/api/v1/reconstruct", json={"image_url": "https://example.com/object.jpg"})
     assert response.status_code == 200
     assert response.json()["region"] == "cn"
+
+
+def test_tayli_fixture_is_perception_input():
+    client = TestClient(app)
+    response = client.post("/api/v1/runs", json={"scene_slug": "hotel_room", "enable_research": False, "enable_design": False})
+    assert response.status_code == 200
+    state = response.json()
+    assert state["metadata"]["yolo_source"] == "TAY-LI Pipeline B"
+    assert state["metadata"]["scene_slug"] == "hotel_room"
+    assert len(state["objects"]) == 25
+    assert all(item["source"] == "tay-li:yolo-world" for item in state["objects"])
+    assert any(item["recommended_pathway"] == "DIRECT_REUSE" for item in state["objects"])
+    assert state["status"] == "awaiting_evidence"
+
+
+def test_yolo_scene_catalog_and_world_validation():
+    client = TestClient(app)
+    scenes = client.get("/api/v1/yolo/scenes").json()["scenes"]
+    assert {"hotel_room", "old_room"}.issubset(scenes)
+    rejected = client.post("/api/v1/3dgs/reconstruct", json={"resources": ["https://example.com/one.jpg"]})
+    assert rejected.status_code == 400
+    assert "20 images" in rejected.json()["detail"]

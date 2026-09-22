@@ -1,0 +1,976 @@
+{
+  "scene_id": "scene_hotel",
+  "panorama_id": "pano_hotel",
+  "scene_slug": "hotel_room",
+  "component_batches": [
+    {
+      "id": "hotel_room__batch_cabinet_-140_-5",
+      "label": "metal cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "hotel_room_obj_010"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -138.0,
+        "pitch": -6.4
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_cabinet_-140_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_cabinet_-100_-30",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "hotel_room_obj_012"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -99.0,
+        "pitch": -30.5
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_cabinet_-100_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_cabinet_-50_-40",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "hotel_room_obj_021",
+        "hotel_room_obj_024"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -47.7,
+        "pitch": -42.1
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_cabinet_-50_-40",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_cabinet_-40_-35",
+      "label": "composite cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "hotel_room_obj_003"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -38.3,
+        "pitch": -33.2
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_cabinet_-40_-35",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_cabinet_140_15",
+      "label": "timber cabinet",
+      "category": "cabinet",
+      "object_ids": [
+        "hotel_room_obj_005",
+        "hotel_room_obj_007"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": 140.4,
+        "pitch": 16.1
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_cabinet_140_15",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "cabinet 外观完好，材质 timber，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_chair_-110_-30",
+      "label": "metal chair",
+      "category": "chair",
+      "object_ids": [
+        "hotel_room_obj_013",
+        "hotel_room_obj_014",
+        "hotel_room_obj_017"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -111.5,
+        "pitch": -31.6
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_chair_-110_-30",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_chair_-90_-55",
+      "label": "metal chair",
+      "category": "chair",
+      "object_ids": [
+        "hotel_room_obj_023",
+        "hotel_room_obj_025"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -87.8,
+        "pitch": -55.7
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_chair_-90_-55",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_chair_-85_-40",
+      "label": "metal chair",
+      "category": "chair",
+      "object_ids": [
+        "hotel_room_obj_016"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -86.3,
+        "pitch": -38.3
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_chair_-85_-40",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 metal，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_chair_-15_-35",
+      "label": "fabric chair",
+      "category": "chair",
+      "object_ids": [
+        "hotel_room_obj_001",
+        "hotel_room_obj_018",
+        "hotel_room_obj_020"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 3,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -14.7,
+        "pitch": -35.7
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_chair_-15_-35",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "chair 外观完好，材质 fabric，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_door_-140_-5",
+      "label": "metal door",
+      "category": "door",
+      "object_ids": [
+        "hotel_room_obj_008"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -138.0,
+        "pitch": -5.9
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_door_-140_-5",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "door 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_door_165_-10",
+      "label": "glass door",
+      "category": "door",
+      "object_ids": [
+        "hotel_room_obj_006",
+        "hotel_room_obj_009"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 2,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": 167.4,
+        "pitch": -8.4
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_door_165_-10",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "door 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_table_-75_-35",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "hotel_room_obj_011",
+        "hotel_room_obj_015",
+        "hotel_room_obj_019",
+        "hotel_room_obj_022"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 4,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -72.6,
+        "pitch": -33.1
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_table_-75_-35",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_table_-40_-35",
+      "label": "composite table",
+      "category": "table",
+      "object_ids": [
+        "hotel_room_obj_002"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": -38.4,
+        "pitch": -33.2
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_table_-40_-35",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "not_applicable",
+            "conditions": [
+              "可移动家具，不适用原位保留语义"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认搬迁与清洁条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在局部表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "DIRECT_REUSE",
+          "alternative_pathways": [
+            "REPURPOSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "table 外观完好，材质 composite，优先直接再用。"
+        }
+      }
+    },
+    {
+      "id": "hotel_room__batch_window_120_0",
+      "label": "metal window",
+      "category": "window",
+      "object_ids": [
+        "hotel_room_obj_004"
+      ],
+      "scene_ids": [
+        "scene_hotel"
+      ],
+      "detected_count": 1,
+      "primary_hotspot": {
+        "scene_id": "scene_hotel",
+        "yaw": 121.5,
+        "pitch": -0.5
+      },
+      "assessment": {
+        "batch_id": "hotel_room__batch_window_120_0",
+        "pathway_assessments": [
+          {
+            "pathway": "KEEP_IN_PLACE",
+            "evidence_status": "supported",
+            "conditions": [
+              "确认项目是否仍需要原功能"
+            ]
+          },
+          {
+            "pathway": "DIRECT_REUSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认固定方式与完整拆卸条件"
+            ]
+          },
+          {
+            "pathway": "REFURBISH",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在表面处理需要时启用"
+            ]
+          },
+          {
+            "pathway": "REPURPOSE",
+            "evidence_status": "conditional",
+            "conditions": [
+              "确认改作他用的开口尺寸与安装条件"
+            ]
+          },
+          {
+            "pathway": "MATERIAL_RECOVERY",
+            "evidence_status": "supported",
+            "conditions": []
+          },
+          {
+            "pathway": "DISPOSAL",
+            "evidence_status": "conditional",
+            "conditions": [
+              "仅在更高价值路径均被排除、不可执行或法规 / 安全要求必须处置时启用"
+            ]
+          }
+        ],
+        "system_recommendation": {
+          "primary_pathway": "KEEP_IN_PLACE",
+          "alternative_pathways": [
+            "DIRECT_REUSE",
+            "MATERIAL_RECOVERY"
+          ],
+          "rationale": "window 外观完好，优先原位保留；拆卸后再用需核实固定条件。"
+        }
+      }
+    }
+  ]
+}
