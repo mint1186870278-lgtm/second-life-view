@@ -3,6 +3,10 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react()],
+  // Keep the committed demo panoramas available in the static deployment.
+  // The Python service still exposes its own /demo-assets URLs when it is
+  // running, while the frontend falls back to these files on Cloudflare Pages.
+  publicDir: 'data/samples',
   server: {
     proxy: {
       '/api': 'http://127.0.0.1:8000',

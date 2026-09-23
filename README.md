@@ -146,9 +146,30 @@ Research Agent 当前采用离线优先的轻量检索：`data/knowledge/materia
 
 默认关闭外部调用。配置 `DASHSCOPE_API_KEY`/`LUX3D_API_KEY` 后，再显式设置 `USE_LLM=true` 或 `USE_EXTERNAL_TOOLS=true`。
 
-## Windows + SSH 真机桥接
+### 演示素材预生成缓存
 
-相机 USB 线连接 Windows，不通过 SSH 让 Linux 加载 Windows DLL。仓库现在提供了可运行的 `windows_camera_bridge/`：它在 Windows 使用 `DeviceDiscovery → Open → TakePhoto → DownloadCameraFile → Close`，可选用 MediaSDK 把 `.insp` 拼接为 ERP JPEG；Linux 通过 SSH **反向**隧道调用该网关、拉取图片并直接创建或恢复 LangGraph run。
+`data/samples/pictures` 的样例可保留真实端到端链路，但现场演示不需要重复等待 YOLO、对象裁切、百炼图片或 Aholo 任务。预热命令会把以输入指纹为键的结果存入 `run_artifacts/demo_precompute/`；这里是部署时应挂载的持久目录，已被 Git 忽略，不会提交密钥、临时签名 URL 或大文件。
+
+```bash
+# 默认五张演示素材：只预生成 YOLO 标注图和所有对象裁切，不调用外部服务
+python3 -m spatial_agent.precompute_demo
+
+# 默认五张素材：每个构件类别选一个可翻新对象，预生成 Design Agent 建议、
+# qwen-image 改造图、Lux3D 对象任务和 Aholo 空间再生记录；--wait 保存最终状态
+python3 -m spatial_agent.precompute_demo --external --wait
+
+# 覆盖全部 11 张样例；只有明确需要时才为全部可翻新对象生成外部结果
+python3 -m spatial_agent.precompute_demo --all-scenes --external --all-eligible --wait
+
+# 查看不含密钥或临时 URL 的缓存数量
+curl -s http://localhost:8000/api/v1/demo/precompute/status | jq
+```
+
+命中同一素材/地区/提示词时，`/api/v1/demo/analyze`、对象改造建议和预览图直接读本地缓存；图片、构件、地区或提示词改变，或没有预热记录时，仍沿用原有裁切、百炼与 Aholo 在线调用。新接入的现场素材仍始终使用 Linux 在线 YOLO，不会把本地回退伪装成真实生成。
+
+## Windows 相机接入：公网主动上传（推荐）及 SSH（可选）
+
+相机 USB 线始终连接 Windows，不让 Linux 加载 Windows DLL。面向公网网页的推荐路径是：每台已配置 SDK 的 Windows 启动本机 `windows_camera_bridge`，网页仅调用 `127.0.0.1:18080`，Bridge 将 ERP JPEG 通过 HTTPS 主动上传 Linux，Linux 运行 YOLO 并返回结果。这个路径不需要 SSH 隧道。SSH **反向**隧道仍保留给“Linux 运维端主动控制一台固定 Windows 相机”的场景。
 
 Linux 侧新增接口：
 
@@ -158,7 +179,7 @@ Linux 侧新增接口：
 - `POST /api/v1/camera/ingest`：Windows 主动以 HTTPS multipart 上传本地 ERP JPEG；Linux 保存原图、运行 YOLO-World、生成标注图和检测 JSON，并开始/恢复 run
 - `POST /api/v1/camera/frame`：保留给已有 Windows 客户端直接提交图片 URL 和检测 JSON 的兼容入口
 
-完整的 Windows 驱动、构建、SSH 隧道、服务器 `.env` 和 curl 验证步骤位于 `windows_camera_bridge/README.md`。网关始终监听 Windows `127.0.0.1`，服务器端也只接受 `http://127.0.0.1:<反向转发端口>` 作为网关 URL。
+完整的 Windows 驱动、构建、SSH 隧道、服务器 `.env`、公网网页模式和 curl 验证步骤位于 `windows_camera_bridge/README.md`。网关始终监听 Windows `127.0.0.1`；不论采用哪种模式，都不要把 Windows 的 `18080` 端口暴露到公网。
 
 ### Windows 主动上传到 Linux 实时 YOLO
 

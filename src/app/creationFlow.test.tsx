@@ -73,7 +73,7 @@ beforeEach(() => {
     const body = url.endsWith('/api/v1/demo/scenes')
       ? { scenes: fallbackDemoScenes, source: 'test' }
       : demoAnalysisResult
-    return { ok: true, status: 200, json: async () => body } as Response
+    return new Response(JSON.stringify(body), { status: 200, headers: { 'content-type': 'application/json' } })
   }))
 })
 
@@ -161,12 +161,12 @@ describe('Phase 1B Creation Flow', () => {
     const fetchMock = vi.fn(async (input: string | URL | Request, _init?: RequestInit) => {
       const url = typeof input === 'string' ? input : input.toString()
       if (url.includes('/v1/browser/capture-and-ingest')) {
-        return { ok: true, status: 200, json: async () => captureResult } as Response
+        return new Response(JSON.stringify(captureResult), { status: 200, headers: { 'content-type': 'application/json' } })
       }
       const body = url.endsWith('/api/v1/demo/scenes')
         ? { scenes: fallbackDemoScenes, source: 'test' }
         : demoAnalysisResult
-      return { ok: true, status: 200, json: async () => body } as Response
+      return new Response(JSON.stringify(body), { status: 200, headers: { 'content-type': 'application/json' } })
     })
     vi.stubGlobal('fetch', fetchMock)
     const user = userEvent.setup()

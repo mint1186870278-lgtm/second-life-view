@@ -1,12 +1,62 @@
 # Windows Insta360 Camera Bridge
 
-该目录把 **Windows 上的 Insta360 CameraSDK / MediaSDK** 封装成仅监听本机回环地址的 HTTP 网关。Linux 上的 `spatial_agent` 通过 **SSH 反向隧道** 调用它，因此：
+该目录把 **Windows 上的 Insta360 CameraSDK / MediaSDK** 封装成仅监听本机回环地址的 HTTP 网关。它支持两种完全不同的工作模式：
+
+1. **公网网页采集（推荐）**：用户在连接相机的 Windows 电脑打开公网前端；浏览器只调用该电脑的 `127.0.0.1:18080` 网关；网关把拼接 JPEG 用 HTTPS 上传 Linux，Linux 统一执行 YOLO。这是“任意已配置 SDK 的 Windows 电脑都能使用”的模式，**不需要 SSH 隧道**。
+2. **服务器主动控制（可选、旧流程）**：Linux 经 SSH 反向隧道调用某一台 Windows 网关。它只适合运维人员从服务器控制一台固定相机，不适合面向任意 Windows 电脑的公网网页。
+
+无论采用哪个模式：
 
 - 相机 USB 线只连接 Windows；`CameraSDK.dll` 和 `MediaSDK.dll` 只在 Windows 运行；
 - Linux 不加载 Windows DLL，也不直接访问 Windows USB；
-- Windows 网关不暴露在局域网或公网，服务器只访问其反向转发后的 `127.0.0.1:18081`；
+- Windows 网关绝不暴露在局域网或公网；公网模式中只有本机浏览器访问 `127.0.0.1:18080`，图片由网关主动上传到 Linux；
 - 每次拍摄都执行 `DeviceDiscovery → Open → TakePhoto → DownloadCameraFile → Close`，下载的 `.insp` 可用 MediaSDK 转为 ERP 全景 JPEG；
 - Linux 将 JPEG 保存到 `run_artifacts/camera/`；配置 OSS 时还会上传私有 OSS 并使用签名 URL。
+
+## 公网网页模式的连接关系
+
+```text
+Windows 浏览器（https://qushanhesy.com）
+       │ 仅本机回环、带 Origin 校验
+       ▼
+Windows Camera Bridge（http://127.0.0.1:18080）
+       │ HTTPS multipart：ERP JPEG + 相机元数据 + Linux ingest token
+       ▼
+Linux（https://qushanhesy.com/api/v1/camera/ingest）
+       │ 保存原图 → YOLO-World → 生成标注图、检测 JSON、RunState
+       ▼
+Windows 浏览器显示 Linux 返回的结果
+```
+
+每一台要使用相机的 Windows 都必须各自安装 SDK、构建 CLI、启动一个本机 Bridge；它们共用同一个 Linux URL 和上传 token，但不共享 USB、也不让 Linux 远程加载 Windows SDK。
+
+## 公网入口的必要配置
+
+公网 HTTPS 入口必须把整个域名（SPA、`/api/` 和 `/camera-assets/`）反向代理到运行本项目的 Linux Nginx。本项目的 Linux origin 默认监听 `192.168.110.48:80`，并已把上传上限和推理超时配置为 300 MB / 900 秒。若 TLS 在另一台边缘 Nginx 终止，可使用以下结构（证书路径按入口机实际配置保留）：
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name qushanhesy.com;
+    # ssl_certificate ...;     # 使用入口机上仍有效的证书
+    # ssl_certificate_key ...;
+    client_max_body_size 300m;
+
+    location / {
+        proxy_pass http://192.168.110.48:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_request_buffering off;
+        proxy_connect_timeout 30s;
+        proxy_send_timeout 900s;
+        proxy_read_timeout 900s;
+    }
+}
+```
+
+入口机变更后，先验证 `https://qushanhesy.com/health` 返回 JSON（而不是旧站点的 HTML/404），再从 Windows 网页测试采集。不要把 `18000` 或 Windows 的 `18080` 端口暴露到公网。
 
 官方接口说明见 [Insta360 Desktop CameraSDK 文档](https://insta360develop.github.io/Insta360-Developer_Docs/ch/x/desktop/camera/)；本桥接器基于 `CameraSDK 2.2.0` 和 `MediaSDK 3.1.7` 的 Windows 包实现。
 
@@ -239,22 +289,35 @@ curl.exe -X POST 'http://127.0.0.1:18080/v1/capture-and-ingest' `
 
 部署前端后，在 **连接相机的同一台 Windows** 上打开网页。网页第二页的“采集现场照片”会访问 `http://127.0.0.1:18080/v1/browser/capture-and-ingest`；该路由只允许一个明确配置的网页 Origin，且不会把任何 bearer token 交给浏览器。
 
-Windows 网关 `.env` 必须补充：
+当前部署到 `qushanhesy.com` 时，每台 Windows 的 `windows_camera_bridge/.env` 至少应为（Windows 路径按实际安装位置替换）：
 
 ```dotenv
-CAMERA_BRIDGE_ALLOWED_WEB_ORIGIN=https://app.example.com
+CAMERA_BRIDGE_EXECUTABLE=C:\src\second-life-view\windows_camera_bridge\build\Release\camera_bridge_cli.exe
+CAMERA_BRIDGE_OUTPUT_DIR=C:\Insta360Bridge\captures
+CAMERA_BRIDGE_TOKEN=<仅供本机受保护接口使用的独立随机密钥>
+CAMERA_BRIDGE_SERVICE_PORT=9099
+CAMERA_BRIDGE_ALLOWED_WEB_ORIGIN=https://qushanhesy.com
+LINUX_CAMERA_INGEST_URL=https://qushanhesy.com/api/v1/camera/ingest
+LINUX_CAMERA_INGEST_TOKEN=<由 Linux 管理员通过安全渠道发放的 CAMERA_INGEST_TOKEN>
+LINUX_CAMERA_INGEST_TIMEOUT=900
 ```
 
-将 `https://app.example.com` 替换为真实、无路径的公网前端 Origin。此前的 `LINUX_CAMERA_INGEST_URL` 仍必须是 Linux 的 HTTPS `/api/v1/camera/ingest` 地址。前端构建时可设置（默认已经是下列值）：
+`CAMERA_BRIDGE_TOKEN` 与 `LINUX_CAMERA_INGEST_TOKEN` 是两把不同的密钥：前者只保护 Windows 本机的运维接口；后者才是 Windows 向 Linux 上传图片的凭据。可在 Windows PowerShell 生成前者：
+
+```powershell
+py -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Linux 的上传 token 不要写入 Git、截图或聊天记录；由服务器管理员通过受控渠道分发。前端构建时可设置（默认已经是下列值）：
 
 ```dotenv
 VITE_WINDOWS_CAMERA_GATEWAY_URL=http://127.0.0.1:18080
 ```
 
-Linux 服务的 `.env` 还应设置与公网反向代理一致的地址，使返回的原图、标注图和检测 JSON 都是可被该 Windows 浏览器加载的 HTTPS URL：
+Linux 服务还必须设置与公网反向代理一致的地址，使返回的原图、标注图和检测 JSON 都是可被该 Windows 浏览器加载的 HTTPS URL：
 
 ```dotenv
-PUBLIC_BASE_URL=https://app.example.com
+PUBLIC_BASE_URL=https://qushanhesy.com
 ```
 
 首次从公网网页访问本机网关时，Chrome/Edge 可能提示“允许此网站访问本地网络”；必须允许。网关会精确校验 `Origin`，并要求浏览器发送 CORS 预检的 `X-Second-Life-Client` 请求头，其他网站不能调用相机接口。Windows 网关始终只监听 `127.0.0.1`，请勿将 `18080` 暴露到公网。

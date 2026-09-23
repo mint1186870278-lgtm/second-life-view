@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { DemoAnalysisResult, DemoGroup } from '../api/demo'
+import type { DemoAnalysisResult, DemoGroup, DemoPrecomputedThreeD } from '../api/demo'
 import { useCreationFlow } from '../app/CreationFlowContext'
 import { useProjectSession } from '../app/ProjectSessionContext'
 import { ImplementationRoutes } from '../app/routes'
@@ -91,6 +91,7 @@ function W01RegenerationViewContent() {
   }, [sceneIdsKey])
 
   const selectedFilmstripItem = filmstrip.find((scene) => scene.scene_id === selectedSceneId) ?? filmstrip[0]
+  const selectedThreeD = analysisResult?.scenes.find((scene) => scene.id === selectedFilmstripItem?.scene_id)?.three_d
   const analysisGroupRows = useMemo(
     () => analysisResult ? buildSidebarGroupRows(analysisResult.groups, analysisResult.group_count) : undefined,
     [analysisResult],
@@ -180,7 +181,7 @@ function W01RegenerationViewContent() {
           onSelect={selectScene}
         />
       </WorkspaceShell>
-      {isThreeDModalOpen && <ThreeDRegenerationDialog onClose={() => setIsThreeDModalOpen(false)} />}
+      {isThreeDModalOpen && <ThreeDRegenerationDialog threeD={selectedThreeD} onClose={() => setIsThreeDModalOpen(false)} />}
     </>
   )
 }
@@ -234,14 +235,17 @@ function buildSidebarGroupRows(groups: readonly DemoGroup[], groupCount: number)
     : rows
 }
 
-function ThreeDRegenerationDialog({ onClose }: { onClose: () => void }) {
+function ThreeDRegenerationDialog({ threeD, onClose }: { threeD?: DemoPrecomputedThreeD | null; onClose: () => void }) {
+  const viewerUrl = threeD?.viewer_urls.spz ?? threeD?.viewer_urls.ply ?? threeD?.viewer_urls.lod
   return (
     <div className="w01-3d-modal-backdrop" role="presentation" onMouseDown={onClose}>
       <section className="w01-3d-modal" role="dialog" aria-modal="true" aria-labelledby="w01-3d-modal-title" onMouseDown={(event) => event.stopPropagation()}>
         <button type="button" className="w01-3d-modal__close" aria-label="关闭 3D再生" onClick={onClose}>×</button>
         <span className="w01-3d-modal__eyebrow">AHOLO</span>
         <h2 id="w01-3d-modal-title">3D再生</h2>
-        <p>当前场景可在 Aholo Studio 中继续进行 3D 再生与空间编辑。</p>
+        <p>{viewerUrl ? '该场景的 3D 再生已预先完成，可直接打开 Aholo Viewer；也可继续进入 Studio 编辑。' : '当前场景可在 Aholo Studio 中继续进行 3D 再生与空间编辑。'}</p>
+        {viewerUrl && <a href={viewerUrl} target="_blank" rel="noreferrer">打开已预生成的 Aholo 3D 模型</a>}
+        {threeD?.imagery_url && <a href={threeD.imagery_url} target="_blank" rel="noreferrer">查看预生成空间改造图</a>}
         <a href={AHOLO_EDITOR_URL} target="_blank" rel="noreferrer">{AHOLO_EDITOR_URL}</a>
       </section>
     </div>

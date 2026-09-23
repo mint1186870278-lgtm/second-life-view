@@ -1,10 +1,10 @@
 import type { W01DemoProjection } from '../selectors/w01Selectors'
 
 export const w01DemoSceneAssetUrls: Readonly<Record<string, string>> = {
-  'fixture-scene-roof': '/demo-assets/0552569a06b61e4551697bd0f211286e.jpg',
-  'fixture-scene-lounge': '/demo-assets/371eefc93daaebc61d98fb6ed1422691.jpg',
-  'fixture-scene-entry': '/demo-assets/d8bdc5c3e1e88f3672da35df425cca3c.jpg',
-  'fixture-scene-service': '/demo-assets/combination_room.jpg',
+  'fixture-scene-roof': '/pictures/0552569a06b61e4551697bd0f211286e.jpg',
+  'fixture-scene-lounge': '/pictures/371eefc93daaebc61d98fb6ed1422691.jpg',
+  'fixture-scene-entry': '/pictures/d8bdc5c3e1e88f3672da35df425cca3c.jpg',
+  'fixture-scene-service': '/pictures/combination_room.jpg',
 }
 
 /**

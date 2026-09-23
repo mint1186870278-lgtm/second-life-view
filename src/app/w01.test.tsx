@@ -40,11 +40,11 @@ describe('W01 Regeneration View', () => {
     renderW01()
     const roof = await screen.findByRole('button', { name: /场景 01屋顶花园/ })
     expect(roof.getAttribute('aria-pressed')).toBe('true')
-    expect(screen.getByRole('img', { name: '屋顶花园 360° 现场原图' }).getAttribute('src')).toBe('/demo-assets/0552569a06b61e4551697bd0f211286e.jpg')
+    expect(screen.getByRole('img', { name: '屋顶花园 360° 现场原图' }).getAttribute('src')).toBe('/pictures/0552569a06b61e4551697bd0f211286e.jpg')
     expect(screen.getByRole('button', { name: '查看 木质围栏 详情' })).toBeTruthy()
 
     await user.click(screen.getByRole('button', { name: /场景 02休息区/ }))
-    expect(screen.getByRole('img', { name: '休息区 360° 现场原图' }).getAttribute('src')).toBe('/demo-assets/371eefc93daaebc61d98fb6ed1422691.jpg')
+    expect(screen.getByRole('img', { name: '休息区 360° 现场原图' }).getAttribute('src')).toBe('/pictures/371eefc93daaebc61d98fb6ed1422691.jpg')
     expect(screen.getByRole('button', { name: '查看 木质围栏 详情' })).toBeTruthy()
   })
 

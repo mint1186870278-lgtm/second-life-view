@@ -1,3 +1,5 @@
+import { apiUrl, backendUrl, readJsonResponse } from './http'
+
 export interface DemoScene {
   id: string
   name: string
@@ -13,6 +15,16 @@ export interface DemoScene {
   group_count: number
   category_counts: Record<string, number>
   default_selected: boolean
+  three_d?: DemoPrecomputedThreeD | null
+}
+
+export interface DemoPrecomputedThreeD {
+  provider: string
+  status?: string | null
+  world_id?: string | null
+  viewer_urls: Record<string, string>
+  imagery_url?: string | null
+  cache_hit?: boolean
 }
 
 export interface DemoGroup {
@@ -210,9 +222,11 @@ export const fallbackDemoScenes: DemoScene[] = fallbackSceneData.map(([
   id,
   name,
   filename,
-  asset_url: `/demo-assets/${filename}`,
-  thumbnail_url: `/api/v1/demo/scenes/${id}/thumbnail`,
-  annotated_url: `/api/v1/demo/scenes/${id}/annotated`,
+  // These are used only if the demo API is unavailable, including the static
+  // Cloudflare Pages deployment. A running API supplies its own URLs instead.
+  asset_url: `/pictures/${filename}`,
+  thumbnail_url: `/pictures/${filename}`,
+  annotated_url: `/pictures/${filename}`,
   width,
   height,
   size_bytes: 0,
@@ -224,57 +238,105 @@ export const fallbackDemoScenes: DemoScene[] = fallbackSceneData.map(([
 }))
 
 async function readJson<T>(response: Response): Promise<T> {
-  if (!response.ok) {
-    let message = `请求失败（${response.status}）`
-    try {
-      const body = await response.json() as { detail?: string }
-      message = body.detail ?? message
-    } catch {
-      const text = await response.text()
-      if (text) message = text
-    }
-    throw new Error(message)
+  return readJsonResponse<T>(response, {
+    errorMessage: `请求失败（${response.status}）`,
+    resolveErrorMessage: (body, rawBody, fallback) => {
+      const detail = body && typeof body === 'object'
+        ? (body as { detail?: unknown }).detail
+        : undefined
+      return typeof detail === 'string' ? detail : rawBody || fallback
+    },
+  })
+}
+
+function normalizeScene(scene: DemoScene): DemoScene {
+  return {
+    ...scene,
+    asset_url: backendUrl(scene.asset_url),
+    thumbnail_url: backendUrl(scene.thumbnail_url),
+    annotated_url: backendUrl(scene.annotated_url),
   }
-  return response.json() as Promise<T>
+}
+
+function normalizeGroup(group: DemoGroup): DemoGroup {
+  return { ...group, crop_url: group.crop_url ? backendUrl(group.crop_url) : undefined }
+}
+
+function normalizeDetail(detail: DemoComponentDetail): DemoComponentDetail {
+  return {
+    ...detail,
+    component: {
+      ...detail.component,
+      crop_url: backendUrl(detail.component.crop_url),
+      preview_url: backendUrl(detail.component.preview_url),
+    },
+    scene: {
+      ...detail.scene,
+      asset_url: backendUrl(detail.scene.asset_url),
+      annotated_url: backendUrl(detail.scene.annotated_url),
+    },
+    evidence: detail.evidence.map((evidence) => ({
+      ...evidence,
+      image_url: evidence.image_url ? backendUrl(evidence.image_url) : evidence.image_url,
+    })),
+  }
+}
+
+function normalizeAnalysisResult(result: DemoAnalysisResult): DemoAnalysisResult {
+  return {
+    ...result,
+    scenes: result.scenes.map(normalizeScene),
+    groups: result.groups.map(normalizeGroup),
+    design: result.design
+      ? { ...result.design, image_url: result.design.image_url ? backendUrl(result.design.image_url) : result.design.image_url }
+      : result.design,
+    spatial_generation: {
+      ...result.spatial_generation,
+      preview_url: result.spatial_generation.preview_url
+        ? backendUrl(result.spatial_generation.preview_url)
+        : result.spatial_generation.preview_url,
+    },
+  }
 }
 
 export async function fetchDemoScenes(): Promise<DemoScene[]> {
-  const response = await fetch('/api/v1/demo/scenes')
+  const response = await fetch(apiUrl('/api/v1/demo/scenes'))
   const payload = await readJson<{ scenes: DemoScene[] }>(response)
-  return payload.scenes
+  return payload.scenes.map(normalizeScene)
 }
 
 export async function runDemoAnalysis(input: DemoAnalyzeInput): Promise<DemoAnalysisResult> {
-  const response = await fetch('/api/v1/demo/analyze', {
+  const response = await fetch(apiUrl('/api/v1/demo/analyze'), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
   })
-  return readJson<DemoAnalysisResult>(response)
+  return normalizeAnalysisResult(await readJson<DemoAnalysisResult>(response))
 }
 
 export async function fetchDemoReviewGroups(sceneIds: readonly string[] = []): Promise<DemoGroup[]> {
   const search = new URLSearchParams()
   sceneIds.forEach((sceneId) => search.append('scene_ids', sceneId))
   const suffix = search.size ? `?${search.toString()}` : ''
-  const response = await fetch(`/api/v1/demo/components${suffix}`)
+  const response = await fetch(`${apiUrl('/api/v1/demo/components')}${suffix}`)
   const payload = await readJson<{ groups: DemoGroup[] }>(response)
-  return payload.groups
+  return payload.groups.map(normalizeGroup)
 }
 
 export async function fetchDemoComponentDetail(groupId: string, region?: string): Promise<DemoComponentDetail> {
   const search = region ? `?${new URLSearchParams({ region }).toString()}` : ''
-  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/detail${search}`)
-  return readJson<DemoComponentDetail>(response)
+  const response = await fetch(`${apiUrl(`/api/v1/demo/components/${encodeURIComponent(groupId)}/detail`)}${search}`)
+  return normalizeDetail(await readJson<DemoComponentDetail>(response))
 }
 
 export async function requestDemoComponentDesignAdvice(groupId: string, region?: string): Promise<DemoComponentDesignAdvice> {
-  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/design-advice`, {
+  const response = await fetch(apiUrl(`/api/v1/demo/components/${encodeURIComponent(groupId)}/design-advice`), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ region }),
   })
-  return readJson<DemoComponentDesignAdvice>(response)
+  const advice = await readJson<DemoComponentDesignAdvice>(response)
+  return { ...advice, crop_url: backendUrl(advice.crop_url) }
 }
 
 export async function generateDemoComponentPreview(
@@ -282,12 +344,13 @@ export async function generateDemoComponentPreview(
   advice: Pick<DemoComponentDesignAdvice, 'material' | 'color' | 'surface' | 'construction' | 'rationale'>,
   region?: string,
 ): Promise<DemoComponentPreview> {
-  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/preview`, {
+  const response = await fetch(apiUrl(`/api/v1/demo/components/${encodeURIComponent(groupId)}/preview`), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ region, advice }),
   })
-  return readJson<DemoComponentPreview>(response)
+  const preview = await readJson<DemoComponentPreview>(response)
+  return { ...preview, image_url: backendUrl(preview.image_url) }
 }
 
 export async function uploadDemoComponentEvidence(
@@ -298,7 +361,7 @@ export async function uploadDemoComponentEvidence(
   if (input.file) form.append('file', input.file)
   if (input.imageUrl?.trim()) form.append('image_url', input.imageUrl.trim())
   if (input.note?.trim()) form.append('note', input.note.trim())
-  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/evidence`, {
+  const response = await fetch(apiUrl(`/api/v1/demo/components/${encodeURIComponent(groupId)}/evidence`), {
     method: 'POST',
     body: form,
   })

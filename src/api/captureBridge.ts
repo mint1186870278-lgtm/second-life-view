@@ -1,5 +1,7 @@
 /** Local Capture Bridge client (Insta360 one-click capture). */
 
+import { readJsonResponse } from './http'
+
 export interface CaptureBridgeHealth {
   ok: boolean
   sdk_version: string
@@ -49,18 +51,15 @@ function formatDetail(detail: unknown, fallback: string): string {
 }
 
 async function readJson<T>(response: Response): Promise<T> {
-  if (!response.ok) {
-    let message = `采集服务请求失败（${response.status}）`
-    try {
-      const body = await response.json() as { detail?: unknown }
-      message = formatDetail(body.detail, message)
-    } catch {
-      const text = await response.text()
-      if (text) message = text
-    }
-    throw new Error(message)
-  }
-  return response.json() as Promise<T>
+  return readJsonResponse<T>(response, {
+    errorMessage: `采集服务请求失败（${response.status}）`,
+    resolveErrorMessage: (body, rawBody, fallback) => {
+      const detail = body && typeof body === 'object'
+        ? (body as { detail?: unknown }).detail
+        : undefined
+      return detail === undefined ? rawBody || fallback : formatDetail(detail, fallback)
+    },
+  })
 }
 
 export async function fetchCaptureBridgeHealth(): Promise<CaptureBridgeHealth> {

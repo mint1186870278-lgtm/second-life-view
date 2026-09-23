@@ -7,11 +7,13 @@ from functools import lru_cache
 from hashlib import sha1
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 from spatial_agent.graph import SpatialAgentGraph
 from spatial_agent.models import AgentEvent, DemoAnalyzeRequest, Detection, Evidence, RunState
 from spatial_agent.providers.aholo_world import AholoWorldClient
 from spatial_agent.providers.research import ResearchClient
+from spatial_agent.demo_cache import DemoArtifactStore, stable_digest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,12 +21,14 @@ PICTURE_DIR = ROOT / "data" / "samples" / "pictures"
 FIXTURE_PATH = ROOT / "data" / "fixtures" / "picture_demo_detections.json"
 DEFAULT_SCENE_LIMIT = 5
 ANNOTATION_PREVIEW_WIDTH = 3840
+ANNOTATION_ENDPOINT_WIDTH = 2880
 ANNOTATION_MAX_WIDTH = 4096
 ANNOTATION_CONFIDENCE_THRESHOLD = 0.20
 COMPONENT_CROP_VIEW_SIZE = 2048
 COMPONENT_CROP_OUTPUT_SIZE = 1280
 AHOLO_EDITOR_URL = "https://studio.aholo3d.cn/editor?projectId=3FO4K4XJJ82N"
 COMPONENT_ARTIFACT_DIR = ROOT / "run_artifacts" / "demo_component_crops"
+DEMO_ARTIFACTS = DemoArtifactStore()
 
 _CATEGORY_GROUP_NAMES = {
     "cabinet": "柜体",
@@ -107,6 +111,55 @@ def _load_fixture() -> dict[str, Any]:
     return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=1)
+def _fixture_fingerprint() -> str:
+    """Version cache results whenever the checked-in YOLO record changes."""
+    return sha1(FIXTURE_PATH.read_bytes()).hexdigest()
+
+
+def _scene_fingerprint(scene: dict[str, Any]) -> str:
+    picture = PICTURE_DIR / str(scene["filename"])
+    try:
+        stat = picture.stat()
+        source = {"size": stat.st_size, "mtime_ns": stat.st_mtime_ns}
+    except FileNotFoundError:
+        source = {"missing": True}
+    return stable_digest({"fixture": _fixture_fingerprint(), "scene": scene["id"], "file": scene["filename"], "source": source})
+
+
+def _group_fingerprint(scene: dict[str, Any], group: dict[str, Any]) -> str:
+    return stable_digest({"scene": _scene_fingerprint(scene), "group": group})
+
+
+def demo_component_advice_cache_key(region: str | None) -> str:
+    return stable_digest({"region": (region or "").strip()})
+
+
+def demo_component_preview_cache_key(prompt: str) -> str:
+    return stable_digest({"prompt": prompt})
+
+
+def demo_component_fingerprint(group_id: str) -> str:
+    scene, group, _ = find_demo_group(group_id)
+    return _group_fingerprint(scene, group)
+
+
+def demo_spatial_generation_cache_key(prompt: str) -> str:
+    return stable_digest({"prompt": prompt})
+
+
+def demo_analysis_cache_key(request: DemoAnalyzeRequest, scenes: list[dict[str, Any]]) -> str:
+    return stable_digest({
+        "fixture": _fixture_fingerprint(),
+        "scene_ids": [scene["id"] for scene in scenes],
+        "scene_fingerprints": [_scene_fingerprint(scene) for scene in scenes],
+        "user_goal": request.user_goal,
+        "region": request.region or "",
+        "spatial_prompt": request.spatial_prompt,
+        "include_web": bool(request.include_web),
+    })
+
+
 def _scene_asset_url(filename: str) -> str:
     return f"/demo-assets/{filename}"
 
@@ -125,6 +178,22 @@ def _component_crop_url(group_id: str) -> str:
 
 def _component_preview_url(group_id: str) -> str:
     return f"/api/v1/demo/components/{group_id}/preview-image"
+
+
+def _public_three_d(scene: dict[str, Any]) -> dict[str, Any] | None:
+    """Expose durable Aholo identifiers/viewer URLs, never signed input URLs."""
+    record = DEMO_ARTIFACTS.latest_world(scene["id"], _scene_fingerprint(scene))
+    if not record:
+        return None
+    viewer_urls = record.get("viewer_urls")
+    return {
+        "provider": record.get("provider", "aholo-spatial-gen"),
+        "status": record.get("status"),
+        "world_id": record.get("world_id"),
+        "viewer_urls": viewer_urls if isinstance(viewer_urls, dict) else {},
+        "imagery_url": record.get("imagery_url"),
+        "cache_hit": True,
+    }
 
 
 def _find_demo_scene(scene_id: str) -> dict[str, Any]:
@@ -248,6 +317,14 @@ def _draw_annotated_group(
 @lru_cache(maxsize=64)
 def load_demo_annotated_preview(scene_id: str, target_width: int = ANNOTATION_PREVIEW_WIDTH) -> bytes:
     scene = _find_demo_scene(scene_id)
+    fingerprint = _scene_fingerprint(scene)
+    # The workspace always asks for the standard preview size.  Retain the
+    # dynamic width endpoint for inspection while making the presentation path
+    # a disk read after prewarming.
+    if target_width == ANNOTATION_ENDPOINT_WIDTH:
+        cached = DEMO_ARTIFACTS.cached_scene_annotation(scene_id, fingerprint)
+        if cached is not None:
+            return cached
     import cv2
 
     image = cv2.imread(str(PICTURE_DIR / scene["filename"]))
@@ -276,7 +353,20 @@ def load_demo_annotated_preview(scene_id: str, target_width: int = ANNOTATION_PR
     encoded, buffer = cv2.imencode(".jpg", preview, [int(cv2.IMWRITE_JPEG_QUALITY), 93])
     if not encoded:
         raise RuntimeError(f"failed to encode annotated preview for {scene_id}")
-    return buffer.tobytes()
+    content = buffer.tobytes()
+    if target_width == ANNOTATION_ENDPOINT_WIDTH:
+        DEMO_ARTIFACTS.save_scene_annotation(
+            scene_id,
+            fingerprint,
+            content,
+            yolo={
+                "source": "Pipeline B cached YOLO-World output",
+                "fixture_fingerprint": _fixture_fingerprint(),
+                "raw_detection_count": scene.get("raw_detection_count", 0),
+                "group_count": scene.get("group_count", 0),
+            },
+        )
+    return content
 
 
 def _component_crop_image(scene: dict[str, Any], group: dict[str, Any]) -> Any:
@@ -339,11 +429,17 @@ def load_demo_component_crop(group_id: str) -> bytes:
     import cv2
 
     scene, group, _ = find_demo_group(group_id)
+    fingerprint = _group_fingerprint(scene, group)
+    cached = DEMO_ARTIFACTS.cached_crop(group_id, fingerprint)
+    if cached is not None:
+        return cached
     crop = _component_crop_image(scene, group)
     encoded, buffer = cv2.imencode(".jpg", crop, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
     if not encoded:
         raise RuntimeError(f"failed to encode component crop for {group_id}")
-    return buffer.tobytes()
+    content = buffer.tobytes()
+    DEMO_ARTIFACTS.save_crop(group_id, fingerprint, content)
+    return content
 
 
 @lru_cache(maxsize=512)
@@ -354,6 +450,13 @@ def load_demo_component_preview(group_id: str) -> bytes:
     the interaction demonstrable offline while never presenting the fallback as
     a real external image-generation result.
     """
+    scene, group, _ = find_demo_group(group_id)
+    cached_preview = DEMO_ARTIFACTS.latest_preview(group_id, _group_fingerprint(scene, group))
+    if cached_preview:
+        cached_image = DEMO_ARTIFACTS.preview_bytes(cached_preview)
+        if cached_image is not None:
+            return cached_image
+
     import cv2
     import numpy as np
 
@@ -377,7 +480,12 @@ def load_demo_component_preview(group_id: str) -> bytes:
 
 
 def demo_component_crop_path(group_id: str) -> Path:
-    """Persist one high-quality crop only while it is needed by an image model."""
+    """Return the durable crop used by a provider, materializing on a miss."""
+    scene, group, _ = find_demo_group(group_id)
+    fingerprint = _group_fingerprint(scene, group)
+    cached_path = DEMO_ARTIFACTS.crop_path(group_id, fingerprint)
+    if cached_path:
+        return cached_path
     COMPONENT_ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     digest = sha1(group_id.encode("utf-8")).hexdigest()[:16]
     path = COMPONENT_ARTIFACT_DIR / f"{digest}.jpg"
@@ -602,6 +710,11 @@ async def build_demo_component_design_advice(
     agent: SpatialAgentGraph,
 ) -> dict[str, Any]:
     scene, group, ordinal = find_demo_group(group_id)
+    fingerprint = _group_fingerprint(scene, group)
+    advice_key = demo_component_advice_cache_key(region)
+    cached = DEMO_ARTIFACTS.cached_advice(group_id, fingerprint, advice_key)
+    if cached:
+        return cached
     fallback = _fallback_design_advice(group, ordinal, region)
     if not agent.bailian.enabled:
         return {
@@ -632,7 +745,7 @@ async def build_demo_component_design_advice(
         }
     if not isinstance(generated, dict):
         generated = {}
-    return {
+    response = {
         **fallback,
         **{key: str(value) for key, value in generated.items() if key in {"material", "color", "surface", "construction", "rationale"} and value},
         "component_id": group_id,
@@ -641,6 +754,10 @@ async def build_demo_component_design_advice(
         "provider": "design-agent:qwen",
         "status": "draft",
     }
+    # Only a completed external response is promoted to a warm artifact.  An
+    # offline fallback must never mask a later, properly configured request.
+    DEMO_ARTIFACTS.save_advice(group_id, fingerprint, advice_key, response)
+    return response
 
 
 def build_demo_component_preview_prompt(group_id: str, advice: dict[str, Any], region: str | None) -> str:
@@ -674,6 +791,7 @@ def list_demo_scenes() -> list[dict[str, Any]]:
             "group_count": item.get("group_count", 0),
             "category_counts": item.get("group_category_counts", {}),
             "default_selected": int(item.get("order", 999)) <= DEFAULT_SCENE_LIMIT,
+            "three_d": _public_three_d(item),
         })
     return scenes
 
@@ -746,6 +864,7 @@ def _public_scene(scene: dict[str, Any]) -> dict[str, Any]:
         "group_count": scene.get("group_count", 0),
         "category_counts": scene.get("group_category_counts", {}),
         "default_selected": int(scene.get("order", 999)) <= DEFAULT_SCENE_LIMIT,
+        "three_d": _public_three_d(scene),
     }
 
 
@@ -795,6 +914,11 @@ async def _run_spatial_generation(
 ) -> dict[str, Any]:
     preview_url = _scene_thumbnail_url(scene["id"])
     local_path = PICTURE_DIR / scene["filename"]
+    fingerprint = _scene_fingerprint(scene)
+    world_key = demo_spatial_generation_cache_key(prompt)
+    cached = DEMO_ARTIFACTS.cached_world(scene["id"], fingerprint, world_key)
+    if cached:
+        return {"provider": "aholo-spatial-gen", "cache_hit": True, **cached}
     try:
         if client.enabled:
             result = await client.generate_from_local_file(
@@ -811,11 +935,14 @@ async def _run_spatial_generation(
             "preview_url": preview_url,
             "message": str(exc),
         }
-    return {
+    response = {
         "provider": "aholo-spatial-gen",
         "preview_url": preview_url,
         **result,
     }
+    if response.get("status") not in {"mock", "failed"}:
+        DEMO_ARTIFACTS.save_world(scene["id"], fingerprint, world_key, response)
+    return response
 
 
 def _group_summary(scenes: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], Counter[str]]:
@@ -858,6 +985,31 @@ async def analyze_demo(
     scenes = _select_scenes(request.scene_ids)
     if not scenes:
         raise ValueError("select at least one demo scene")
+    analysis_key = demo_analysis_cache_key(request, scenes)
+    cached_analysis = DEMO_ARTIFACTS.cached_analysis(analysis_key)
+    if cached_analysis and cached_analysis.get("fingerprint") == analysis_key:
+        cached_state = cached_analysis.get("state")
+        cached_response = cached_analysis.get("response")
+        if isinstance(cached_state, dict) and isinstance(cached_response, dict):
+            state = RunState.model_validate(cached_state)
+            # A warm response is a new user run, not a pointer to a stale run
+            # that happened during the overnight precompute.
+            state.run_id = f"run_{uuid4().hex[:10]}"
+            state.metadata["demo_precompute_cache_hit"] = True
+            response = json.loads(json.dumps(cached_response))
+            response["run_id"] = state.run_id
+            response["cache_hit"] = True
+            # The analysis narrative is immutable for this request, while an
+            # Aholo task may complete after it was cached.  Refresh only the
+            # safe 3D status/viewer projection so W01 can expose the finished
+            # Viewer link without rerunning the whole pipeline.
+            for public_scene in response.get("scenes", []):
+                if isinstance(public_scene, dict) and isinstance(public_scene.get("id"), str):
+                    try:
+                        public_scene["three_d"] = _public_three_d(_find_demo_scene(public_scene["id"]))
+                    except ValueError:
+                        continue
+            return state, response
     image_paths = [str(PICTURE_DIR / scene["filename"]) for scene in scenes]
     state = RunState(
         user_goal=request.user_goal,
@@ -951,4 +1103,20 @@ async def analyze_demo(
         "events": [event.model_dump(mode="json") for event in state.events[-24:]],
         "errors": state.errors,
     }
+    # The complete default walkthrough (YOLO groups, evidence gate, Design
+    # Agent output, qwen-image and Aholo result) can be served without waiting
+    # on any provider after its first successful precompute.  Do not cache a
+    # degraded/offline run: it must remain eligible for the normal online
+    # fallback as soon as credentials become available.
+    if (
+        agent.bailian.enabled
+        and spatial_generation.get("status") not in {"mock", "failed"}
+        and (design or {}).get("status") in {"generated", "submitted"}
+    ):
+        DEMO_ARTIFACTS.save_analysis(
+            analysis_key,
+            fingerprint=analysis_key,
+            state=state.model_dump(mode="json"),
+            response=response,
+        )
     return state, response

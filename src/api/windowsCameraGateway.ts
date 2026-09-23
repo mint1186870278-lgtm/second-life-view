@@ -6,6 +6,8 @@
  * permits this browser route only for its configured public web origin.
  */
 
+import { readJsonResponse } from './http'
+
 export interface WindowsCameraAsset {
   image_url: string
   frame_id?: string
@@ -58,18 +60,15 @@ const browserGatewayBase = (
 )?.replace(/\/$/, '') ?? 'http://127.0.0.1:18080'
 
 async function readJson<T>(response: Response): Promise<T> {
-  if (!response.ok) {
-    let message = `Windows 相机网关请求失败（${response.status}）`
-    try {
-      const body = await response.json() as { detail?: unknown }
-      if (typeof body.detail === 'string') message = body.detail
-    } catch {
-      const text = await response.text()
-      if (text) message = text
-    }
-    throw new Error(message)
-  }
-  return response.json() as Promise<T>
+  return readJsonResponse<T>(response, {
+    errorMessage: `Windows 相机网关请求失败（${response.status}）`,
+    resolveErrorMessage: (body, rawBody, fallback) => {
+      const detail = body && typeof body === 'object'
+        ? (body as { detail?: unknown }).detail
+        : undefined
+      return typeof detail === 'string' ? detail : rawBody || fallback
+    },
+  })
 }
 
 export async function captureAndIngestFromWindows(

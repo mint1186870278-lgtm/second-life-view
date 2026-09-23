@@ -13,6 +13,19 @@ def test_public_endpoints(path):
     response = TestClient(app).get(path)
     assert response.status_code == 200
 
+
+def test_workers_static_assets_origin_is_allowed_by_cors():
+    origin = "https://second-life-view.1500641972.workers.dev"
+    response = TestClient(app).options(
+        "/api/v1/demo/scenes",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == origin
+
 def test_active_perception_resume_and_design():
     client = TestClient(app)
     created = client.post("/api/v1/runs", json={"user_goal": "评估旧木柜再利用"})

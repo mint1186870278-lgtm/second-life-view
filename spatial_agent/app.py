@@ -14,10 +14,13 @@ from spatial_agent.config import get_settings
 from spatial_agent.camera_gateway import CameraGatewayError, CameraGatewayNotConfigured, WindowsCameraGateway
 from spatial_agent.demo import (
     PICTURE_DIR,
+    DEMO_ARTIFACTS,
     analyze_demo,
     build_demo_component_design_advice,
     build_demo_component_detail,
     build_demo_component_preview_prompt,
+    demo_component_fingerprint,
+    demo_component_preview_cache_key,
     demo_component_crop_path,
     find_demo_group,
     list_demo_component_groups,
@@ -53,7 +56,11 @@ IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 app = FastAPI(title="Second Life View · Spatial Agent", version="0.1.0", description="Insta360 + YOLO + active perception multi-agent backend")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://second-life-view.1500641972.workers.dev",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,7 +71,7 @@ app.mount("/demo-evidence", StaticFiles(directory=DEMO_COMPONENT_EVIDENCE_DIR), 
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "windows_camera_gateway_configured": camera_gateway.configured, "camera_ingest_configured": bool(settings.camera_ingest_token), "yolo_device": settings.yolo_device, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
+    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "windows_camera_gateway_configured": camera_gateway.configured, "camera_ingest_configured": bool(settings.camera_ingest_token), "yolo_device": settings.yolo_device, "lux3d_region": settings.lux3d_region, "aholo_region": "cn", "demo_precompute": DEMO_ARTIFACTS.status()}
 
 
 @app.get("/api/v1/assets/config")
@@ -137,6 +144,12 @@ def demo_scenes() -> dict:
     return {"scenes": list_demo_scenes(), "source": "data/samples/pictures"}
 
 
+@app.get("/api/v1/demo/precompute/status")
+def demo_precompute_status() -> dict:
+    """Safe inventory of retained presentation artifacts; no provider URLs."""
+    return DEMO_ARTIFACTS.status()
+
+
 @app.get("/api/v1/demo/components")
 def demo_components(scene_ids: list[str] | None = None) -> dict:
     try:
@@ -189,6 +202,16 @@ def demo_component_preview_image(group_id: str) -> Response:
     return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=3600"})
 
 
+@app.get("/api/v1/demo/precomputed/{asset_path:path}")
+def demo_precomputed_asset(asset_path: str) -> FileResponse:
+    """Serve a locally retained provider result without exposing its source URL."""
+    path = DEMO_ARTIFACTS.asset_path(asset_path)
+    if path is None or not path.is_file():
+        raise HTTPException(404, "预生成素材不存在或已失效")
+    media_type = "image/jpeg" if path.suffix.lower() in {".jpg", ".jpeg"} else "application/octet-stream"
+    return FileResponse(path, media_type=media_type, headers={"Cache-Control": "public, max-age=86400"})
+
+
 @app.get("/api/v1/demo/components/{group_id}/detail")
 async def demo_component_detail(group_id: str, region: str | None = None) -> dict:
     try:
@@ -227,6 +250,22 @@ async def demo_component_preview(group_id: str, request: DemoComponentPreviewReq
             raise HTTPException(409, "仅有依据且建议为修复翻新或改造再利用的构件可生成再生预览")
         prompt = build_demo_component_preview_prompt(group_id, request.advice, request.region)
         fallback_url = f"/api/v1/demo/components/{group_id}/preview-image"
+        fingerprint = demo_component_fingerprint(group_id)
+        preview_key = demo_component_preview_cache_key(prompt)
+        cached_preview = DEMO_ARTIFACTS.cached_preview(group_id, fingerprint, preview_key)
+        if cached_preview:
+            relative_path = DEMO_ARTIFACTS.preview_relative_path(cached_preview)
+            if relative_path:
+                return {
+                    "component_id": group_id,
+                    "status": "generated",
+                    "provider": cached_preview.get("provider", "qwen-image-3.0-pro"),
+                    "prompt": prompt,
+                    "image_url": f"/api/v1/demo/precomputed/{relative_path}",
+                    "is_offline_fallback": False,
+                    "generation_task_id": cached_preview.get("generation_task_id"),
+                    "cache_hit": True,
+                }
         result: dict = {}
         image_url: str | None = None
         generation_task_id: str | None = None
@@ -247,6 +286,32 @@ async def demo_component_preview(group_id: str, request: DemoComponentPreviewReq
         else:
             provider = "qwen-image-3.0-pro (offline preview)"
             status = "fallback"
+        # DashScope URLs are short-lived.  Retain a local copy immediately so
+        # subsequent presentation clicks never depend on a signed URL or a
+        # second paid image request.  A download failure does not discard a
+        # successful provider response; it simply leaves this first response
+        # pointing at the provider URL and lets the next request retry online.
+        if image_url:
+            try:
+                async with httpx.AsyncClient(timeout=120, trust_env=False, follow_redirects=True) as client:
+                    image_response = await client.get(image_url)
+                    image_response.raise_for_status()
+                saved = DEMO_ARTIFACTS.save_preview(
+                    group_id,
+                    fingerprint,
+                    preview_key,
+                    image_response.content,
+                    metadata={
+                        "provider": provider,
+                        "prompt": prompt,
+                        "generation_task_id": generation_task_id,
+                    },
+                )
+                relative_path = DEMO_ARTIFACTS.preview_relative_path(saved)
+                if relative_path:
+                    image_url = f"/api/v1/demo/precomputed/{relative_path}"
+            except Exception as exc:
+                result = {**result, "cache_warning": f"已生成图片但本地保存失败：{exc}"}
         return {
             "component_id": group_id,
             "status": status,
@@ -256,6 +321,7 @@ async def demo_component_preview(group_id: str, request: DemoComponentPreviewReq
             "is_offline_fallback": image_url is None,
             "generation_task_id": generation_task_id,
             "raw": result if result else None,
+            "cache_hit": False,
         }
     except ValueError as exc:
         raise HTTPException(404, str(exc)) from exc
