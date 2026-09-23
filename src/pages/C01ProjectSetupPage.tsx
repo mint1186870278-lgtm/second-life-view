@@ -1,4 +1,4 @@
-import { Building2, FileText, Lightbulb, MapPin, Shapes } from 'lucide-react'
+import { Building2, Box, FileText, Lightbulb, MapPin } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreationFlow } from '../app/CreationFlowContext'
@@ -63,6 +63,7 @@ function C01ProjectSetupContent() {
               id="project-region"
               value={projectDraft.region}
               options={demoProjectOptionSource.regionOptions}
+              icon={<MapPin size={27} />}
               aria-invalid={Boolean(errors.region)}
               onChange={(event) => updateProjectDraft({ region: event.target.value })}
             />
@@ -72,6 +73,7 @@ function C01ProjectSetupContent() {
               id="project-type"
               value={projectDraft.projectType}
               options={demoProjectOptionSource.projectTypeOptions}
+              icon={<Box size={27} />}
               aria-invalid={Boolean(errors.projectType)}
               onChange={(event) => updateProjectDraft({ projectType: event.target.value })}
             />
@@ -81,6 +83,7 @@ function C01ProjectSetupContent() {
               id="project-stage"
               value={projectDraft.projectStage}
               options={demoProjectOptionSource.projectStageOptions}
+              icon={<Building2 size={27} />}
               aria-invalid={Boolean(errors.projectStage)}
               onChange={(event) => updateProjectDraft({ projectStage: event.target.value })}
             />
@@ -95,21 +98,23 @@ function C01ProjectSetupContent() {
             <div className="character-count">{projectDraft.description.length} / 500</div>
           </FormField>
           <div className="form-actions">
+            <Button variant="secondary" type="button">取消</Button>
             <Button type="submit">下一步：素材接入</Button>
           </div>
         </form>
       </section>
       <aside className="creation-aside">
         <GuidancePanel title="项目创建提示">
-          <GuidanceItem icon={FileText} title="项目名称" accent>建议使用建筑名与区域或部位命名，便于后续素材与评估草案关联。</GuidanceItem>
+          <GuidanceItem icon={FileText} title="项目名称" accent>建议使用建筑名 + 区域或部位命名，便于后续素材与评估草案关联。</GuidanceItem>
           <GuidanceItem icon={MapPin} title="所在地区">将影响后续本地可行方案、政策依据与参考案例匹配。</GuidanceItem>
-          <GuidanceItem icon={Shapes} title="项目类型">用于建立本次评估所处的改造、翻新或拆除语境。</GuidanceItem>
+          <GuidanceItem icon={Box} title="项目类型">用于建立本次评估所处的改造、翻新或拆除语境。</GuidanceItem>
           <GuidanceItem icon={Building2} title="项目阶段">会影响现场可观察证据范围，以及后续人工补证重点。</GuidanceItem>
           <GuidanceItem icon={FileText} title="项目说明">可补充本次评估目标、构件关注重点或现场特殊条件。</GuidanceItem>
         </GuidancePanel>
-        <GuidancePanel title="小提示">
-          <GuidanceItem icon={Lightbulb} title="项目上下文" accent>创建后，项目将作为后续素材、分析与工作区的共同上下文。</GuidanceItem>
-        </GuidancePanel>
+        <section className="panel guidance-panel mini-tip-panel">
+          <span className="guidance-icon guidance-icon--accent"><Lightbulb size={25} /></span>
+          <div><h2>小提示</h2><p>项目创建后，可随时通过工作区顶部的项目切换器进入其他项目或新建评估项目。</p></div>
+        </section>
       </aside>
     </div>
   )

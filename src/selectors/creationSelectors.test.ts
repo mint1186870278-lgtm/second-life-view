@@ -18,6 +18,8 @@ describe('Creation analysis read model', () => {
       assessmentBatchCount: 2,
       activeVerificationItemCount: 2,
     })
-    expect(summary.processedScenes.map((scene) => scene.ingestion_status)).toEqual(['received', 'received'])
+    expect(summary.processedScenes.map((scene) => scene.ingestion_status)).toEqual([
+      'received', 'received', 'received', 'received',
+    ])
   })
 })

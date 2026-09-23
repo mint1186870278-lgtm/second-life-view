@@ -18,8 +18,8 @@ export const creationDemoGraph: ProjectGraph = {
   scenes: [
     { scene_id: 'fixture-scene-roof', project_id: CREATION_DEMO_PROJECT_ID, name: '屋顶花园', ingestion_status: 'received' },
     { scene_id: 'fixture-scene-lounge', project_id: CREATION_DEMO_PROJECT_ID, name: '休息区', ingestion_status: 'received' },
-    { scene_id: 'fixture-scene-entry', project_id: CREATION_DEMO_PROJECT_ID, name: '入口', ingestion_status: 'receiving' },
-    { scene_id: 'fixture-scene-service', project_id: CREATION_DEMO_PROJECT_ID, name: '服务区', ingestion_status: 'ingestion_error' },
+    { scene_id: 'fixture-scene-entry', project_id: CREATION_DEMO_PROJECT_ID, name: '入口', ingestion_status: 'received' },
+    { scene_id: 'fixture-scene-service', project_id: CREATION_DEMO_PROJECT_ID, name: '办公区', ingestion_status: 'received' },
   ],
   componentInstances: [
     { component_instance_id: 'fixture-component-01', project_id: CREATION_DEMO_PROJECT_ID, scene_id: 'fixture-scene-roof', batch_id: 'fixture-batch-wood' },
@@ -45,10 +45,12 @@ export const creationDemoGraph: ProjectGraph = {
     {
       verification_id: 'fixture-verification-01', batch_id: 'fixture-batch-wood', field: '固定方式',
       question: '确认柜体与墙面的固定方式', verification_type: 'onsite_observation', status: 'unverified',
+      focus_key: 'fixing_method',
     },
     {
       verification_id: 'fixture-verification-02', batch_id: 'fixture-batch-wood', field: '隐藏腐朽',
       question: '确认背板后方是否存在隐藏腐朽', verification_type: 'specialist_review', status: 'unable_to_verify',
+      focus_key: 'hidden_damage',
     },
   ],
   evidenceAssets: [],

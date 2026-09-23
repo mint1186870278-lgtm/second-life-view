@@ -1,16 +1,15 @@
 .brand-lockup { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .brand-mark {
-  width: 40px;
-  height: 40px;
+  width: 39px;
+  height: 39px;
   flex: none;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: var(--color-accent);
+  display: block;
+  border-radius: 0;
+  background: transparent;
   color: var(--color-dark);
 }
 .brand-title { font-size: 22px; font-weight: 780; line-height: 1.2; letter-spacing: -0.25px; white-space: nowrap; }
-.brand-subtitle { margin-top: 4px; color: #7c889a; font-size: 13px; }
+.brand-subtitle { margin-top: 5px; color: #7c889a; font-size: 14px; }
 .button {
   min-height: 54px;
   padding: 0 30px;
@@ -59,7 +58,10 @@
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
 }
-.textarea { height: 150px; padding: 14px 18px; resize: none; line-height: 1.55; }
+.select-control { position: relative; display: block; }
+.select-control.has-icon .control--select { padding-left: 60px; }
+.select-control__icon { position: absolute; z-index: 1; left: 20px; top: 15px; width: 27px; height: 27px; display: grid; place-items: center; pointer-events: none; }
+.textarea { height: 170px; padding: 14px 18px; resize: none; line-height: 1.55; }
 .character-count { margin-top: 5px; padding-right: 6px; color: var(--color-text-secondary); font-size: 14px; text-align: right; }
 .form-helper { margin-top: 6px; color: var(--color-text-muted); font-size: 13px; }
 .form-error { margin-top: 6px; color: var(--color-error); font-size: 14px; }
@@ -80,6 +82,9 @@
 .guidance-icon--accent { background: var(--color-accent-soft); }
 .guidance-item strong { display: block; margin: 2px 0 5px; font-size: 17px; }
 .guidance-item p { margin: 0; color: #68768b; font-size: 15px; line-height: 1.55; }
+.mini-tip-panel { display: grid; grid-template-columns: 58px 1fr; gap: 16px; align-items: start; }
+.mini-tip-panel h2 { margin: 5px 0 8px; font-size: 22px; }
+.mini-tip-panel p { margin: 0; color: #68768b; font-size: 16px; line-height: 1.55; }
 .status-pill {
   width: fit-content;
   display: inline-flex;

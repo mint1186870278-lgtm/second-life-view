@@ -52,13 +52,11 @@ describe('Phase 1B Creation Flow', () => {
     expect(screen.getByLabelText('current-route').textContent).toContain(ImplementationRoutes.c02)
   })
 
-  it('projects every formal Scene ingestion state and supports Scene rename', async () => {
+  it('renders the approved received-state composition and supports Scene rename', async () => {
     const user = userEvent.setup()
     renderRoute(ImplementationRoutes.c02)
     await screen.findByRole('heading', { name: '现场素材接入' })
-    expect(screen.getAllByText('已接入')).toHaveLength(2)
-    expect(screen.getByText('接收中')).toBeTruthy()
-    expect(screen.getByText('接入异常')).toBeTruthy()
+    expect(screen.getAllByText('已接入')).toHaveLength(5)
 
     await user.click(screen.getByRole('button', { name: '重命名 屋顶花园' }))
     const input = screen.getByLabelText('场景 1 名称')
@@ -87,8 +85,8 @@ describe('Phase 1B Creation Flow', () => {
     renderRoute(ImplementationRoutes.c03)
     await screen.findByRole('heading', { name: '分析处理完成' })
 
-    const labels = ['项目场景', '已识别构件', '评估分组', '待核实事项']
-    const values = ['4', '4', '2', '2']
+    const labels = ['已识别构件', '待核实事项', '评估草案']
+    const values = ['4', '2', '1']
     labels.forEach((label, index) => {
       const card = screen.getByText(label).closest('.metric-card')
       expect(card).not.toBeNull()

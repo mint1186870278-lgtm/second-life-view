@@ -1,5 +1,6 @@
 import type {
   InputHTMLAttributes,
+  ReactElement,
   ReactNode,
   SelectHTMLAttributes,
   TextareaHTMLAttributes,
@@ -41,18 +42,22 @@ export interface SelectOption {
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: readonly SelectOption[]
+  icon?: ReactElement
 }
 
-export function Select({ options, className = '', ...props }: SelectProps) {
+export function Select({ options, icon, className = '', ...props }: SelectProps) {
   return (
-    <select className={`control control--select ${className}`.trim()} {...props}>
-      <option value="">请选择</option>
-      {options.map((option) => (
-        <option key={option.value} value={option.value} disabled={option.disabled}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <span className={`select-control ${icon ? 'has-icon' : ''}`.trim()}>
+      {icon && <span className="select-control__icon" aria-hidden="true">{icon}</span>}
+      <select className={`control control--select ${className}`.trim()} {...props}>
+        <option value="">请选择</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value} disabled={option.disabled}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </span>
   )
 }
 
