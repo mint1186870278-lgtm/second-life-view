@@ -18,11 +18,26 @@ export interface ProjectFormDraft {
   description: string
 }
 
+/** Confirmed on-site capture shown alongside demo sample cards on C02. */
+export interface LiveScene {
+  id: string
+  name: string
+  thumbnail_url: string
+  width: number
+  height: number
+  file_size_bytes?: number
+  capture_id: string
+  local_path?: string | null
+  source: 'live_capture'
+}
+
 interface CreationFlowValue {
   projectDraft: ProjectFormDraft
   updateProjectDraft: (patch: Partial<ProjectFormDraft>) => void
   demoScenes: readonly DemoScene[]
+  liveScenes: readonly LiveScene[]
   selectedSceneIds: readonly string[]
+  selectedLiveIds: readonly string[]
   sceneCatalogStatus: 'idle' | 'loading' | 'ready' | 'fallback'
   sceneCatalogError?: string
   analysisStatus: 'idle' | 'running' | 'completed' | 'error'
@@ -33,6 +48,10 @@ interface CreationFlowValue {
   loadDemoScenes: () => Promise<void>
   toggleDemoScene: (sceneId: string) => void
   setAllDemoScenesSelected: (selected: boolean) => void
+  addLiveScene: (scene: LiveScene) => void
+  toggleLiveScene: (sceneId: string) => void
+  setAllScenesSelected: (selected: boolean) => void
+  clearSceneSelection: () => void
   startDemoAnalysis: () => Promise<DemoAnalysisResult>
 }
 
@@ -61,7 +80,9 @@ export function CreationFlowProvider({ children }: { children: ReactNode }) {
   const initializedDraft = useRef<ProjectFormDraft | null>(null)
   const [editedDraft, setEditedDraft] = useState<ProjectFormDraft | null>(null)
   const [demoScenes, setDemoScenes] = useState<DemoScene[]>(fallbackDemoScenes)
+  const [liveScenes, setLiveScenes] = useState<LiveScene[]>([])
   const [selectedSceneIds, setSelectedSceneIds] = useState<string[]>(fallbackDemoScenes.filter((scene) => scene.default_selected).map((scene) => scene.id))
+  const [selectedLiveIds, setSelectedLiveIds] = useState<string[]>([])
   const [sceneCatalogStatus, setSceneCatalogStatus] = useState<CreationFlowValue['sceneCatalogStatus']>('idle')
   const [sceneCatalogError, setSceneCatalogError] = useState<string>()
   const [analysisStatus, setAnalysisStatus] = useState<CreationFlowValue['analysisStatus']>('idle')
@@ -99,12 +120,18 @@ export function CreationFlowProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const startDemoAnalysis = useCallback(async () => {
-    if (!selectedSceneIds.length) throw new Error('请至少选择一个场景')
+    const demoIds = selectedSceneIds.filter((id) => !id.startsWith('live_'))
+    if (!demoIds.length) {
+      if (selectedLiveIds.length) {
+        throw new Error('实拍分析待后端接入，请同时选择下方样例场景，或等待上传接口完成后再仅用实拍分析。')
+      }
+      throw new Error('请至少选择一个样例场景')
+    }
     setAnalysisStatus('running')
     setAnalysisError(undefined)
     try {
       const result = await runDemoAnalysis({
-        scene_ids: selectedSceneIds,
+        scene_ids: demoIds,
         user_goal: projectDraft.description || '评估空间构件的再利用机会，并提出低碳翻新方案',
         region: projectDraft.region || undefined,
         spatial_prompt: spatialPrompt,
@@ -119,7 +146,7 @@ export function CreationFlowProvider({ children }: { children: ReactNode }) {
       setAnalysisStatus('error')
       throw error
     }
-  }, [projectDraft.description, projectDraft.region, selectedSceneIds, spatialPrompt])
+  }, [projectDraft.description, projectDraft.region, selectedLiveIds.length, selectedSceneIds, spatialPrompt])
 
   const value = useMemo<CreationFlowValue>(() => ({
     projectDraft,
@@ -128,7 +155,9 @@ export function CreationFlowProvider({ children }: { children: ReactNode }) {
       ...patch,
     })),
     demoScenes,
+    liveScenes,
     selectedSceneIds,
+    selectedLiveIds,
     sceneCatalogStatus,
     sceneCatalogError,
     analysisStatus,
@@ -141,16 +170,36 @@ export function CreationFlowProvider({ children }: { children: ReactNode }) {
       current.includes(sceneId) ? current.filter((id) => id !== sceneId) : [...current, sceneId]
     )),
     setAllDemoScenesSelected: (selected) => setSelectedSceneIds(selected ? demoScenes.map((scene) => scene.id) : []),
+    addLiveScene: (scene) => {
+      setLiveScenes((current) => {
+        if (current.some((item) => item.id === scene.id)) return current
+        return [scene, ...current]
+      })
+      setSelectedLiveIds((current) => (current.includes(scene.id) ? current : [scene.id, ...current]))
+    },
+    toggleLiveScene: (sceneId) => setSelectedLiveIds((current) => (
+      current.includes(sceneId) ? current.filter((id) => id !== sceneId) : [...current, sceneId]
+    )),
+    setAllScenesSelected: (selected) => {
+      setSelectedSceneIds(selected ? demoScenes.map((scene) => scene.id) : [])
+      setSelectedLiveIds(selected ? liveScenes.map((scene) => scene.id) : [])
+    },
+    clearSceneSelection: () => {
+      setSelectedSceneIds([])
+      setSelectedLiveIds([])
+    },
     startDemoAnalysis,
   }), [
     analysisError,
     analysisResult,
     analysisStatus,
     demoScenes,
+    liveScenes,
     loadDemoScenes,
     projectDraft,
     sceneCatalogError,
     sceneCatalogStatus,
+    selectedLiveIds,
     selectedSceneIds,
     spatialPrompt,
     startDemoAnalysis,
