@@ -1,17 +1,5 @@
-:root {
-  font-family: Inter, "SF Pro Display", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-  color: #111418;
-  background: #f7f8fa;
-}
-
-body {
-  margin: 0;
-}
-
-.development-placeholder {
-  min-height: 100vh;
-  display: grid;
-  place-content: center;
-  gap: 0.5rem;
-  text-align: center;
-}
+@import '../styles/tokens.css';
+@import '../styles/base.css';
+@import '../styles/components.css';
+@import '../styles/creation.css';
+@import '../styles/workspace.css';

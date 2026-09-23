@@ -1,0 +1,68 @@
+.workspace-frame { background: white; }
+.workspace-header {
+  height: var(--workspace-header-height);
+  padding: 0 24px 0 30px;
+  display: grid;
+  grid-template-columns: 450px 1fr 520px;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #e6e8eb;
+}
+.workspace-header__actions { display: flex; justify-content: flex-end; align-items: center; gap: 14px; }
+.workspace-header__actions .button { min-width: 150px; min-height: 56px; }
+.project-context {
+  width: 228px;
+  height: 58px;
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: 1fr 18px;
+  align-items: center;
+  border: 1px solid #dfe4ea;
+  border-radius: 10px;
+  color: var(--color-text);
+  background: white;
+  text-align: left;
+  opacity: 1;
+}
+.project-context span { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.project-context strong { overflow: hidden; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+.project-context small { color: var(--color-text-secondary); font-size: 12px; }
+.workspace-body { min-height: calc(var(--frame-height) - var(--workspace-header-height)); display: grid; grid-template-columns: 228px minmax(0, 1fr); }
+.workspace-sidebar { padding: 18px 14px; border-right: 1px solid #e6e8eb; background: white; }
+.workspace-sidebar nav { display: flex; flex-direction: column; gap: 6px; }
+.workspace-nav-item {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  padding: 0 17px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-radius: 9px;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  font-weight: 800;
+}
+.workspace-nav-item.is-active { color: #111214; background: #fff5c7; }
+.workspace-nav-item.is-active::before { content: ""; position: absolute; left: -14px; top: 0; bottom: 0; width: 7px; border-radius: 0 5px 5px 0; background: var(--color-accent); }
+.workspace-content { padding: 32px; background: var(--color-canvas); }
+.workspace-placeholder {
+  min-height: 520px;
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: white;
+  text-align: center;
+}
+.workspace-placeholder > span { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%; background: var(--color-accent-soft); }
+.workspace-placeholder__eyebrow { margin: 18px 0 5px; color: var(--color-text-secondary); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; }
+.workspace-placeholder h1 { margin-bottom: 10px; font-size: 36px; }
+.workspace-placeholder p { max-width: 620px; margin: 0; color: var(--color-text-secondary); font-size: 16px; line-height: 1.7; }
