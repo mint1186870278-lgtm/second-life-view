@@ -34,7 +34,7 @@ class SpatialAgentGraph:
             builder.add_edge(START, "supervisor")
             builder.add_conditional_edges("supervisor", self.route_supervisor, {"perception": "perception", "research": "research", "design": "design", "end": END})
             builder.add_edge("perception", "evidence")
-            builder.add_conditional_edges("evidence", self.route_evidence, {"awaiting_evidence": END, "supervisor": "supervisor"})
+            builder.add_conditional_edges("evidence", self.route_evidence, {"awaiting_evidence": END, "supervisor": "supervisor", "end": END})
             builder.add_edge("research", "design")
             builder.add_edge("design", END)
             self.compiled = builder.compile()
@@ -67,6 +67,10 @@ class SpatialAgentGraph:
         state = data["state"]
         detections = state.detections
         if not detections:
+            if state.metadata.get("yolo_mode") == "live":
+                state.metadata["live_yolo_empty"] = True
+                self._event(state, "perception", "no_detections", "Linux YOLO 已完成实时检测，但未识别到配置类别")
+                return data
             # A deterministic fixture lets the hackathon demo run before the Windows gateway is connected.
             detections = [
                 Detection(class_name="wood_cabinet", bbox=[0.22, 0.22, 0.49, 0.78], confidence=0.91, track_id="demo-cabinet"),
@@ -148,6 +152,10 @@ class SpatialAgentGraph:
 
     def evidence(self, data: GraphState) -> GraphState:
         state = data["state"]
+        if state.metadata.get("live_yolo_empty"):
+            state.status = "completed"
+            self._event(state, "evidence", "no_objects", "实时 YOLO 未检测到构件，未回退到演示 fixture")
+            return data
         state.capture_actions.clear()
         for obj in state.objects:
             if obj.missing_fields or obj.confidence < self.settings.evidence_confidence_threshold:
@@ -163,7 +171,9 @@ class SpatialAgentGraph:
         self._event(state, "evidence", "approve", "证据满足当前任务阈值")
         return data
 
-    def route_evidence(self, data: GraphState) -> Literal["awaiting_evidence", "supervisor"]:
+    def route_evidence(self, data: GraphState) -> Literal["awaiting_evidence", "supervisor", "end"]:
+        if data["state"].status == "completed":
+            return "end"
         return "awaiting_evidence" if data["state"].status == "awaiting_evidence" else "supervisor"
 
     async def research(self, data: GraphState) -> GraphState:

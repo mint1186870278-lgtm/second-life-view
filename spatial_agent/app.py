@@ -1,11 +1,12 @@
 from __future__ import annotations
 import asyncio
 import json
+import secrets
 from pathlib import Path
 from typing import AsyncIterator
 from uuid import uuid4
 import httpx
-from fastapi import File, Form, Request, UploadFile, FastAPI, HTTPException
+from fastapi import File, Form, Header, Request, UploadFile, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -32,6 +33,7 @@ from spatial_agent.providers.oss import OSSClient, save_upload_to_temp
 from spatial_agent.providers.tripo import TripoClient
 from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DemoAnalyzeRequest, DemoComponentDesignAdviceRequest, DemoComponentPreviewRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WindowsCameraCaptureRequest, WindowsCameraDownloadRequest, WorldRequest, SpatialGenRequest
 from spatial_agent.yolo_adapter import available_scenes, load_scene
+from spatial_agent.yolo_service import LiveYoloDetector, LiveYoloError, LiveYoloResult
 
 settings = get_settings()
 agent = SpatialAgentGraph(settings)
@@ -39,6 +41,7 @@ aholo_world = AholoWorldClient(settings)
 oss = OSSClient(settings)
 tripo = TripoClient(settings)
 camera_gateway = WindowsCameraGateway(settings)
+live_yolo = LiveYoloDetector(settings)
 runs: dict[str, RunState] = {}
 CAMERA_ARTIFACT_DIR = Path(__file__).resolve().parents[1] / "run_artifacts" / "camera"
 CAMERA_ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
@@ -61,7 +64,7 @@ app.mount("/demo-evidence", StaticFiles(directory=DEMO_COMPONENT_EVIDENCE_DIR), 
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "windows_camera_gateway_configured": camera_gateway.configured, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
+    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "windows_camera_gateway_configured": camera_gateway.configured, "camera_ingest_configured": bool(settings.camera_ingest_token), "yolo_device": settings.yolo_device, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
 
 
 @app.get("/api/v1/assets/config")
@@ -338,6 +341,7 @@ async def accept_camera_frame(request: CameraFrameRequest) -> RunState:
             raise HTTPException(404, "run not found")
         if not request.action_id:
             raise HTTPException(400, "action_id is required when run_id is supplied")
+        state.metadata.update(request.run_metadata)
         result = await complete_capture(
             request.run_id,
             CaptureRequest(
@@ -351,12 +355,23 @@ async def accept_camera_frame(request: CameraFrameRequest) -> RunState:
         runs[result.run_id] = result
         return result
 
-    init = AnalyzeRequest(
-        user_goal=request.user_goal,
-        image_urls=[request.image_url],
-        detections=request.detections,
-    )
-    result = await create_run(init)
+    if request.run_metadata:
+        initial_metadata = {"include_web": False, **request.run_metadata}
+        state = RunState(
+            user_goal=request.user_goal,
+            image_urls=[request.image_url],
+            detections=request.detections,
+            metadata=initial_metadata,
+        )
+        result = await agent.run(state)
+        runs[result.run_id] = result
+    else:
+        init = AnalyzeRequest(
+            user_goal=request.user_goal,
+            image_urls=[request.image_url],
+            detections=request.detections,
+        )
+        result = await create_run(init)
     result.metadata["camera"] = request.metadata
     runs[result.run_id] = result
     return result
@@ -380,7 +395,91 @@ def safe_camera_frame_id(value: object) -> str:
     return normalized.strip("._-")[:120] or "camera-frame"
 
 
-async def persist_camera_artifact(request: Request, gateway_result: dict) -> tuple[str, dict]:
+def camera_asset_url(request: Request, path: Path) -> str:
+    return str(request.url_for("camera-assets", path=path.name))
+
+
+def require_camera_ingest_token(authorization: str | None) -> None:
+    if not settings.camera_ingest_token:
+        raise HTTPException(503, "camera ingest is disabled; set CAMERA_INGEST_TOKEN on the Linux server")
+    expected = f"Bearer {settings.camera_ingest_token}"
+    if not authorization or not secrets.compare_digest(authorization, expected):
+        raise HTTPException(401, "invalid camera ingest token")
+
+
+def parse_camera_ingest_metadata(raw_metadata: str | None) -> dict:
+    if not raw_metadata or not raw_metadata.strip():
+        return {}
+    try:
+        metadata = json.loads(raw_metadata)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(422, "metadata must be a JSON object") from exc
+    if not isinstance(metadata, dict):
+        raise HTTPException(422, "metadata must be a JSON object")
+    return metadata
+
+
+def validate_camera_upload(file: UploadFile) -> str:
+    filename = file.filename or "camera-frame.jpg"
+    extension = Path(filename).suffix.lower()
+    if extension not in IMAGE_EXTENSIONS:
+        raise HTTPException(400, "camera ingest supports JPG, PNG and WEBP images only")
+    content_type = (file.content_type or "").lower()
+    if content_type and content_type != "application/octet-stream" and not content_type.startswith("image/"):
+        raise HTTPException(400, "camera ingest requires an image content type")
+    return extension
+
+
+async def save_camera_upload(file: UploadFile, destination: Path, *, max_bytes: int) -> int:
+    temporary_path = destination.with_name(f".{destination.name}.{uuid4().hex}.part")
+    size = 0
+    try:
+        with temporary_path.open("wb") as output:
+            while chunk := await file.read(1024 * 1024):
+                size += len(chunk)
+                if size > max_bytes:
+                    raise HTTPException(413, f"camera upload exceeds {max_bytes // (1024 * 1024)}MB")
+                output.write(chunk)
+        temporary_path.replace(destination)
+        return size
+    except Exception:
+        temporary_path.unlink(missing_ok=True)
+        raise
+    finally:
+        await file.close()
+
+
+async def publish_camera_artifact(
+    request: Request,
+    local_path: Path,
+    *,
+    frame_id: str,
+    content_type: str | None,
+    source_metadata: dict,
+) -> tuple[str, dict]:
+    metadata = {
+        "frame_id": frame_id,
+        "filename": local_path.name,
+        "content_type": content_type,
+        **source_metadata,
+    }
+    if oss.enabled:
+        try:
+            upload = await asyncio.to_thread(
+                oss.upload_file,
+                local_path,
+                session_id=frame_id,
+                filename=local_path.name,
+                content_type=content_type,
+            )
+        except Exception as error:
+            raise HTTPException(502, f"failed to upload camera artifact to OSS: {error}") from error
+        metadata["oss"] = upload
+        return upload["url"], metadata
+    return camera_asset_url(request, local_path), metadata
+
+
+async def persist_camera_artifact(request: Request, gateway_result: dict) -> tuple[str, dict, Path]:
     artifact_url = gateway_result.get("artifact_url")
     if not isinstance(artifact_url, str) or not artifact_url:
         raise HTTPException(502, "Windows camera gateway did not return an artifact URL")
@@ -394,29 +493,112 @@ async def persist_camera_artifact(request: Request, gateway_result: dict) -> tup
     except CameraGatewayError as error:
         raise camera_gateway_exception(error) from error
 
-    metadata = {
-        "frame_id": frame_id,
-        "filename": local_name,
-        "content_type": content_type,
-        "gateway_artifact_id": gateway_result.get("artifact_id"),
-        "remote_paths": gateway_result.get("remote_paths", []),
-        "stitched": bool(gateway_result.get("stitched")),
-    }
-    if oss.enabled:
-        try:
-            upload = await asyncio.to_thread(
-                oss.upload_file,
-                local_path,
-                session_id=frame_id,
-                filename=local_name,
-                content_type=content_type,
-            )
-        except Exception as error:
-            raise HTTPException(502, f"failed to upload camera artifact to OSS: {error}") from error
-        metadata["oss"] = upload
-        return upload["url"], metadata
+    image_url, metadata = await publish_camera_artifact(
+        request,
+        local_path,
+        frame_id=frame_id,
+        content_type=content_type,
+        source_metadata={
+            "gateway_artifact_id": gateway_result.get("artifact_id"),
+            "remote_paths": gateway_result.get("remote_paths", []),
+            "stitched": bool(gateway_result.get("stitched")),
+        },
+    )
+    return image_url, metadata, local_path
 
-    return str(request.url_for("camera-assets", path=local_name)), metadata
+
+async def persist_ingested_camera_artifact(
+    request: Request,
+    file: UploadFile,
+    *,
+    frame_id: str,
+    projection: str,
+) -> tuple[str, dict, Path]:
+    extension = validate_camera_upload(file)
+    content_type = file.content_type or "application/octet-stream"
+    local_name = f"{frame_id}-{uuid4().hex[:12]}{extension}"
+    local_path = CAMERA_ARTIFACT_DIR / local_name
+    size = await save_camera_upload(
+        file,
+        local_path,
+        max_bytes=int(settings.camera_ingest_max_upload_mb) * 1024 * 1024,
+    )
+    image_url, metadata = await publish_camera_artifact(
+        request,
+        local_path,
+        frame_id=frame_id,
+        content_type=content_type,
+        source_metadata={
+            "source": "windows_multipart",
+            "original_filename": file.filename,
+            "size_bytes": size,
+            "stitched": projection.strip().lower() in {"erp", "equirectangular", "panorama", "spherical"},
+        },
+    )
+    return image_url, metadata, local_path
+
+
+async def detect_camera_artifact(
+    request: Request,
+    local_path: Path,
+    *,
+    projection: str,
+) -> tuple[LiveYoloResult, dict]:
+    try:
+        result = await live_yolo.detect(
+            local_path,
+            artifact_id=local_path.stem,
+            projection=projection,
+            output_dir=CAMERA_ARTIFACT_DIR,
+        )
+    except LiveYoloError as error:
+        raise HTTPException(503, f"Linux live YOLO failed: {error}") from error
+    payload = result.public_metadata(
+        annotated_image_url=camera_asset_url(request, result.annotated_path),
+        detections_url=camera_asset_url(request, result.detections_path),
+    )
+    return result, payload
+
+
+async def run_live_camera_analysis(
+    request: Request,
+    *,
+    local_path: Path,
+    image_url: str,
+    artifact: dict,
+    run_id: str | None,
+    action_id: str | None,
+    user_goal: str,
+    camera: dict,
+) -> tuple[RunState, dict]:
+    projection = str(camera.get("projection") or "equirectangular")
+    yolo_result, yolo_payload = await detect_camera_artifact(
+        request,
+        local_path,
+        projection=projection,
+    )
+    state = await accept_camera_frame(
+        CameraFrameRequest(
+            run_id=run_id,
+            action_id=action_id,
+            user_goal=user_goal,
+            image_url=image_url,
+            detections=yolo_result.detections,
+            metadata=camera,
+            run_metadata={
+                "yolo": yolo_payload,
+                "yolo_batches": yolo_result.component_batches,
+                "yolo_source": "Linux live YOLO-World",
+                "yolo_mode": "live",
+            },
+        )
+    )
+    state.metadata["yolo"] = yolo_payload
+    state.metadata["yolo_batches"] = yolo_result.component_batches
+    state.metadata["yolo_source"] = "Linux live YOLO-World"
+    state.metadata["yolo_mode"] = "live"
+    runs[state.run_id] = state
+    return state, yolo_payload
 
 
 def camera_metadata(gateway_result: dict, artifact: dict) -> dict:
@@ -456,7 +638,7 @@ async def run_windows_camera_operation(
     except CameraGatewayError as error:
         raise camera_gateway_exception(error) from error
 
-    image_url, artifact = await persist_camera_artifact(request, gateway_result)
+    image_url, artifact, local_path = await persist_camera_artifact(request, gateway_result)
     response: dict = {
         "gateway": {
             "frame_id": gateway_result.get("frame_id"),
@@ -469,16 +651,17 @@ async def run_windows_camera_operation(
         response["message"] = "已下载相机原始文件；请以 stitch=true 生成全景图后再提交分析。"
         return response
 
-    state = await accept_camera_frame(
-        CameraFrameRequest(
-            run_id=payload.run_id,
-            action_id=payload.action_id,
-            user_goal=payload.user_goal,
-            image_url=image_url,
-            detections=payload.detections,
-            metadata=camera_metadata(gateway_result, artifact),
-        )
+    state, yolo_payload = await run_live_camera_analysis(
+        request,
+        local_path=local_path,
+        image_url=image_url,
+        artifact=artifact,
+        run_id=payload.run_id,
+        action_id=payload.action_id,
+        user_goal=payload.user_goal,
+        camera=camera_metadata(gateway_result, artifact),
     )
+    response["yolo"] = yolo_payload
     response["run"] = state.model_dump(mode="json")
     return response
 
@@ -509,6 +692,64 @@ async def windows_camera_capture(request: Request, payload: WindowsCameraCapture
 async def windows_camera_download(request: Request, payload: WindowsCameraDownloadRequest) -> dict:
     """Transfer an existing camera file and optionally stitch it before analysis."""
     return await run_windows_camera_operation(request, payload, remote_path=payload.remote_path)
+
+
+@app.post("/api/v1/camera/ingest")
+async def ingest_windows_camera_frame(
+    request: Request,
+    file: UploadFile = File(...),
+    run_id: str | None = Form(default=None),
+    action_id: str | None = Form(default=None),
+    user_goal: str = Form(default="评估空间构件的再利用机会，并提出下一步需要采集的证据"),
+    metadata: str | None = Form(default=None),
+    authorization: str | None = Header(default=None),
+) -> dict:
+    """Receive a Windows-local image, run Linux YOLO, then create or resume a run.
+
+    This is the push-based counterpart to ``/camera/capture`` and
+    ``/camera/download``.  The Windows host sends only the image and camera
+    metadata; detector boxes always originate from this Linux process.
+    """
+    require_camera_ingest_token(authorization)
+    run_id = (run_id or "").strip() or None
+    action_id = (action_id or "").strip() or None
+    if run_id and not action_id:
+        raise HTTPException(400, "action_id is required when run_id is supplied")
+
+    camera_metadata_from_upload = parse_camera_ingest_metadata(metadata)
+    source_name = file.filename or "camera-frame.jpg"
+    frame_id = safe_camera_frame_id(
+        camera_metadata_from_upload.get("frame_id") or Path(source_name).stem
+    )
+    projection = str(camera_metadata_from_upload.get("projection") or "equirectangular")
+    image_url, artifact, local_path = await persist_ingested_camera_artifact(
+        request,
+        file,
+        frame_id=frame_id,
+        projection=projection,
+    )
+    camera = {
+        **camera_metadata_from_upload,
+        "source": "windows_multipart",
+        "frame_id": frame_id,
+        "projection": projection,
+        "artifact": artifact,
+    }
+    state, yolo_payload = await run_live_camera_analysis(
+        request,
+        local_path=local_path,
+        image_url=image_url,
+        artifact=artifact,
+        run_id=run_id,
+        action_id=action_id,
+        user_goal=user_goal,
+        camera=camera,
+    )
+    return {
+        "asset": {"image_url": image_url, **artifact},
+        "yolo": yolo_payload,
+        "run": state.model_dump(mode="json"),
+    }
 
 
 @app.post("/api/v1/camera/frame", response_model=RunState)
@@ -558,7 +799,7 @@ async def complete_capture(run_id: str, payload: CaptureRequest) -> RunState:
         raise HTTPException(400, "action_id is not pending for this run")
     if payload.image_url:
         state.image_urls.append(payload.image_url)
-    if payload.detections:
+    if payload.detections or state.metadata.get("yolo_mode") == "live":
         state.detections = payload.detections
     state.evidence.append(Evidence(kind="user", source="windows_camera_gateway", uri=payload.image_url, confidence=0.95, claims={"capture_action_id": payload.action_id, "confirmed": True}, provenance="verified"))
     state.metadata["capture_confirmed"] = True

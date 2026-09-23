@@ -56,8 +56,17 @@ def load_yolo_world(weights: str | None = None):
     return model
 
 
-def detect_view(model, image_bgr: np.ndarray, view: ViewSpec, conf: float = 0.12) -> list[dict]:
-    result = model.predict(image_bgr, conf=conf, verbose=False, device=0)[0]
+def detect_view(
+    model,
+    image_bgr: np.ndarray,
+    view: ViewSpec,
+    conf: float = 0.12,
+    device: str | int | None = 0,
+) -> list[dict]:
+    options = {"conf": conf, "verbose": False}
+    if device is not None:
+        options["device"] = device
+    result = model.predict(image_bgr, **options)[0]
     detections = []
     if result.boxes is None:
         return detections

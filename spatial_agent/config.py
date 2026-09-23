@@ -29,9 +29,20 @@ class Settings(BaseSettings):
     oss_prefix: str = "second-life-view"
     oss_signed_url_ttl: int = 3600
     oss_max_upload_mb: int = 1024
+    # Windows hosts upload completed ERP JPEGs to this Linux service. Keep the
+    # endpoint disabled until a distinct, high-entropy bearer token is set.
+    camera_ingest_token: str = ""
+    camera_ingest_max_upload_mb: int = 256
     windows_camera_gateway_url: str = ""
     windows_camera_gateway_token: str = ""
     windows_camera_gateway_timeout: float = 720.0
+    # Live inference is intentionally separate from the checked-in fixtures.
+    # "auto" chooses CUDA device 0 when available and otherwise uses CPU.
+    yolo_weights: str = ""
+    yolo_device: str = "auto"
+    yolo_confidence: float = 0.12
+    yolo_view_size: int = 768
+    yolo_fov_deg: float = 90.0
     lux3d_region: str = "cn"
     lux3d_base_url: str = "https://api.aholo3d.cn"
     use_llm: bool = False

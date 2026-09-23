@@ -210,6 +210,7 @@ class CameraFrameRequest(BaseModel):
     image_url: str
     detections: list[Detection] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
+    run_metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class WindowsCameraCaptureRequest(BaseModel):

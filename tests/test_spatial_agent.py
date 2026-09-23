@@ -1,7 +1,12 @@
+import json
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 import spatial_agent.app as app_module
 from spatial_agent.app import app
+from spatial_agent.models import Detection
+from spatial_agent.yolo_service import LiveYoloResult
 
 @pytest.mark.parametrize("path", ["/health", "/api/v1/demo"])
 def test_public_endpoints(path):
@@ -96,9 +101,63 @@ class FakeWindowsCameraGateway:
         }
 
 
+class FakeLiveYolo:
+    def __init__(self, detections: list[Detection] | None = None):
+        self.detections = detections if detections is not None else [
+            Detection(
+                id="live_obj_001",
+                class_name="cabinet",
+                bbox=[12, 18, 160, 240],
+                bbox_xyxy=[12, 18, 160, 240],
+                confidence=0.94,
+                track_id="live_obj_001",
+                source="linux:yolov8s-worldv2",
+                raw_label="cabinet",
+                yaw=4.0,
+                pitch=-2.0,
+                component_batch_id="live__batch_cabinet_005_-005",
+            )
+        ]
+        self.calls: list[dict] = []
+
+    async def detect(self, image_path: Path, *, artifact_id: str, projection: str, output_dir: Path) -> LiveYoloResult:
+        self.calls.append(
+            {
+                "image_path": image_path,
+                "artifact_id": artifact_id,
+                "projection": projection,
+                "output_dir": output_dir,
+            }
+        )
+        annotated_path = output_dir / f"{artifact_id}-yolo-annotated.jpg"
+        detections_path = output_dir / f"{artifact_id}-yolo.json"
+        annotated_path.write_bytes(b"annotated")
+        detections_path.write_text("{}", encoding="utf-8")
+        batches = [
+            {
+                "id": "live__batch_cabinet_005_-005",
+                "category": "cabinet",
+                "object_ids": [detection.id for detection in self.detections if detection.id],
+                "detected_count": len(self.detections),
+            }
+        ] if self.detections else []
+        return LiveYoloResult(
+            detections=self.detections,
+            component_batches=batches,
+            raw_detection_count=len(self.detections),
+            projection=projection,
+            annotation_kind="perspective_contact_sheet",
+            annotated_path=annotated_path,
+            detections_path=detections_path,
+            device=0,
+        )
+
+
 def test_windows_gateway_capture_transfers_stitched_frame_and_starts_run(monkeypatch, tmp_path):
     gateway = FakeWindowsCameraGateway(b"\xff\xd8fake-jpeg\xff\xd9")
+    detector = FakeLiveYolo()
     monkeypatch.setattr(app_module, "camera_gateway", gateway)
+    monkeypatch.setattr(app_module, "live_yolo", detector)
     monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
 
     response = TestClient(app).post(
@@ -130,11 +189,15 @@ def test_windows_gateway_capture_transfers_stitched_frame_and_starts_run(monkeyp
     assert (tmp_path / body["asset"]["filename"]).read_bytes() == b"\xff\xd8fake-jpeg\xff\xd9"
     assert body["run"]["metadata"]["camera"]["camera_model"] == "Insta360 X5"
     assert body["run"]["metadata"]["camera"]["projection"] == "equirectangular"
+    assert body["yolo"]["mode"] == "live"
+    assert detector.calls
 
 
 def test_windows_gateway_download_resumes_pending_capture(monkeypatch, tmp_path):
     gateway = FakeWindowsCameraGateway(b"\xff\xd8fake-jpeg\xff\xd9")
+    detector = FakeLiveYolo()
     monkeypatch.setattr(app_module, "camera_gateway", gateway)
+    monkeypatch.setattr(app_module, "live_yolo", detector)
     monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
     client = TestClient(app)
     created = client.post("/api/v1/runs", json={"user_goal": "评估旧木柜再利用"}).json()
@@ -155,6 +218,68 @@ def test_windows_gateway_download_resumes_pending_capture(monkeypatch, tmp_path)
     assert gateway.download_payloads[0]["remote_path"] == "/DCIM/100MEDIA/TEST.insp"
     assert body["run"]["run_id"] == created["run_id"]
     assert body["run"]["metadata"]["camera"]["camera_serial"] == "X5-TEST"
+    assert body["run"]["metadata"]["yolo_source"] == "Linux live YOLO-World"
+
+
+def test_windows_multipart_ingest_runs_linux_yolo_and_starts_run(monkeypatch, tmp_path):
+    detector = FakeLiveYolo()
+    monkeypatch.setattr(app_module, "live_yolo", detector)
+    monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
+    monkeypatch.setattr(app_module.settings, "camera_ingest_token", "ingest-test-token")
+
+    response = TestClient(app).post(
+        "/api/v1/camera/ingest",
+        headers={"Authorization": "Bearer ingest-test-token"},
+        files={"file": ("stitched-room.jpg", b"windows-jpeg", "image/jpeg")},
+        data={
+            "user_goal": "评估来自 Windows 的全景图",
+            "metadata": json.dumps(
+                {
+                    "frame_id": "windows-frame-001",
+                    "camera_model": "Insta360 X5",
+                    "projection": "equirectangular",
+                }
+            ),
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["asset"]["source"] == "windows_multipart"
+    assert (tmp_path / body["asset"]["filename"]).read_bytes() == b"windows-jpeg"
+    assert body["yolo"]["source"] == "linux:yolov8s-worldv2"
+    assert body["run"]["metadata"]["yolo_mode"] == "live"
+    assert body["run"]["objects"][0]["source"] == "linux:yolov8s-worldv2"
+    assert detector.calls[0]["projection"] == "equirectangular"
+
+
+def test_windows_multipart_ingest_resumes_run_and_never_uses_fixture(monkeypatch, tmp_path):
+    detector = FakeLiveYolo(detections=[])
+    monkeypatch.setattr(app_module, "live_yolo", detector)
+    monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
+    monkeypatch.setattr(app_module.settings, "camera_ingest_token", "ingest-test-token")
+    client = TestClient(app)
+    created = client.post("/api/v1/runs", json={"user_goal": "需要补拍"}).json()
+    action_id = created["capture_actions"][0]["id"]
+
+    response = client.post(
+        "/api/v1/camera/ingest",
+        headers={"Authorization": "Bearer ingest-test-token"},
+        files={"file": ("empty-room.jpg", b"windows-jpeg", "image/jpeg")},
+        data={
+            "run_id": created["run_id"],
+            "action_id": action_id,
+            "metadata": json.dumps({"projection": "equirectangular"}),
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["run"]["run_id"] == created["run_id"]
+    assert body["run"]["status"] == "completed"
+    assert body["run"]["objects"] == []
+    assert body["run"]["detections"] == []
+    assert any(event["action"] == "no_detections" for event in body["run"]["events"])
 
 
 def test_windows_gateway_status_and_files_are_proxied(monkeypatch):
