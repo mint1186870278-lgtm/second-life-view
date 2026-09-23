@@ -1,12 +1,23 @@
 import type {
   AssessmentBatch,
+  AssessmentBatchId,
+  ComponentInstance,
+  EvidenceStatus,
+  Pathway,
   ProjectId,
+  ReviewStatus,
   Scene,
+  SceneId,
   VerificationItem,
+  VerificationItemId,
+  VerificationStatus,
+  VerificationType,
 } from '../domain'
 import {
   getActiveVerificationItemsForProject,
   getAttentionBatchCount,
+  getBatchPendingVerificationCount,
+  getBatchQuantity,
   getDistinctAffectedBatchCount,
   getProjectAssessmentBatchCount,
   getProjectSceneCount,
@@ -17,6 +28,108 @@ import {
   selectProjectVerificationItems,
   type VerificationTypeCounts,
 } from './projectSelectors'
+
+export interface W02DraftBatchReadModel {
+  batch_id: AssessmentBatchId
+  material_group: string
+  component_type: string
+  batch_label: string
+  quantity: number
+  scene_id: SceneId
+  scene_name: string
+  scene_index: number
+  pathway: Pathway
+  evidence_status: EvidenceStatus
+  review_status: ReviewStatus
+  pending_verification_count: number
+  attention: boolean
+  attention_reason?: string
+}
+
+export function selectW02DraftBatches(
+  projectId: ProjectId,
+  scenes: readonly Scene[],
+  instances: readonly ComponentInstance[],
+  batches: readonly AssessmentBatch[],
+  items: readonly VerificationItem[],
+): W02DraftBatchReadModel[] {
+  const projectScenes = scenes.filter((scene) => scene.project_id === projectId)
+  const sceneById = new Map(projectScenes.map((scene, index) => [scene.scene_id, { scene, index }]))
+
+  return selectProjectBatches(projectId, batches).flatMap((batch) => {
+    const sceneEntry = sceneById.get(batch.scene_id)
+    if (!sceneEntry) return []
+    return [{
+      batch_id: batch.batch_id,
+      material_group: batch.material_group,
+      component_type: batch.component_type,
+      batch_label: batch.batch_label,
+      quantity: getBatchQuantity(batch.batch_id, instances),
+      scene_id: batch.scene_id,
+      scene_name: sceneEntry.scene.name,
+      scene_index: sceneEntry.index + 1,
+      pathway: batch.pathway,
+      evidence_status: batch.evidence_status,
+      review_status: batch.review_status,
+      pending_verification_count: getBatchPendingVerificationCount(batch.batch_id, items),
+      attention: batch.attention,
+      attention_reason: batch.attention_reason,
+    }]
+  })
+}
+
+export interface W02VerificationRowReadModel {
+  verification_id: VerificationItemId
+  batch_id: AssessmentBatchId
+  material_group: string
+  batch_label: string
+  scene_id: SceneId
+  scene_name: string
+  scene_index: number
+  field: string
+  question: string
+  verification_type: VerificationType
+  status: VerificationStatus
+  focus_target?: string
+  discovered_at?: string
+  discovered_source?: string
+}
+
+export function selectW02VerificationRows(
+  projectId: ProjectId,
+  scenes: readonly Scene[],
+  batches: readonly AssessmentBatch[],
+  items: readonly VerificationItem[],
+): W02VerificationRowReadModel[] {
+  const sceneById = new Map(
+    scenes
+      .filter((scene) => scene.project_id === projectId)
+      .map((scene, index) => [scene.scene_id, { scene, index }]),
+  )
+  const batchById = new Map(selectProjectBatches(projectId, batches).map((batch) => [batch.batch_id, batch]))
+
+  return selectProjectVerificationItems(projectId, batches, items).flatMap((item) => {
+    const batch = batchById.get(item.batch_id)
+    const sceneEntry = batch ? sceneById.get(batch.scene_id) : undefined
+    if (!batch || !sceneEntry) return []
+    return [{
+      verification_id: item.verification_id,
+      batch_id: item.batch_id,
+      material_group: batch.material_group,
+      batch_label: batch.batch_label,
+      scene_id: batch.scene_id,
+      scene_name: sceneEntry.scene.name,
+      scene_index: sceneEntry.index + 1,
+      field: item.field,
+      question: item.question,
+      verification_type: item.verification_type,
+      status: item.status,
+      focus_target: item.focus_key,
+      discovered_at: item.discovered_at,
+      discovered_source: item.discovered_source,
+    }]
+  })
+}
 
 export interface W02ASummaryReadModel {
   assessment_batch_count: number

@@ -89,6 +89,7 @@ export function WorkspaceSidebar({ items, activeDestination, onNavigate }: Works
 }
 
 interface WorkspaceShellProps extends WorkspaceSidebarProps {
+  frameClassName?: string
   projectName: string
   projectContextLabel?: string
   headerCenter?: ReactNode
@@ -104,6 +105,7 @@ export function WorkspaceShell({
   headerCenter,
   headerAction,
   sidebarSupplement,
+  frameClassName = '',
   contentClassName = '',
   items,
   activeDestination,
@@ -111,7 +113,7 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   return (
-    <div className="app-frame workspace-frame">
+    <div className={("app-frame workspace-frame " + frameClassName).trim()}>
       <WorkspaceGlobalHeader
         projectName={projectName}
         projectContextLabel={projectContextLabel}
