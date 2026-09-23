@@ -223,7 +223,21 @@ class LiveYoloDetector:
         try:
             import torch
 
-            return 0 if torch.cuda.is_available() else "cpu"
+            if not torch.cuda.is_available():
+                return "cpu"
+            minimum_free_bytes = max(0, self.settings.yolo_auto_min_free_mb) * 1024 * 1024
+            candidates: list[tuple[int, int]] = []
+            for device_index in range(torch.cuda.device_count()):
+                try:
+                    free_bytes, _ = torch.cuda.mem_get_info(device_index)
+                except Exception:  # CUDA contexts can be exhausted per device.
+                    continue
+                if free_bytes >= minimum_free_bytes:
+                    candidates.append((free_bytes, device_index))
+            # On shared multi-GPU servers, CUDA:0 is often occupied by an LLM.
+            # Pick the logical CUDA device with the most free memory; this also
+            # respects CUDA_VISIBLE_DEVICES because torch indexes that view.
+            return max(candidates)[1] if candidates else "cpu"
         except ImportError:  # pragma: no cover - ultralytics needs torch in production
             return "cpu"
 

@@ -6,6 +6,10 @@ class Settings(BaseSettings):
     dashscope_api_key: str = ""
     dashscope_base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     dashscope_api_host: str = "https://dashscope.aliyuncs.com"
+    # Image generation is not served by every OpenAI-compatible MaaS gateway.
+    # Keep it on DashScope's official multimodal-generation endpoint even when
+    # chat uses a workspace-specific compatible-mode URL.
+    dashscope_image_api_host: str = "https://dashscope.aliyuncs.com"
     dashscope_text_model: str = "deepseek-v4-pro"
     dashscope_vision_model: str = "qwen3.8-max"
     dashscope_image_model: str = "qwen-image-3.0-pro"
@@ -33,13 +37,19 @@ class Settings(BaseSettings):
     # endpoint disabled until a distinct, high-entropy bearer token is set.
     camera_ingest_token: str = ""
     camera_ingest_max_upload_mb: int = 256
+    # Canonical public HTTPS origin used in returned camera asset URLs when
+    # FastAPI is behind a reverse proxy. Leave blank for direct/local serving.
+    public_base_url: str = ""
     windows_camera_gateway_url: str = ""
     windows_camera_gateway_token: str = ""
     windows_camera_gateway_timeout: float = 720.0
     # Live inference is intentionally separate from the checked-in fixtures.
-    # "auto" chooses CUDA device 0 when available and otherwise uses CPU.
+    # "auto" chooses the CUDA device with sufficient free VRAM, or CPU.
     yolo_weights: str = ""
     yolo_device: str = "auto"
+    # In auto mode choose the CUDA device with at least this much currently
+    # free VRAM; otherwise use CPU instead of repeatedly OOMing GPU 0.
+    yolo_auto_min_free_mb: int = 1024
     yolo_confidence: float = 0.12
     yolo_view_size: int = 768
     yolo_fov_deg: float = 90.0

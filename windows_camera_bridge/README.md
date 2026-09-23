@@ -201,6 +201,64 @@ curl.exe -X POST 'https://<linux-host>/api/v1/camera/ingest' `
 
 需恢复证据补拍时，再追加 `-F 'run_id=<run_id>'` 与 `-F 'action_id=<capture_actions 中的 id>'`。响应的 `yolo.annotated_image_url`、`yolo.detections_url` 和 `run` 可直接交给 Windows UI 或上层业务。
 
+### 让 Windows 网关自动推送（推荐）
+
+不需要让业务程序自行处理 multipart。将下面三项加入 Windows 网关的 `.env`，其中 token 与 Linux 的 `CAMERA_INGEST_TOKEN` 相同：
+
+```dotenv
+LINUX_CAMERA_INGEST_URL=https://<linux-host>/api/v1/camera/ingest
+LINUX_CAMERA_INGEST_TOKEN=<CAMERA_INGEST_TOKEN>
+LINUX_CAMERA_INGEST_TIMEOUT=900
+```
+
+该 URL 必须是 HTTPS 且路径必须精确为 `/api/v1/camera/ingest`；网关不接受 HTTP，以免上传照片和 bearer token 时降级为明文传输。重启 Windows 网关后，已在 `CAMERA_BRIDGE_OUTPUT_DIR` 中的拼接 JPEG 可由本机调用：
+
+```powershell
+$gatewayToken = '<CAMERA_BRIDGE_TOKEN>'
+
+curl.exe -X POST 'http://127.0.0.1:18080/v1/local-file/ingest' `
+  -H "Authorization: Bearer $gatewayToken" `
+  -H 'Content-Type: application/json' `
+  -d '{"filename":"stitched-room.jpg","user_goal":"评估这个空间的构件再利用机会","metadata":{"frame_id":"x5-20260923-001","camera_model":"Insta360 X5","captured_at":"2026-09-23T12:00:00Z"}}'
+```
+
+`filename` 只能是输出目录内的相对 `.jpg` / `.jpeg` 路径，因此该接口不能被用来上传 Windows 上的任意文件。它的响应直接包含 Linux 的 `asset`、`yolo` 和 `run`；没有 `detections` 入参。补拍时在 JSON 中添加 `run_id` 和 `action_id`。
+
+如果希望 Windows SDK 拍完并拼接后立即上传，可改调：
+
+```powershell
+curl.exe -X POST 'http://127.0.0.1:18080/v1/capture-and-ingest' `
+  -H "Authorization: Bearer $gatewayToken" `
+  -H 'Content-Type: application/json' `
+  -d '{"stitch":true,"output_width":4096,"output_height":2048,"user_goal":"评估这个空间的构件再利用机会","metadata":{"site":"一层大厅"}}'
+```
+
+此接口只接受 `stitch=true` 且 Windows MediaSDK 产出的 JPEG；它会先保留本地原图，再用 HTTPS multipart 推送 Linux。Linux 检测失败时原图仍会留在 Windows 输出目录中，可以重试 `local-file/ingest`，不会重新控制相机。
+
+### 让公网第二页按钮直接采集并推理
+
+部署前端后，在 **连接相机的同一台 Windows** 上打开网页。网页第二页的“采集现场照片”会访问 `http://127.0.0.1:18080/v1/browser/capture-and-ingest`；该路由只允许一个明确配置的网页 Origin，且不会把任何 bearer token 交给浏览器。
+
+Windows 网关 `.env` 必须补充：
+
+```dotenv
+CAMERA_BRIDGE_ALLOWED_WEB_ORIGIN=https://app.example.com
+```
+
+将 `https://app.example.com` 替换为真实、无路径的公网前端 Origin。此前的 `LINUX_CAMERA_INGEST_URL` 仍必须是 Linux 的 HTTPS `/api/v1/camera/ingest` 地址。前端构建时可设置（默认已经是下列值）：
+
+```dotenv
+VITE_WINDOWS_CAMERA_GATEWAY_URL=http://127.0.0.1:18080
+```
+
+Linux 服务的 `.env` 还应设置与公网反向代理一致的地址，使返回的原图、标注图和检测 JSON 都是可被该 Windows 浏览器加载的 HTTPS URL：
+
+```dotenv
+PUBLIC_BASE_URL=https://app.example.com
+```
+
+首次从公网网页访问本机网关时，Chrome/Edge 可能提示“允许此网站访问本地网络”；必须允许。网关会精确校验 `Origin`，并要求浏览器发送 CORS 预检的 `X-Second-Life-Client` 请求头，其他网站不能调用相机接口。Windows 网关始终只监听 `127.0.0.1`，请勿将 `18080` 暴露到公网。
+
 ## 8. 运维边界
 
 - CameraSDK 桌面端连接相机使用 USB；SSH 是控制数据的传输通道，不会把 USB 设备“穿透”到 Linux。

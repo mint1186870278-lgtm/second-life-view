@@ -27,7 +27,13 @@ export interface LiveScene {
   height: number
   file_size_bytes?: number
   capture_id: string
-  local_path?: string | null
+  /** Linux-side run started by the camera ingest endpoint. */
+  run_id?: string
+  raw_image_url?: string
+  annotated_image_url?: string
+  detections_url?: string
+  detection_count?: number
+  group_count?: number
   source: 'live_capture'
 }
 

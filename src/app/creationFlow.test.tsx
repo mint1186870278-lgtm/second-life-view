@@ -134,6 +134,61 @@ describe('Phase 1B Creation Flow', () => {
     expect(screen.getByRole('button', { name: '选择 屋顶露台' }).getAttribute('aria-pressed')).toBe('false')
   })
 
+  it('captures through the Windows loopback gateway and displays Linux YOLO output', async () => {
+    const captureResult = {
+      asset: {
+        image_url: 'https://linux.example.test/camera-assets/room.jpg',
+        frame_id: 'frame-001',
+        filename: 'room.jpg',
+        size_bytes: 1234,
+        source: 'windows_multipart',
+      },
+      yolo: {
+        source: 'linux:yolov8s-worldv2',
+        mode: 'live',
+        detector: 'yolov8s-worldv2',
+        device: '1',
+        projection: 'equirectangular',
+        annotation_kind: 'perspective_contact_sheet',
+        raw_detection_count: 26,
+        component_group_count: 16,
+        annotated_image_url: 'https://linux.example.test/camera-assets/room-yolo.jpg',
+        detections_url: 'https://linux.example.test/camera-assets/room-yolo.json',
+      },
+      run: { run_id: 'run_live_001', status: 'awaiting_evidence' },
+      gateway: { frame_id: 'frame-001', filename: 'room.jpg' },
+    }
+    const fetchMock = vi.fn(async (input: string | URL | Request, _init?: RequestInit) => {
+      const url = typeof input === 'string' ? input : input.toString()
+      if (url.includes('/v1/browser/capture-and-ingest')) {
+        return { ok: true, status: 200, json: async () => captureResult } as Response
+      }
+      const body = url.endsWith('/api/v1/demo/scenes')
+        ? { scenes: fallbackDemoScenes, source: 'test' }
+        : demoAnalysisResult
+      return { ok: true, status: 200, json: async () => body } as Response
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const user = userEvent.setup()
+    renderRoute(ImplementationRoutes.c02)
+    await screen.findByRole('heading', { name: '现场素材接入' })
+
+    await user.click(screen.getByRole('button', { name: '采集现场照片' }))
+    expect(await screen.findByRole('heading', { name: '已上传并完成在线推理' })).toBeTruthy()
+    expect(screen.getByRole('img', { name: 'Linux YOLO 标注预览' }).getAttribute('src')).toBe(captureResult.yolo.annotated_image_url)
+    expect(screen.getByText(/Linux YOLO：26 个检测框 · 16 组/)).toBeTruthy()
+
+    const captureCall = fetchMock.mock.calls.find(([input]) => String(input).includes('/v1/browser/capture-and-ingest'))
+    expect(captureCall).toBeTruthy()
+    const request = captureCall?.[1] as RequestInit
+    expect(request.headers).toMatchObject({ 'X-Second-Life-Client': 'capture-ui-v1' })
+    expect(JSON.parse(request.body as string)).not.toHaveProperty('detections')
+
+    await user.click(screen.getByRole('button', { name: '确认' }))
+    expect(await screen.findByText('26 个检测框 · Linux 在线推理')).toBeTruthy()
+    expect(screen.getByText('YOLO 16 组')).toBeTruthy()
+  })
+
   it('supports C02 back and forward navigation', async () => {
     const user = userEvent.setup()
     const view = renderRoute(ImplementationRoutes.c02)

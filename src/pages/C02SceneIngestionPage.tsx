@@ -2,10 +2,9 @@ import { Box, Check, Camera, FileText, Focus, Image, Lightbulb, Link2, LoaderCir
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  fetchCaptureBridgeHealth,
-  startCaptureImport,
-  type CaptureBridgeResult,
-} from '../api/captureBridge'
+  captureAndIngestFromWindows,
+  type WindowsCameraCaptureAndIngestResult,
+} from '../api/windowsCameraGateway'
 import { useCreationFlow, type LiveScene } from '../app/CreationFlowContext'
 import { useProjectSession } from '../app/ProjectSessionContext'
 import { ImplementationRoutes } from '../app/routes'
@@ -48,7 +47,7 @@ function C02SceneIngestionContent() {
 
   const [capturePhase, setCapturePhase] = useState<CapturePhase>('idle')
   const [captureError, setCaptureError] = useState<string>()
-  const [captureResult, setCaptureResult] = useState<CaptureBridgeResult | null>(null)
+  const [captureResult, setCaptureResult] = useState<WindowsCameraCaptureAndIngestResult | null>(null)
   const [spaceName, setSpaceName] = useState('')
   const [confirmError, setConfirmError] = useState<string>()
 
@@ -59,17 +58,17 @@ function C02SceneIngestionContent() {
   const runCapture = useCallback(async () => {
     setCaptureError(undefined)
     setConfirmError(undefined)
-    setCapturePhase('checking')
+    setCapturePhase('capturing')
     try {
-      const health = await fetchCaptureBridgeHealth()
-      if (!health.ok) {
-        throw new Error(health.detail || '采集服务未就绪')
-      }
-      setCapturePhase('capturing')
       const label = spaceName.trim() || projectDraft.name || project?.name || '现场空间'
-      const result = await startCaptureImport({
-        project_id: project?.project_id ?? 'proj_local',
-        scene_label: label,
+      const result = await captureAndIngestFromWindows({
+        userGoal: projectDraft.description || '评估空间构件的再利用机会，并提出下一步需要采集的证据',
+        metadata: {
+          project_id: project?.project_id ?? 'proj_local',
+          project_name: projectDraft.name || project?.name,
+          scene_label: label,
+          client: 'second-life-view-web',
+        },
       })
       setCaptureResult(result)
       if (!spaceName.trim()) {
@@ -80,15 +79,15 @@ function C02SceneIngestionContent() {
     } catch (error) {
       const message = error instanceof Error ? error.message : '现场采集失败'
       const offlineHint = /Failed to fetch|NetworkError|fetch|超时|timeout|ECONNREFUSED/i.test(message)
-        ? '无法连接本机采集服务。请先启动：CAPTURE_BRIDGE_BACKEND=demo_auto 后运行 python -m capture_bridge（端口 18765）。'
+        ? '无法连接本机 Windows 相机网关。请启动 windows_camera_bridge（端口 18080），并允许浏览器访问本地网络。'
         : message
       setCaptureError(offlineHint)
       setCapturePhase('error')
     }
-  }, [liveScenes.length, project?.name, project?.project_id, projectDraft.name, spaceName])
+  }, [liveScenes.length, project?.name, project?.project_id, projectDraft.description, projectDraft.name, spaceName])
 
   const handleConfirm = () => {
-    if (!captureResult?.preview_url) {
+    if (!captureResult?.asset.image_url) {
       setConfirmError('请先完成现场采集')
       return
     }
@@ -98,14 +97,19 @@ function C02SceneIngestionContent() {
       return
     }
     const scene: LiveScene = {
-      id: `live_${captureResult.capture_id}`,
+      id: `live_${captureResult.run.run_id}`,
       name,
-      thumbnail_url: captureResult.preview_url,
-      width: captureResult.width ?? 0,
-      height: captureResult.height ?? 0,
-      file_size_bytes: captureResult.file_size_bytes ?? undefined,
-      capture_id: captureResult.capture_id,
-      local_path: captureResult.local_path,
+      thumbnail_url: captureResult.yolo.annotated_image_url || captureResult.asset.image_url,
+      width: 0,
+      height: 0,
+      file_size_bytes: captureResult.asset.size_bytes,
+      capture_id: captureResult.asset.frame_id ?? captureResult.run.run_id,
+      run_id: captureResult.run.run_id,
+      raw_image_url: captureResult.asset.image_url,
+      annotated_image_url: captureResult.yolo.annotated_image_url,
+      detections_url: captureResult.yolo.detections_url,
+      detection_count: captureResult.yolo.raw_detection_count,
+      group_count: captureResult.yolo.component_group_count,
       source: 'live_capture',
     }
     addLiveScene(scene)
@@ -126,8 +130,8 @@ function C02SceneIngestionContent() {
       height: scene.height,
       selected: selectedLiveIds.includes(scene.id),
       badgePrimary: '现场实拍',
-      badgeSecondary: '360° 已接入',
-      meta: `${scene.width}×${scene.height}`,
+      badgeSecondary: `YOLO ${scene.group_count ?? 0} 组`,
+      meta: `${scene.detection_count ?? 0} 个检测框 · Linux 在线推理`,
       onToggle: () => toggleLiveScene(scene.id),
     }))
     const demoItems = demoScenes.map((scene, index) => ({
@@ -165,10 +169,10 @@ function C02SceneIngestionContent() {
       <section className="panel creation-main-panel ingestion-main">
         <h1 className="page-title">现场素材接入</h1>
         <p className="page-description">
-          点击采集框内按钮调用本机 Insta360 服务拍照下载；确认后实拍会出现在下方素材列表，可与样例一并选择进入后续流程。
+          点击采集框内按钮调用 Windows CameraSDK；拼接后的全景图会自动上传 Linux，完成 YOLO-World 推理后返回标注图和检测结果。
         </p>
 
-        <section className={`ingestion-connection ingestion-connection--capture ${capturePhase === 'ready' ? 'is-ready' : ''}`} aria-label="CameraSDKDemo 现场采集">
+        <section className={`ingestion-connection ingestion-connection--capture ${capturePhase === 'ready' ? 'is-ready' : ''}`} aria-label="Windows CameraSDK 现场采集">
           {(capturePhase === 'idle' || capturePhase === 'error') && (
             <div className="ingestion-capture-idle">
               <div className="ingestion-connection__icon">
@@ -182,7 +186,7 @@ function C02SceneIngestionContent() {
                 <p>
                   {capturePhase === 'error'
                     ? captureError
-                    : '请先启动本机 capture_bridge（demo_auto），相机 USB 选安卓模式并开启机内照片拼接。'}
+                    : '请先启动本机 Windows Camera Bridge；相机 USB 选安卓模式，并确保 MediaSDK 可生成 ERP JPEG。'}
                 </p>
                 <div className="ingestion-capture-idle__actions">
                   <Button type="button" disabled={isCapturing} onClick={() => void runCapture()}>
@@ -202,11 +206,11 @@ function C02SceneIngestionContent() {
               <div>
                 <div className="ingestion-eyebrow ingestion-eyebrow--pending">已连接insta全景相机...</div>
                 <h2>正在现场采集…</h2>
-                <p>请勿拔线；过程可能需要 30–120 秒。完成后可在本框预览并填写空间名称。</p>
+                <p>请勿拔线；将依次执行拍摄、下载、拼接、HTTPS 上传及 Linux YOLO 推理，通常需要 30–120 秒。</p>
                 <div className="ingestion-meta">
                   <span>当前项目 <strong>{project?.name}</strong></span>
                   <i aria-hidden="true" />
-                  <span>采集状态 <strong>{capturePhase === 'checking' ? '检查服务' : '拍照下载中'}</strong></span>
+                  <span>采集状态 <strong>{capturePhase === 'checking' ? '检查服务' : '拍照、上传与推理中'}</strong></span>
                 </div>
               </div>
             </div>
@@ -215,19 +219,18 @@ function C02SceneIngestionContent() {
           {capturePhase === 'ready' && captureResult && (
             <div className="ingestion-capture-ready">
               <div className="ingestion-capture-ready__preview">
-                {captureResult.preview_url ? (
-                  <img src={captureResult.preview_url} alt="现场采集全景预览" />
+                {captureResult.yolo.annotated_image_url || captureResult.asset.image_url ? (
+                  <img src={captureResult.yolo.annotated_image_url || captureResult.asset.image_url} alt="Linux YOLO 标注预览" />
                 ) : (
                   <div className="ingestion-capture-ready__placeholder">暂无预览</div>
                 )}
                 <div className="ingestion-capture-ready__dims">
-                  {captureResult.width}×{captureResult.height}
-                  {captureResult.meta?.camera_file ? ` · ${captureResult.meta.camera_file}` : ''}
+                  Linux YOLO：{captureResult.yolo.raw_detection_count} 个检测框 · {captureResult.yolo.component_group_count} 组
                 </div>
               </div>
               <div className="ingestion-capture-ready__form">
                 <div className="ingestion-eyebrow"><span />现场采集完成</div>
-                <h2>确认空间信息</h2>
+                <h2>已上传并完成在线推理</h2>
                 <label className="ingestion-space-field">
                   <span>空间名称</span>
                   <input
@@ -241,6 +244,9 @@ function C02SceneIngestionContent() {
                     }}
                   />
                 </label>
+                <p className="ingestion-note">
+                  Run {captureResult.run.run_id} · <a href={captureResult.asset.image_url} target="_blank" rel="noreferrer">查看原始全景</a> · <a href={captureResult.yolo.detections_url} target="_blank" rel="noreferrer">查看检测 JSON</a>
+                </p>
                 {confirmError ? <p className="inline-notice inline-notice--error" role="alert">{confirmError}</p> : null}
                 <div className="ingestion-capture-ready__actions">
                   <Button
@@ -316,12 +322,12 @@ function C02SceneIngestionContent() {
       <aside className="creation-aside">
         <GuidancePanel title="采集建议">
           <GuidanceItem icon={Link2} title="先启动本机 Bridge">
-            采集前请运行 capture_bridge（demo_auto），并保证相机 USB 为安卓模式。
+            采集前请运行 Windows 的 windows_camera_bridge，并保证相机 USB 为安卓模式。
           </GuidanceItem>
           <GuidanceItem icon={Image} title="覆盖主要空间与构件区域">尽量采集项目中具有代表性的空间与关键构件区域。</GuidanceItem>
           <GuidanceItem icon={Focus} title="保证关键构件有清晰视角">对需要评估的建筑构件尽量保留清晰、完整的视角。</GuidanceItem>
           <GuidanceItem icon={Box} title="确认后再入库">预览满意并填写空间名称后点「确认」，卡片会出现在下方列表。</GuidanceItem>
-          <GuidanceItem icon={FileText} title="分析仍可选样例">本期全链路分析仍使用样例场景 ID；实拍用于展示与后续对接。</GuidanceItem>
+          <GuidanceItem icon={FileText} title="在线 YOLO 已完成">实拍上传后立即创建 Linux RunState；下方卡片展示本次实时检测结果。</GuidanceItem>
         </GuidancePanel>
         <section className="panel guidance-panel mini-tip-panel">
           <span className="guidance-icon guidance-icon--accent"><Lightbulb size={25} /></span>

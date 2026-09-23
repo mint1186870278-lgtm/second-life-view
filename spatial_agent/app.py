@@ -335,6 +335,8 @@ async def accept_camera_frame(request: CameraFrameRequest) -> RunState:
     ``/runs`` and ``/capture/complete`` endpoints remain available for clients
     that want explicit control.
     """
+    if request.action_id and not request.run_id:
+        raise HTTPException(400, "run_id is required when action_id is supplied")
     if request.run_id:
         state = runs.get(request.run_id)
         if not state:
@@ -396,6 +398,9 @@ def safe_camera_frame_id(value: object) -> str:
 
 
 def camera_asset_url(request: Request, path: Path) -> str:
+    public_base_url = settings.public_base_url.strip().rstrip("/")
+    if public_base_url:
+        return f"{public_base_url}{app.url_path_for('camera-assets', path=path.name)}"
     return str(request.url_for("camera-assets", path=path.name))
 
 
@@ -405,6 +410,21 @@ def require_camera_ingest_token(authorization: str | None) -> None:
     expected = f"Bearer {settings.camera_ingest_token}"
     if not authorization or not secrets.compare_digest(authorization, expected):
         raise HTTPException(401, "invalid camera ingest token")
+
+
+def validate_camera_run_target(run_id: str | None, action_id: str | None) -> None:
+    """Fail before storing or inferring on an invalid evidence-resume target."""
+    if action_id and not run_id:
+        raise HTTPException(400, "run_id is required when action_id is supplied")
+    if not run_id:
+        return
+    if not action_id:
+        raise HTTPException(400, "action_id is required when run_id is supplied")
+    state = runs.get(run_id)
+    if not state:
+        raise HTTPException(404, "run not found")
+    if not any(action.id == action_id for action in state.capture_actions):
+        raise HTTPException(400, "action_id is not pending for this run")
 
 
 def parse_camera_ingest_metadata(raw_metadata: str | None) -> dict:
@@ -713,8 +733,7 @@ async def ingest_windows_camera_frame(
     require_camera_ingest_token(authorization)
     run_id = (run_id or "").strip() or None
     action_id = (action_id or "").strip() or None
-    if run_id and not action_id:
-        raise HTTPException(400, "action_id is required when run_id is supplied")
+    validate_camera_run_target(run_id, action_id)
 
     camera_metadata_from_upload = parse_camera_ingest_metadata(metadata)
     source_name = file.filename or "camera-frame.jpg"

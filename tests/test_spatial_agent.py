@@ -282,6 +282,26 @@ def test_windows_multipart_ingest_resumes_run_and_never_uses_fixture(monkeypatch
     assert any(event["action"] == "no_detections" for event in body["run"]["events"])
 
 
+def test_windows_multipart_ingest_rejects_invalid_resume_before_yolo(monkeypatch, tmp_path):
+    detector = FakeLiveYolo()
+    monkeypatch.setattr(app_module, "live_yolo", detector)
+    monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
+    monkeypatch.setattr(app_module.settings, "camera_ingest_token", "ingest-test-token")
+    client = TestClient(app)
+
+    response = client.post(
+        "/api/v1/camera/ingest",
+        headers={"Authorization": "Bearer ingest-test-token"},
+        files={"file": ("room.jpg", b"windows-jpeg", "image/jpeg")},
+        data={"action_id": "act_without_a_run"},
+    )
+
+    assert response.status_code == 400
+    assert "run_id is required" in response.json()["detail"]
+    assert detector.calls == []
+    assert list(tmp_path.iterdir()) == []
+
+
 def test_windows_gateway_status_and_files_are_proxied(monkeypatch):
     gateway = FakeWindowsCameraGateway(b"jpeg")
     monkeypatch.setattr(app_module, "camera_gateway", gateway)
@@ -360,6 +380,23 @@ def test_picture_demo_catalog_and_full_chain():
     assert body["design"]["title"]
     assert body["spatial_generation"]["provider"] == "aholo-spatial-gen"
     assert {item["agent"] for item in body["events"]} >= {"perception", "evidence", "research", "design"}
+
+
+def test_demo_review_projection_has_supported_majority_and_mixed_pathways():
+    client = TestClient(app)
+    groups = client.get("/api/v1/demo/components").json()["groups"]
+    evidence_counts = {status: sum(group["evidence_status"] == status for group in groups) for status in ("supported", "conditional")}
+
+    assert evidence_counts["supported"] > evidence_counts["conditional"]
+    assert evidence_counts["conditional"] > 0
+    assert any(
+        group["evidence_status"] == "supported"
+        and group["recommended_pathway"] in {"REFURBISH", "REPURPOSE"}
+        and group["can_generate_preview"]
+        for group in groups
+    )
+    chair_pathways = {group["recommended_pathway"] for group in groups if group["category"] == "chair"}
+    assert len(chair_pathways) > 1
 
 
 def test_demo_picture_asset_is_served():

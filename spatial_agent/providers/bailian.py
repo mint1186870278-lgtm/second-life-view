@@ -92,9 +92,10 @@ class BailianClient:
         """Call a DashScope image endpoint when configured; otherwise return a traceable mock."""
         if not (self.settings.dashscope_api_key and self.settings.use_external_tools):
             return {"status": "mock", "image_url": None, "prompt": prompt}
-        # qwen-image uses the multimodal-generation messages schema.  Keep the
-        # task asynchronous so the API can return immediately to the Agent.
-        endpoint = self.settings.dashscope_api_host.rstrip("/") + "/api/v1/services/aigc/multimodal-generation/generation"
+        # qwen-image uses the multimodal-generation messages schema. The
+        # synchronous response is the compatibility default for this account;
+        # async remains an explicit opt-in below.
+        endpoint = self.settings.dashscope_image_api_host.rstrip("/") + "/api/v1/services/aigc/multimodal-generation/generation"
         content: list[dict[str, str]] = [{"text": prompt}]
         if reference_image_url:
             content.append({"image": self._image_reference(reference_image_url)})

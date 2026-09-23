@@ -94,6 +94,7 @@ interface WorkspaceShellProps extends WorkspaceSidebarProps {
   headerCenter?: ReactNode
   headerAction?: ReactNode
   sidebarSupplement?: ReactNode
+  frameClassName?: string
   contentClassName?: string
   children: ReactNode
 }
@@ -104,6 +105,7 @@ export function WorkspaceShell({
   headerCenter,
   headerAction,
   sidebarSupplement,
+  frameClassName = '',
   contentClassName = '',
   items,
   activeDestination,
@@ -111,7 +113,7 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   return (
-    <div className="app-frame workspace-frame">
+    <div className={`app-frame workspace-frame ${frameClassName}`.trim()}>
       <WorkspaceGlobalHeader
         projectName={projectName}
         projectContextLabel={projectContextLabel}

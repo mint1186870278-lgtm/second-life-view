@@ -1,5 +1,4 @@
 import {
-  ChevronDown,
   ChevronRight,
   Image as ImageIcon,
   Leaf,
@@ -84,7 +83,6 @@ function W02ProjectReviewContent() {
   const [groups, setGroups] = useState<DemoGroup[]>(analysisResult?.groups ?? [])
   const [loading, setLoading] = useState(!analysisResult?.groups.length)
   const [loadError, setLoadError] = useState<string>()
-  const [expandedMaterial, setExpandedMaterial] = useState<string | null>(null)
   const [previewGroup, setPreviewGroup] = useState<DemoGroup | null>(null)
   const [advice, setAdvice] = useState<DemoComponentDesignAdvice | null>(null)
   const [preview, setPreview] = useState<DemoComponentPreview | null>(null)
@@ -131,18 +129,11 @@ function W02ProjectReviewContent() {
     () => groups.filter(canGeneratePreview).length,
     [groups],
   )
-
-  useEffect(() => {
-    if (!activeSections.length) {
-      setExpandedMaterial(null)
-      return
-    }
-    setExpandedMaterial((current) => (
-      current && activeSections.some((section) => section.material === current)
-        ? current
-        : activeSections[0].material
-    ))
-  }, [activeSections])
+  const attentionGroups = useMemo(
+    () => verificationSections.flatMap((section) => section.groups)
+      .sort((left, right) => right.confidence - left.confidence),
+    [verificationSections],
+  )
 
   async function openPreview(target: DemoGroup) {
     setPreviewGroup(target)
@@ -185,85 +176,65 @@ function W02ProjectReviewContent() {
         activeDestination="review"
         onNavigate={(destination) => navigate(getWorkspaceDestinationRoute(destination))}
         headerCenter={<div className="w02-header-title">项目审查</div>}
-        headerAction={<Button className="w02-view-entry" onClick={() => navigate(ImplementationRoutes.w01)}>返回再生视图</Button>}
+        headerAction={<Button className="workspace-context-action w02-view-entry" onClick={() => navigate(ImplementationRoutes.w01)}><span>返回再生视图</span></Button>}
+        frameClassName="w02-frame"
         contentClassName="w02-main"
       >
-        <section className="w02-page-head">
-          <div>
-            <p className="w02-eyebrow">YOLO 构件审查</p>
-            <h1>项目审查</h1>
-            <p>按材质汇总实际识别到的构件子图；所有分组已完成初审，待核实项可进入详情补充证据。</p>
-          </div>
-          <div className="w02-page-metrics" aria-label="审查统计">
-            <span><strong>{groups.length}</strong> 构件分组</span>
-            <span><strong>{eligiblePreviewCount}</strong> 可再生预览</span>
-          </div>
-        </section>
+        <header className="w02-page-head">
+          <h1>项目审查</h1>
+          <div className="w02-meta">{projectDraft.name || project?.name || '当前项目'}<span>/</span>{region || '项目所在地'}<span>/</span>YOLO 构件审查</div>
+        </header>
 
         <div className="w02-tabs" role="tablist" aria-label="项目审查视图">
           <button
             type="button"
             role="tab"
             aria-selected={tab === 'review'}
-            className={tab === 'review' ? 'is-active' : ''}
+            className={tab === 'review' ? 'active' : ''}
             onClick={() => setTab('review')}
           >
-            全部构件
-            <span>{filteredGroups.length}</span>
+            评估草案
           </button>
           <button
             type="button"
             role="tab"
             aria-selected={tab === 'verification'}
-            className={tab === 'verification' ? 'is-active' : ''}
+            className={tab === 'verification' ? 'active' : ''}
             onClick={() => setTab('verification')}
           >
-            待核实
-            <span>{filteredGroups.filter((group) => group.evidence_status !== 'supported').length}</span>
+            待核实事项
           </button>
         </div>
-
-        <ReviewToolbar
-          filters={filters}
-          materials={materialOptions}
-          scenes={sceneOptions}
-          onChange={setFilters}
+        <ReviewSummary
+          tab={tab}
+          groupCount={groups.length}
+          previewCount={eligiblePreviewCount}
+          verificationCount={attentionGroups.length}
         />
-
-        {loading && <div className="w02-state"><LoaderCircle className="spin" />正在读取构件识别结果…</div>}
-        {!loading && loadError && <div className="w02-state is-error">{loadError}</div>}
-        {!loading && !loadError && !activeSections.length && (
-          <div className="w02-state">没有符合当前筛选条件的构件分组。</div>
-        )}
-        {!loading && !loadError && activeSections.map((section) => {
-          const expanded = expandedMaterial === section.material
-          return (
-            <section className="w02-material-section" key={section.material}>
-              <button
-                className="w02-material-header"
-                type="button"
-                aria-expanded={expanded}
-                onClick={() => setExpandedMaterial(expanded ? null : section.material)}
-              >
-                <span className={`w02-material-swatch ${materialTone(section.material)}`} />
-                <span><strong>{section.material}</strong><small>{section.groups.length} 个 YOLO 构件分组</small></span>
-                {expanded ? <ChevronDown /> : <ChevronRight />}
-              </button>
-              {expanded && (
-                <div className="w02-component-grid">
-                  {section.groups.map((group) => (
-                    <ComponentCard
-                      group={group}
-                      key={group.id}
-                      onPreview={() => void openPreview(group)}
-                      onOpenDetail={() => openDetail(group.id)}
-                    />
-                  ))}
-                </div>
-              )}
-            </section>
-          )
-        })}
+        <div className="w02-workspace">
+          <section className="w02-table-panel">
+            <ReviewToolbar
+              filters={filters}
+              materials={materialOptions}
+              scenes={sceneOptions}
+              onChange={setFilters}
+            />
+            {loading && <div className="w02-state"><LoaderCircle className="spin" />正在读取构件识别结果…</div>}
+            {!loading && loadError && <div className="w02-state is-error">{loadError}</div>}
+            {!loading && !loadError && !activeSections.length && (
+              <div className="w02-state">没有符合当前筛选条件的构件分组。</div>
+            )}
+            {!loading && !loadError && activeSections.length > 0 && (
+              <ReviewTable
+                sections={activeSections}
+                tab={tab}
+                onPreview={(group) => void openPreview(group)}
+                onOpenDetail={openDetail}
+              />
+            )}
+          </section>
+          <ReviewAttentionRail groups={attentionGroups} onOpenDetail={openDetail} />
+        </div>
       </WorkspaceShell>
       {previewGroup && (
         <RegenerationPreviewDialog
@@ -330,45 +301,109 @@ function ReviewToolbar({
   )
 }
 
-function ComponentCard({
-  group,
+function ReviewSummary({
+  tab,
+  groupCount,
+  previewCount,
+  verificationCount,
+}: {
+  tab: ReviewTab
+  groupCount: number
+  previewCount: number
+  verificationCount: number
+}) {
+  return (
+    <section className={`w02-summary-grid ${tab === 'review' ? 'w02-draft-summary-grid' : 'w02-v-summary-grid'}`} aria-label="审查统计">
+      <SummaryCard label="构件分组" value={groupCount} detail="已完成 YOLO 汇总" />
+      <SummaryCard label="可再生预览" value={previewCount} detail="可调用图像生成" tone="success" />
+      <SummaryCard label="待核实事项" value={verificationCount} detail="需要补充现场证据" tone="warning" />
+      {tab === 'review' && <SummaryCard label="当前工作区" value="草案" detail="按材质查看与筛选" tone="attention" />}
+      {tab === 'verification' && <SummaryCard label="当前工作区" value="核实" detail="逐项回到现场补证" tone="attention" />}
+    </section>
+  )
+}
+
+function SummaryCard({ label, value, detail, tone = 'default' }: { label: string; value: string | number; detail: string; tone?: 'default' | 'success' | 'warning' | 'attention' }) {
+  return <div className={`w02-stat-card display-only ${tone}`}>
+    <span className="w02-stat-icon">{tone === 'success' ? <Leaf size={20} /> : <ImageIcon size={20} />}</span>
+    <span className="w02-stat-copy"><span>{label}</span><span className="w02-stat-metric"><strong>{value}</strong><small>{detail}</small></span></span>
+  </div>
+}
+
+function ReviewTable({
+  sections,
+  tab,
   onPreview,
   onOpenDetail,
 }: {
-  group: DemoGroup
-  onPreview: () => void
-  onOpenDetail: () => void
+  sections: readonly MaterialSection[]
+  tab: ReviewTab
+  onPreview: (group: DemoGroup) => void
+  onOpenDetail: (groupId: string) => void
 }) {
-  const eligible = canGeneratePreview(group)
+  return (
+    <div className="w02-table-shell">
+      <div className="w02-table-head" role="row">
+        <span>构件分组</span><span className="w02-center-col">数量</span><span>建议路径</span><span>证据状态</span><span className="w02-center-col">再生预览</span><span className="w02-center-col">操作</span>
+      </div>
+      {sections.map((section) => (
+        <section className="w02-material-section" key={section.material}>
+          <header className="w02-material-head"><span className={`w02-material-swatch ${materialTone(section.material)}`} /><strong>{section.material}</strong><span>{section.groups.length} 个构件分组</span></header>
+          {section.groups.map((group) => <ReviewRow key={group.id} group={group} tab={tab} onPreview={onPreview} onOpenDetail={onOpenDetail} />)}
+        </section>
+      ))}
+    </div>
+  )
+}
+
+function ReviewRow({ group, tab, onPreview, onOpenDetail }: {
+  group: DemoGroup
+  tab: ReviewTab
+  onPreview: (group: DemoGroup) => void
+  onOpenDetail: (groupId: string) => void
+}) {
   const evidence = group.evidence_status || 'conditional'
   const pathway = group.recommended_pathway || 'DIRECT_REUSE'
-  return (
-    <article className="w02-component-card">
-      <button className="w02-component-image" type="button" onClick={onOpenDetail} aria-label={`查看 ${group.group_name || group.label} 详情`}>
-        {group.crop_url ? <img src={group.crop_url} alt={`${group.group_name || group.label} 的 YOLO 构件裁切图`} loading="lazy" /> : <ImageIcon />}
-      </button>
-      <div className="w02-component-copy">
-        <div className="w02-component-title-row">
-          <h2>{group.group_name || categoryLabel(group)}</h2>
-          <span className={`w02-evidence-pill ${evidence}`}>{EVIDENCE_LABELS[evidence] || '待核实'}</span>
-        </div>
-        <p>{group.scene_name} · {group.material || '材质待核实'}</p>
-        <div className="w02-component-tags">
-          <span>{PATHWAY_LABELS[pathway] || pathway}</span>
-          <span>{group.detected_count} 个相似实例</span>
-        </div>
-      </div>
-      <div className="w02-component-actions">
-        {eligible ? (
-          <button className="w02-preview-action" type="button" onClick={onPreview}><Sparkles size={15} />再生预览图</button>
-        ) : (
-          <button className="w02-detail-action" type="button" onClick={onOpenDetail}>
-            {evidence === 'supported' ? '查看详情' : '去核实'}<ChevronRight size={15} />
+  const title = group.group_name || categoryLabel(group)
+  const previewable = canGeneratePreview(group)
+  const detailAction = evidence === 'supported' && tab === 'review' ? '查看详情' : '去核实'
+  return <div className="w02-batch-row" role="row">
+    <button className="w02-batch-identity" type="button" onClick={() => onOpenDetail(group.id)} aria-label={`查看 ${title} 详情`}>
+      <span className={`w02-thumb ${materialTone(group.material || '')}`}>{group.crop_url ? <img src={group.crop_url} alt="" loading="lazy" /> : <ImageIcon size={18} />}</span>
+      <span><strong>{title}</strong><small>{group.scene_name} · {group.material || '材质待核实'}</small></span>
+    </button>
+    <span className="w02-quantity w02-center-col">{group.detected_count}</span>
+    <span className={`w02-pathway ${pathwayTone(pathway)}`}><Leaf className="w02-path-icon" />{PATHWAY_LABELS[pathway] || pathway}</span>
+    <EvidencePill evidence={evidence} />
+    <span className="w02-center-col">
+      {previewable ? <button className="w02-preview-action" type="button" onClick={() => onPreview(group)}><Sparkles size={14} />预览</button> : <span className="w02-action-empty">—</span>}
+    </span>
+    <button className="w02-row-action" type="button" onClick={() => onOpenDetail(group.id)}>{detailAction}<ChevronRight size={14} /></button>
+  </div>
+}
+
+function EvidencePill({ evidence }: { evidence: string }) {
+  return <span className={`w02-pill evidence-${evidence}`}><span />{EVIDENCE_LABELS[evidence] || '待核实'}</span>
+}
+
+function ReviewAttentionRail({ groups, onOpenDetail }: { groups: readonly DemoGroup[]; onOpenDetail: (groupId: string) => void }) {
+  return <aside className="w02-attention-rail">
+    <section className="w02-attention-panel">
+      <div className="w02-attention-head"><strong>需要关注</strong><span>{groups.length}</span></div>
+      <div className="w02-attention-list">
+        {groups.length ? groups.slice(0, 4).map((group, index) => {
+          const title = group.group_name || categoryLabel(group)
+          return <button className="w02-attention-item" type="button" key={group.id} onClick={() => onOpenDetail(group.id)}>
+            <span className="w02-rank">{index + 1}</span>
+            <span className={`w02-thumb ${materialTone(group.material || '')}`}>{group.crop_url ? <img src={group.crop_url} alt="" loading="lazy" /> : null}</span>
+            <span className="w02-attention-copy"><strong>{title}</strong><small>{group.scene_name} · {EVIDENCE_LABELS[group.evidence_status || 'conditional'] || '待核实'}</small></span>
+            <ChevronRight size={16} />
           </button>
-        )}
+        }) : <div className="w02-attention-empty">当前筛选下没有待核实事项</div>}
       </div>
-    </article>
-  )
+    </section>
+    <section className="w02-info-callout"><Leaf size={18} /><p>仅把需要补充证据的构件放入关注列表；点击后进入“去核实”页面。</p></section>
+  </aside>
 }
 
 function RegenerationPreviewDialog({
@@ -487,4 +522,13 @@ function materialTone(material: string): string {
   if (material.includes('织物')) return 'fabric'
   if (material.includes('玻璃')) return 'glass'
   return 'other'
+}
+
+function pathwayTone(pathway: string): string {
+  if (pathway === 'KEEP_IN_PLACE') return 'keep'
+  if (pathway === 'DIRECT_REUSE') return 'reuse'
+  if (pathway === 'REFURBISH') return 'refurbish'
+  if (pathway === 'REPURPOSE') return 'repurpose'
+  if (pathway === 'MATERIAL_RECOVERY') return 'recovery'
+  return 'disposal'
 }
