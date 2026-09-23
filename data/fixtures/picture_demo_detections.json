@@ -1,0 +1,5284 @@
+{
+  "fixture_version": "2026-09-23",
+  "source": "YOLO-World cache generated from data/samples/pictures",
+  "detector": "yolov8s-worldv2",
+  "scenes": [
+    {
+      "id": "0552569a06b61e4551697bd0f211286e",
+      "name": "屋顶露台",
+      "filename": "0552569a06b61e4551697bd0f211286e.jpg",
+      "order": 1,
+      "width": 7680,
+      "height": 3840,
+      "raw_detection_count": 51,
+      "raw_category_counts": {
+        "sofa": 7,
+        "chair": 31,
+        "table": 11,
+        "door": 1,
+        "cabinet": 1
+      },
+      "group_count": 24,
+      "group_category_counts": {
+        "cabinet": 1,
+        "chair": 15,
+        "door": 1,
+        "sofa": 3,
+        "table": 4
+      },
+      "groups": [
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_cabinet_-55_45",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1587,
+          "bbox_xyxy": [
+            0.01,
+            1.21,
+            190.93,
+            768.0
+          ],
+          "raw_label": "cabinet",
+          "yaw": -56.29,
+          "pitch": 43.77,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-145_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.5117,
+          "bbox_xyxy": [
+            312.58,
+            422.27,
+            351.06,
+            505.21
+          ],
+          "raw_label": "chair",
+          "yaw": -142.74,
+          "pitch": -11.63,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-120_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.315,
+          "bbox_xyxy": [
+            163.54,
+            463.13,
+            194.13,
+            563.41
+          ],
+          "raw_label": "chair",
+          "yaw": -118.11,
+          "pitch": -16.54,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-100_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2657,
+          "bbox_xyxy": [
+            616.83,
+            444.26,
+            692.16,
+            576.28
+          ],
+          "raw_label": "chair",
+          "yaw": -99.84,
+          "pitch": -15.05,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-100_-60",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1219,
+          "bbox_xyxy": [
+            0.0,
+            547.36,
+            204.17,
+            767.36
+          ],
+          "raw_label": "chair",
+          "yaw": -99.02,
+          "pitch": -58.69,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-90_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1912,
+          "bbox_xyxy": [
+            737.95,
+            473.41,
+            768.0,
+            609.66
+          ],
+          "raw_label": "chair",
+          "yaw": -91.14,
+          "pitch": -16.48,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-80_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1679,
+          "bbox_xyxy": [
+            428.13,
+            456.85,
+            481.7,
+            515.64
+          ],
+          "raw_label": "chair",
+          "yaw": -79.54,
+          "pitch": -14.67,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-40_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.3385,
+          "bbox_xyxy": [
+            350.34,
+            471.93,
+            486.59,
+            589.35
+          ],
+          "raw_label": "chair",
+          "yaw": -39.87,
+          "pitch": -20.82,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-20_-45",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 7,
+          "confidence": 0.6466,
+          "bbox_xyxy": [
+            230.3,
+            196.0,
+            352.77,
+            366.6
+          ],
+          "raw_label": "chair",
+          "yaw": -18.22,
+          "pitch": -43.55,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-20_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4639,
+          "bbox_xyxy": [
+            198.99,
+            432.45,
+            251.57,
+            470.75
+          ],
+          "raw_label": "chair",
+          "yaw": -22.46,
+          "pitch": -9.24,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_-10_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 5,
+          "confidence": 0.3483,
+          "bbox_xyxy": [
+            622.24,
+            544.01,
+            725.13,
+            719.74
+          ],
+          "raw_label": "chair",
+          "yaw": -7.97,
+          "pitch": -27.26,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_0_-60",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.7683,
+          "bbox_xyxy": [
+            297.45,
+            308.8,
+            462.07,
+            490.01
+          ],
+          "raw_label": "chair",
+          "yaw": -1.36,
+          "pitch": -62.29,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_10_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.8273,
+          "bbox_xyxy": [
+            24.7,
+            565.65,
+            180.41,
+            767.95
+          ],
+          "raw_label": "chair",
+          "yaw": 8.76,
+          "pitch": -30.71,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_85_-60",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.4532,
+          "bbox_xyxy": [
+            535.07,
+            471.98,
+            768.0,
+            703.14
+          ],
+          "raw_label": "chair",
+          "yaw": 86.64,
+          "pitch": -58.32,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_140_5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.176,
+          "bbox_xyxy": [
+            59.6,
+            325.9,
+            101.36,
+            363.22
+          ],
+          "raw_label": "chair",
+          "yaw": 141.68,
+          "pitch": 4.61,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_chair_165_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.4629,
+          "bbox_xyxy": [
+            241.25,
+            490.19,
+            294.9,
+            538.19
+          ],
+          "raw_label": "chair",
+          "yaw": 163.2,
+          "pitch": -17.98,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_door_30_55",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.1995,
+          "bbox_xyxy": [
+            227.16,
+            1.48,
+            767.47,
+            767.33
+          ],
+          "raw_label": "door",
+          "yaw": 30.5,
+          "pitch": 56.11,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_sofa_-45_-25",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2064,
+          "bbox_xyxy": [
+            706.2,
+            534.96,
+            768.0,
+            669.18
+          ],
+          "raw_label": "sofa",
+          "yaw": -47.4,
+          "pitch": -22.69,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_sofa_-40_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.8715,
+          "bbox_xyxy": [
+            0.0,
+            494.27,
+            161.54,
+            651.47
+          ],
+          "raw_label": "sofa",
+          "yaw": -38.3,
+          "pitch": -21.11,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_sofa_-20_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.4291,
+          "bbox_xyxy": [
+            518.74,
+            433.21,
+            570.82,
+            471.05
+          ],
+          "raw_label": "sofa",
+          "yaw": -22.28,
+          "pitch": -9.29,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_table_-110_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.2227,
+          "bbox_xyxy": [
+            549.33,
+            458.18,
+            613.42,
+            565.59
+          ],
+          "raw_label": "table",
+          "yaw": -107.8,
+          "pitch": -16.5,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_table_-10_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 5,
+          "confidence": 0.6186,
+          "bbox_xyxy": [
+            591.46,
+            556.7,
+            754.45,
+            766.58
+          ],
+          "raw_label": "desk",
+          "yaw": -8.04,
+          "pitch": -30.02,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_table_155_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.3377,
+          "bbox_xyxy": [
+            178.69,
+            469.75,
+            250.18,
+            535.08
+          ],
+          "raw_label": "desk",
+          "yaw": 156.18,
+          "pitch": -15.75,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "0552569a06b61e4551697bd0f211286e__batch_table_165_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.4536,
+          "bbox_xyxy": [
+            516.25,
+            542.89,
+            660.05,
+            690.23
+          ],
+          "raw_label": "desk",
+          "yaw": 163.0,
+          "pitch": -28.14,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "371eefc93daaebc61d98fb6ed1422691",
+      "name": "大堂休息区",
+      "filename": "371eefc93daaebc61d98fb6ed1422691.jpg",
+      "order": 2,
+      "width": 7680,
+      "height": 3840,
+      "raw_detection_count": 34,
+      "raw_category_counts": {
+        "chair": 11,
+        "table": 18,
+        "sofa": 3,
+        "cabinet": 2
+      },
+      "group_count": 15,
+      "group_category_counts": {
+        "cabinet": 1,
+        "chair": 5,
+        "sofa": 2,
+        "table": 7
+      },
+      "groups": [
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_cabinet_-20_-10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.2113,
+          "bbox_xyxy": [
+            230.54,
+            433.04,
+            259.02,
+            482.39
+          ],
+          "raw_label": "cabinet",
+          "yaw": -19.93,
+          "pitch": -10.23,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_chair_20_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.666,
+          "bbox_xyxy": [
+            479.75,
+            441.56,
+            553.1,
+            515.46
+          ],
+          "raw_label": "chair",
+          "yaw": 19.03,
+          "pitch": -13.1,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_chair_40_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.6861,
+          "bbox_xyxy": [
+            319.68,
+            443.99,
+            403.49,
+            526.88
+          ],
+          "raw_label": "chair",
+          "yaw": 41.66,
+          "pitch": -14.77,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_chair_45_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.375,
+          "bbox_xyxy": [
+            0.01,
+            466.5,
+            31.66,
+            588.83
+          ],
+          "raw_label": "chair",
+          "yaw": 46.21,
+          "pitch": -15.11,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_chair_55_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7048,
+          "bbox_xyxy": [
+            403.47,
+            443.91,
+            487.54,
+            528.82
+          ],
+          "raw_label": "chair",
+          "yaw": 54.1,
+          "pitch": -14.75,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_chair_80_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7141,
+          "bbox_xyxy": [
+            599.9,
+            451.27,
+            685.72,
+            533.18
+          ],
+          "raw_label": "chair",
+          "yaw": 78.98,
+          "pitch": -13.15,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_sofa_40_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.4156,
+          "bbox_xyxy": [
+            659.15,
+            460.93,
+            768.0,
+            585.04
+          ],
+          "raw_label": "couch",
+          "yaw": 40.64,
+          "pitch": -15.36,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_sofa_45_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.1823,
+          "bbox_xyxy": [
+            0.02,
+            466.44,
+            33.55,
+            598.08
+          ],
+          "raw_label": "sofa",
+          "yaw": 46.28,
+          "pitch": -15.59,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_-155_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.1797,
+          "bbox_xyxy": [
+            0.45,
+            563.21,
+            489.6,
+            767.94
+          ],
+          "raw_label": "desk",
+          "yaw": -154.9,
+          "pitch": -34.59,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_-55_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 5,
+          "confidence": 0.7219,
+          "bbox_xyxy": [
+            559.73,
+            504.61,
+            767.95,
+            766.68
+          ],
+          "raw_label": "desk",
+          "yaw": -53.92,
+          "pitch": -27.91,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_30_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 4,
+          "confidence": 0.5561,
+          "bbox_xyxy": [
+            219.75,
+            476.02,
+            324.67,
+            527.25
+          ],
+          "raw_label": "table",
+          "yaw": 28.77,
+          "pitch": -16.39,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_70_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.5415,
+          "bbox_xyxy": [
+            489.05,
+            478.54,
+            614.65,
+            536.24
+          ],
+          "raw_label": "table",
+          "yaw": 68.61,
+          "pitch": -16.41,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_100_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.6143,
+          "bbox_xyxy": [
+            33.14,
+            428.83,
+            195.4,
+            520.34
+          ],
+          "raw_label": "desk",
+          "yaw": 99.91,
+          "pitch": -10.93,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_120_-5",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.4272,
+          "bbox_xyxy": [
+            578.91,
+            404.57,
+            662.48,
+            451.63
+          ],
+          "raw_label": "desk",
+          "yaw": 121.65,
+          "pitch": -5.58,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "371eefc93daaebc61d98fb6ed1422691__batch_table_130_0",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1634,
+          "bbox_xyxy": [
+            307.84,
+            387.4,
+            385.22,
+            409.09
+          ],
+          "raw_label": "desk",
+          "yaw": 129.43,
+          "pitch": -2.12,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "822548005dbfc0c2a17d53647c5418f4",
+      "name": "餐饮接待区",
+      "filename": "822548005dbfc0c2a17d53647c5418f4.jpg",
+      "order": 3,
+      "width": 7680,
+      "height": 3840,
+      "raw_detection_count": 94,
+      "raw_category_counts": {
+        "chair": 46,
+        "sofa": 23,
+        "table": 15,
+        "window": 4,
+        "cabinet": 6
+      },
+      "group_count": 42,
+      "group_category_counts": {
+        "cabinet": 5,
+        "chair": 20,
+        "sofa": 7,
+        "table": 8,
+        "window": 2
+      },
+      "groups": [
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_cabinet_-150_10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.3365,
+          "bbox_xyxy": [
+            528.08,
+            279.94,
+            701.41,
+            353.97
+          ],
+          "raw_label": "cabinet",
+          "yaw": -149.0,
+          "pitch": 8.51,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_cabinet_-120_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1522,
+          "bbox_xyxy": [
+            1.68,
+            334.07,
+            314.2,
+            453.71
+          ],
+          "raw_label": "cabinet",
+          "yaw": -120.48,
+          "pitch": -1.27,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_cabinet_-55_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1876,
+          "bbox_xyxy": [
+            289.28,
+            354.94,
+            324.25,
+            465.72
+          ],
+          "raw_label": "cabinet",
+          "yaw": -56.37,
+          "pitch": -3.85,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_cabinet_10_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1566,
+          "bbox_xyxy": [
+            111.07,
+            362.47,
+            160.06,
+            425.06
+          ],
+          "raw_label": "cabinet",
+          "yaw": 12.1,
+          "pitch": -1.22,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_cabinet_30_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.144,
+          "bbox_xyxy": [
+            252.41,
+            355.36,
+            285.79,
+            450.44
+          ],
+          "raw_label": "cabinet",
+          "yaw": 28.34,
+          "pitch": -2.7,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-170_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.5047,
+          "bbox_xyxy": [
+            58.34,
+            407.2,
+            124.41,
+            493.64
+          ],
+          "raw_label": "chair",
+          "yaw": -172.31,
+          "pitch": -7.83,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-165_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.6316,
+          "bbox_xyxy": [
+            120.1,
+            411.26,
+            191.51,
+            509.97
+          ],
+          "raw_label": "chair",
+          "yaw": -165.72,
+          "pitch": -9.73,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-160_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7169,
+          "bbox_xyxy": [
+            187.77,
+            414.97,
+            252.13,
+            515.74
+          ],
+          "raw_label": "chair",
+          "yaw": -158.13,
+          "pitch": -11.02,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-140_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1848,
+          "bbox_xyxy": [
+            648.37,
+            613.66,
+            768.0,
+            767.95
+          ],
+          "raw_label": "chair",
+          "yaw": -139.83,
+          "pitch": -31.4,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-70_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 5,
+          "confidence": 0.5304,
+          "bbox_xyxy": [
+            424.36,
+            520.68,
+            635.94,
+            768.0
+          ],
+          "raw_label": "chair",
+          "yaw": -69.16,
+          "pitch": -32.36,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-45_-50",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1387,
+          "bbox_xyxy": [
+            37.44,
+            258.68,
+            330.66,
+            468.32
+          ],
+          "raw_label": "chair",
+          "yaw": -43.63,
+          "pitch": -48.04,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_-35_-40",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.4859,
+          "bbox_xyxy": [
+            299.62,
+            678.78,
+            577.81,
+            767.95
+          ],
+          "raw_label": "chair",
+          "yaw": -36.89,
+          "pitch": -41.18,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_25_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 5,
+          "confidence": 0.6421,
+          "bbox_xyxy": [
+            404.19,
+            640.33,
+            726.98,
+            768.0
+          ],
+          "raw_label": "chair",
+          "yaw": 25.31,
+          "pitch": -37.01,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_10_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.3961,
+          "bbox_xyxy": [
+            74.33,
+            407.04,
+            121.56,
+            449.15
+          ],
+          "raw_label": "chair",
+          "yaw": 8.32,
+          "pitch": -5.26,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_15_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4116,
+          "bbox_xyxy": [
+            127.41,
+            411.42,
+            185.58,
+            459.62
+          ],
+          "raw_label": "chair",
+          "yaw": 14.35,
+          "pitch": -6.58,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_25_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.6477,
+          "bbox_xyxy": [
+            216.85,
+            406.16,
+            253.27,
+            449.19
+          ],
+          "raw_label": "chair",
+          "yaw": 23.8,
+          "pitch": -6.05,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_55_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.4732,
+          "bbox_xyxy": [
+            400.8,
+            454.17,
+            495.79,
+            606.07
+          ],
+          "raw_label": "chair",
+          "yaw": 54.5,
+          "pitch": -20.57,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_60_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2882,
+          "bbox_xyxy": [
+            483.42,
+            435.6,
+            511.44,
+            486.22
+          ],
+          "raw_label": "chair",
+          "yaw": 61.46,
+          "pitch": -10.87,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_95_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7727,
+          "bbox_xyxy": [
+            400.07,
+            437.1,
+            465.27,
+            534.6
+          ],
+          "raw_label": "chair",
+          "yaw": 97.22,
+          "pitch": -14.74,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_115_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.6164,
+          "bbox_xyxy": [
+            187.7,
+            447.26,
+            267.02,
+            550.19
+          ],
+          "raw_label": "chair",
+          "yaw": 112.81,
+          "pitch": -15.46,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_130_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7667,
+          "bbox_xyxy": [
+            650.7,
+            427.71,
+            730.24,
+            519.52
+          ],
+          "raw_label": "chair",
+          "yaw": 128.59,
+          "pitch": -10.34,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_135_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1391,
+          "bbox_xyxy": [
+            723.49,
+            420.55,
+            767.98,
+            499.83
+          ],
+          "raw_label": "chair",
+          "yaw": 133.29,
+          "pitch": -8.22,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_135_-10_2",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5249,
+          "bbox_xyxy": [
+            0.0,
+            412.2,
+            62.61,
+            495.26
+          ],
+          "raw_label": "chair",
+          "yaw": 137.43,
+          "pitch": -7.62,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_150_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5871,
+          "bbox_xyxy": [
+            112.47,
+            437.3,
+            244.11,
+            574.76
+          ],
+          "raw_label": "chair",
+          "yaw": 151.82,
+          "pitch": -15.65,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_chair_165_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.5774,
+          "bbox_xyxy": [
+            240.69,
+            436.08,
+            352.69,
+            559.97
+          ],
+          "raw_label": "chair",
+          "yaw": 167.19,
+          "pitch": -16.15,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_-115_-35",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 11,
+          "confidence": 0.5834,
+          "bbox_xyxy": [
+            303.88,
+            554.34,
+            767.51,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": -113.44,
+          "pitch": -33.87,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_0_-75",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.3489,
+          "bbox_xyxy": [
+            0.25,
+            228.12,
+            767.48,
+            767.94
+          ],
+          "raw_label": "couch",
+          "yaw": -0.08,
+          "pitch": -76.54,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_15_-5",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 5,
+          "confidence": 0.2839,
+          "bbox_xyxy": [
+            448.09,
+            405.39,
+            542.44,
+            444.67
+          ],
+          "raw_label": "couch",
+          "yaw": 16.16,
+          "pitch": -5.86,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_25_-5",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2694,
+          "bbox_xyxy": [
+            534.41,
+            408.29,
+            572.71,
+            449.69
+          ],
+          "raw_label": "sofa",
+          "yaw": 23.82,
+          "pitch": -6.12,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_50_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.2265,
+          "bbox_xyxy": [
+            0.0,
+            465.91,
+            90.63,
+            597.86
+          ],
+          "raw_label": "sofa",
+          "yaw": 48.59,
+          "pitch": -16.11,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_65_-35",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2246,
+          "bbox_xyxy": [
+            289.87,
+            602.51,
+            768.0,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": 65.68,
+          "pitch": -36.28,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_sofa_170_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.7201,
+          "bbox_xyxy": [
+            559.88,
+            445.21,
+            708.86,
+            595.56
+          ],
+          "raw_label": "sofa",
+          "yaw": 168.1,
+          "pitch": -16.57,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_-165_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.1323,
+          "bbox_xyxy": [
+            105.44,
+            394.44,
+            226.6,
+            498.98
+          ],
+          "raw_label": "desk",
+          "yaw": -164.58,
+          "pitch": -8.08,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_-90_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.2139,
+          "bbox_xyxy": [
+            0.0,
+            408.58,
+            49.6,
+            561.87
+          ],
+          "raw_label": "desk",
+          "yaw": -88.09,
+          "pitch": -10.9,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_40_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.2367,
+          "bbox_xyxy": [
+            692.08,
+            572.14,
+            768.0,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 42.02,
+          "pitch": -28.96,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_50_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.2055,
+          "bbox_xyxy": [
+            0.0,
+            466.53,
+            91.07,
+            593.27
+          ],
+          "raw_label": "desk",
+          "yaw": 48.61,
+          "pitch": -15.91,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_105_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.343,
+          "bbox_xyxy": [
+            129.41,
+            447.59,
+            198.5,
+            532.08
+          ],
+          "raw_label": "desk",
+          "yaw": 105.19,
+          "pitch": -13.45,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_130_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1666,
+          "bbox_xyxy": [
+            614.65,
+            627.46,
+            768.0,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 128.67,
+          "pitch": -32.53,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_135_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.308,
+          "bbox_xyxy": [
+            722.6,
+            439.77,
+            767.93,
+            500.07
+          ],
+          "raw_label": "desk",
+          "yaw": 133.25,
+          "pitch": -9.26,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_table_155_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 4,
+          "confidence": 0.4893,
+          "bbox_xyxy": [
+            288.25,
+            565.13,
+            766.72,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 155.49,
+          "pitch": -34.58,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_window_30_-5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 2,
+          "confidence": 0.1866,
+          "bbox_xyxy": [
+            572.19,
+            354.09,
+            610.38,
+            456.74
+          ],
+          "raw_label": "window",
+          "yaw": 28.36,
+          "pitch": -2.81,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "822548005dbfc0c2a17d53647c5418f4__batch_window_165_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 2,
+          "confidence": 0.2083,
+          "bbox_xyxy": [
+            62.72,
+            143.54,
+            480.06,
+            453.0
+          ],
+          "raw_label": "window",
+          "yaw": 163.66,
+          "pitch": 12.09,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "c5492d66e5bcad84e73dc80dbb288a5f",
+      "name": "景观连廊",
+      "filename": "c5492d66e5bcad84e73dc80dbb288a5f.jpg",
+      "order": 4,
+      "width": 7680,
+      "height": 3840,
+      "raw_detection_count": 52,
+      "raw_category_counts": {
+        "chair": 21,
+        "sofa": 20,
+        "table": 9,
+        "window": 1,
+        "cabinet": 1
+      },
+      "group_count": 18,
+      "group_category_counts": {
+        "cabinet": 1,
+        "chair": 8,
+        "sofa": 3,
+        "table": 5,
+        "window": 1
+      },
+      "groups": [
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_cabinet_170_-85",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1686,
+          "bbox_xyxy": [
+            291.64,
+            563.55,
+            491.56,
+            768.0
+          ],
+          "raw_label": "wardrobe",
+          "yaw": 171.69,
+          "pitch": -83.66,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-175_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4834,
+          "bbox_xyxy": [
+            0.66,
+            586.72,
+            96.45,
+            682.13
+          ],
+          "raw_label": "chair",
+          "yaw": -176.14,
+          "pitch": -26.16,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-140_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1289,
+          "bbox_xyxy": [
+            672.8,
+            510.93,
+            699.74,
+            569.53
+          ],
+          "raw_label": "chair",
+          "yaw": -141.79,
+          "pitch": -17.73,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-135_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4033,
+          "bbox_xyxy": [
+            0.0,
+            462.52,
+            37.1,
+            537.8
+          ],
+          "raw_label": "chair",
+          "yaw": -133.58,
+          "pitch": -12.36,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-100_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1995,
+          "bbox_xyxy": [
+            630.99,
+            475.45,
+            668.42,
+            525.42
+          ],
+          "raw_label": "chair",
+          "yaw": -100.32,
+          "pitch": -14.0,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-55_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.5756,
+          "bbox_xyxy": [
+            601.39,
+            565.26,
+            727.84,
+            704.83
+          ],
+          "raw_label": "chair",
+          "yaw": -53.84,
+          "pitch": -27.83,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-30_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 6,
+          "confidence": 0.6909,
+          "bbox_xyxy": [
+            136.36,
+            158.4,
+            237.86,
+            285.05
+          ],
+          "raw_label": "chair",
+          "yaw": -30.63,
+          "pitch": -33.05,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_-25_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1262,
+          "bbox_xyxy": [
+            487.85,
+            483.38,
+            544.39,
+            537.93
+          ],
+          "raw_label": "chair",
+          "yaw": -26.01,
+          "pitch": -17.32,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_chair_160_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 5,
+          "confidence": 0.2392,
+          "bbox_xyxy": [
+            534.18,
+            610.13,
+            592.79,
+            719.07
+          ],
+          "raw_label": "chair",
+          "yaw": 160.05,
+          "pitch": -33.5,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_sofa_-175_-25",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.4805,
+          "bbox_xyxy": [
+            0.0,
+            575.49,
+            94.9,
+            680.86
+          ],
+          "raw_label": "sofa",
+          "yaw": -176.23,
+          "pitch": -25.56,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_sofa_-50_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.2293,
+          "bbox_xyxy": [
+            295.92,
+            463.04,
+            389.9,
+            520.43
+          ],
+          "raw_label": "sofa",
+          "yaw": -51.11,
+          "pitch": -15.59,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_sofa_-35_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 15,
+          "confidence": 0.5685,
+          "bbox_xyxy": [
+            0.23,
+            7.75,
+            199.92,
+            218.89
+          ],
+          "raw_label": "sofa",
+          "yaw": -33.66,
+          "pitch": -21.06,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_table_-175_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.2124,
+          "bbox_xyxy": [
+            258.31,
+            509.29,
+            566.97,
+            767.59
+          ],
+          "raw_label": "desk",
+          "yaw": -175.73,
+          "pitch": -33.46,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_table_-145_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.1812,
+          "bbox_xyxy": [
+            295.36,
+            459.08,
+            344.3,
+            532.14
+          ],
+          "raw_label": "desk",
+          "yaw": -144.49,
+          "pitch": -16.0,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_table_-40_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.2988,
+          "bbox_xyxy": [
+            378.49,
+            571.65,
+            424.37,
+            657.91
+          ],
+          "raw_label": "table",
+          "yaw": -42.4,
+          "pitch": -30.98,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_table_160_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2954,
+          "bbox_xyxy": [
+            215.55,
+            603.79,
+            271.9,
+            705.71
+          ],
+          "raw_label": "table",
+          "yaw": 159.93,
+          "pitch": -33.52,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_table_170_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.4359,
+          "bbox_xyxy": [
+            576.51,
+            527.19,
+            768.0,
+            767.93
+          ],
+          "raw_label": "desk",
+          "yaw": 171.89,
+          "pitch": -28.76,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "c5492d66e5bcad84e73dc80dbb288a5f__batch_window_-10_15",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1228,
+          "bbox_xyxy": [
+            284.31,
+            706.23,
+            318.42,
+            768.0
+          ],
+          "raw_label": "window",
+          "yaw": -9.43,
+          "pitch": 17.18,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "combination_room",
+      "name": "组合起居室",
+      "filename": "combination_room.jpg",
+      "order": 5,
+      "width": 8192,
+      "height": 4096,
+      "raw_detection_count": 29,
+      "raw_category_counts": {
+        "window": 8,
+        "sofa": 7,
+        "table": 5,
+        "chair": 7,
+        "door": 2
+      },
+      "group_count": 19,
+      "group_category_counts": {
+        "chair": 4,
+        "door": 2,
+        "sofa": 3,
+        "table": 2,
+        "window": 8
+      },
+      "groups": [
+        {
+          "id": "combination_room__batch_chair_-170_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.8193,
+          "bbox_xyxy": [
+            382.35,
+            463.19,
+            530.09,
+            634.93
+          ],
+          "raw_label": "chair",
+          "yaw": -169.35,
+          "pitch": -22.9,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "combination_room__batch_chair_-140_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.3146,
+          "bbox_xyxy": [
+            699.81,
+            403.35,
+            729.56,
+            462.92
+          ],
+          "raw_label": "chair",
+          "yaw": -139.27,
+          "pitch": -5.54,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_chair_-95_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.3246,
+          "bbox_xyxy": [
+            610.5,
+            522.63,
+            767.94,
+            767.47
+          ],
+          "raw_label": "chair",
+          "yaw": -96.52,
+          "pitch": -28.02,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_chair_140_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7618,
+          "bbox_xyxy": [
+            290.73,
+            513.88,
+            537.34,
+            767.91
+          ],
+          "raw_label": "chair",
+          "yaw": 139.47,
+          "pitch": -33.7,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_door_-165_0",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.173,
+          "bbox_xyxy": [
+            438.91,
+            260.15,
+            527.43,
+            503.09
+          ],
+          "raw_label": "door",
+          "yaw": -165.52,
+          "pitch": 0.34,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_door_40_-35",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.4623,
+          "bbox_xyxy": [
+            510.11,
+            0.0,
+            767.82,
+            484.26
+          ],
+          "raw_label": "door",
+          "yaw": 39.0,
+          "pitch": -32.85,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_sofa_-70_-30",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.9289,
+          "bbox_xyxy": [
+            285.43,
+            488.35,
+            725.11,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": -72.47,
+          "pitch": -31.23,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "combination_room__batch_sofa_130_-30",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.774,
+          "bbox_xyxy": [
+            620.06,
+            555.41,
+            768.0,
+            767.77
+          ],
+          "raw_label": "sofa",
+          "yaw": 128.92,
+          "pitch": -29.36,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_sofa_145_-30",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.6709,
+          "bbox_xyxy": [
+            0.0,
+            558.75,
+            215.94,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": 144.29,
+          "pitch": -30.57,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_table_-180_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2455,
+          "bbox_xyxy": [
+            0.0,
+            634.86,
+            34.47,
+            768.0
+          ],
+          "raw_label": "table",
+          "yaw": -178.68,
+          "pitch": -30.87,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_table_170_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.8432,
+          "bbox_xyxy": [
+            563.29,
+            582.07,
+            767.93,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 171.26,
+          "pitch": -31.43,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "combination_room__batch_window_-90_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1229,
+          "bbox_xyxy": [
+            752.89,
+            239.33,
+            768.0,
+            377.34
+          ],
+          "raw_label": "window",
+          "yaw": -90.57,
+          "pitch": 8.01,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_-40_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.266,
+          "bbox_xyxy": [
+            0.02,
+            180.49,
+            112.81,
+            385.17
+          ],
+          "raw_label": "window",
+          "yaw": -40.47,
+          "pitch": 11.33,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_-20_40",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1274,
+          "bbox_xyxy": [
+            155.36,
+            0.02,
+            352.04,
+            50.86
+          ],
+          "raw_label": "window",
+          "yaw": -18.74,
+          "pitch": 41.48,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_15_5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1551,
+          "bbox_xyxy": [
+            416.25,
+            108.73,
+            555.2,
+            569.75
+          ],
+          "raw_label": "window",
+          "yaw": 14.84,
+          "pitch": 6.43,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_35_25",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1439,
+          "bbox_xyxy": [
+            576.87,
+            432.25,
+            768.0,
+            767.64
+          ],
+          "raw_label": "window",
+          "yaw": 37.27,
+          "pitch": 25.25,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_40_-35",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1677,
+          "bbox_xyxy": [
+            511.27,
+            0.58,
+            768.0,
+            484.4
+          ],
+          "raw_label": "window",
+          "yaw": 39.1,
+          "pitch": -32.86,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_50_-5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1233,
+          "bbox_xyxy": [
+            300.85,
+            233.36,
+            513.87,
+            581.84
+          ],
+          "raw_label": "window",
+          "yaw": 48.48,
+          "pitch": -3.51,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "combination_room__batch_window_80_5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1869,
+          "bbox_xyxy": [
+            254.19,
+            134.91,
+            386.75,
+            567.18
+          ],
+          "raw_label": "window",
+          "yaw": 80.61,
+          "pitch": 4.84,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "d8bdc5c3e1e88f3672da35df425cca3c",
+      "name": "入口迎宾区",
+      "filename": "d8bdc5c3e1e88f3672da35df425cca3c.jpg",
+      "order": 6,
+      "width": 2560,
+      "height": 1280,
+      "raw_detection_count": 30,
+      "raw_category_counts": {
+        "chair": 18,
+        "table": 8,
+        "cabinet": 1,
+        "sofa": 3
+      },
+      "group_count": 10,
+      "group_category_counts": {
+        "cabinet": 1,
+        "chair": 6,
+        "sofa": 1,
+        "table": 2
+      },
+      "groups": [
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_cabinet_130_-15",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1665,
+          "bbox_xyxy": [
+            648.94,
+            300.15,
+            767.94,
+            748.62
+          ],
+          "raw_label": "wardrobe",
+          "yaw": 130.19,
+          "pitch": -15.6,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_-145_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 6,
+          "confidence": 0.3466,
+          "bbox_xyxy": [
+            620.9,
+            539.61,
+            732.23,
+            638.84
+          ],
+          "raw_label": "chair",
+          "yaw": -142.7,
+          "pitch": -23.03,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_-135_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.3006,
+          "bbox_xyxy": [
+            0.03,
+            504.42,
+            40.98,
+            600.43
+          ],
+          "raw_label": "chair",
+          "yaw": -133.43,
+          "pitch": -17.67,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_-125_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.6151,
+          "bbox_xyxy": [
+            53.82,
+            526.13,
+            149.22,
+            616.74
+          ],
+          "raw_label": "chair",
+          "yaw": -126.34,
+          "pitch": -21.46,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_75_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5407,
+          "bbox_xyxy": [
+            564.99,
+            602.35,
+            691.23,
+            766.49
+          ],
+          "raw_label": "chair",
+          "yaw": 77.44,
+          "pitch": -33.43,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_80_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.1912,
+          "bbox_xyxy": [
+            299.74,
+            528.48,
+            343.07,
+            586.96
+          ],
+          "raw_label": "chair",
+          "yaw": 80.74,
+          "pitch": -24.06,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_chair_100_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.5491,
+          "bbox_xyxy": [
+            394.92,
+            590.74,
+            515.28,
+            747.17
+          ],
+          "raw_label": "chair",
+          "yaw": 100.49,
+          "pitch": -36.12,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_sofa_-135_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.4774,
+          "bbox_xyxy": [
+            712.92,
+            503.85,
+            768.0,
+            614.91
+          ],
+          "raw_label": "sofa",
+          "yaw": -137.13,
+          "pitch": -18.51,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_table_-135_-20",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.3547,
+          "bbox_xyxy": [
+            338.79,
+            507.8,
+            397.83,
+            552.82
+          ],
+          "raw_label": "desk",
+          "yaw": -137.34,
+          "pitch": -20.84,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "d8bdc5c3e1e88f3672da35df425cca3c__batch_table_90_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 5,
+          "confidence": 0.424,
+          "bbox_xyxy": [
+            339.8,
+            572.03,
+            427.44,
+            654.35
+          ],
+          "raw_label": "table",
+          "yaw": 89.94,
+          "pitch": -30.83,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "e82029f0f900bfd594d9c908060dacfe",
+      "name": "宴会休闲区",
+      "filename": "e82029f0f900bfd594d9c908060dacfe.jpg",
+      "order": 7,
+      "width": 7680,
+      "height": 3840,
+      "raw_detection_count": 126,
+      "raw_category_counts": {
+        "chair": 95,
+        "table": 25,
+        "cabinet": 4,
+        "window": 1,
+        "sofa": 1
+      },
+      "group_count": 46,
+      "group_category_counts": {
+        "cabinet": 3,
+        "chair": 31,
+        "sofa": 1,
+        "table": 10,
+        "window": 1
+      },
+      "groups": [
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_cabinet_-90_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.2391,
+          "bbox_xyxy": [
+            275.17,
+            362.87,
+            459.64,
+            491.37
+          ],
+          "raw_label": "cabinet",
+          "yaw": -92.47,
+          "pitch": -6.4,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_cabinet_-45_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1215,
+          "bbox_xyxy": [
+            0.03,
+            369.79,
+            56.27,
+            412.36
+          ],
+          "raw_label": "cabinet",
+          "yaw": -42.82,
+          "pitch": -0.77,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_cabinet_0_60",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.2353,
+          "bbox_xyxy": [
+            0.0,
+            0.17,
+            768.0,
+            768.0
+          ],
+          "raw_label": "wardrobe",
+          "yaw": 0.0,
+          "pitch": 59.99,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-155_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.7356,
+          "bbox_xyxy": [
+            447.38,
+            577.85,
+            657.98,
+            736.61
+          ],
+          "raw_label": "chair",
+          "yaw": -156.29,
+          "pitch": -33.08,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-140_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.6992,
+          "bbox_xyxy": [
+            655.22,
+            576.03,
+            768.0,
+            734.2
+          ],
+          "raw_label": "chair",
+          "yaw": -139.53,
+          "pitch": -28.24,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-125_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5737,
+          "bbox_xyxy": [
+            28.93,
+            530.04,
+            159.22,
+            661.52
+          ],
+          "raw_label": "chair",
+          "yaw": -127.05,
+          "pitch": -23.76,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-120_-20",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5451,
+          "bbox_xyxy": [
+            467.12,
+            478.24,
+            535.54,
+            558.42
+          ],
+          "raw_label": "chair",
+          "yaw": -118.01,
+          "pitch": -18.5,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-110_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1405,
+          "bbox_xyxy": [
+            206.18,
+            477.71,
+            251.45,
+            529.44
+          ],
+          "raw_label": "chair",
+          "yaw": -112.0,
+          "pitch": -16.1,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-110_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2036,
+          "bbox_xyxy": [
+            218.43,
+            450.85,
+            273.11,
+            495.12
+          ],
+          "raw_label": "chair",
+          "yaw": -109.8,
+          "pitch": -12.3,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-105_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2325,
+          "bbox_xyxy": [
+            595.33,
+            444.16,
+            650.01,
+            510.83
+          ],
+          "raw_label": "chair",
+          "yaw": -103.14,
+          "pitch": -11.68,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-100_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.3356,
+          "bbox_xyxy": [
+            626.49,
+            478.87,
+            727.58,
+            532.57
+          ],
+          "raw_label": "chair",
+          "yaw": -97.65,
+          "pitch": -14.14,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-95_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2082,
+          "bbox_xyxy": [
+            688.85,
+            452.53,
+            758.32,
+            475.08
+          ],
+          "raw_label": "chair",
+          "yaw": -93.51,
+          "pitch": -8.85,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-80_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 9,
+          "confidence": 0.4859,
+          "bbox_xyxy": [
+            1.45,
+            539.44,
+            185.89,
+            767.83
+          ],
+          "raw_label": "chair",
+          "yaw": -82.09,
+          "pitch": -29.25,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-65_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4202,
+          "bbox_xyxy": [
+            194.18,
+            509.33,
+            281.75,
+            671.95
+          ],
+          "raw_label": "chair",
+          "yaw": -65.82,
+          "pitch": -26.7,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_60_-70",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.5472,
+          "bbox_xyxy": [
+            307.77,
+            411.95,
+            694.05,
+            640.46
+          ],
+          "raw_label": "chair",
+          "yaw": 59.51,
+          "pitch": -71.42,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-50_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.5508,
+          "bbox_xyxy": [
+            589.95,
+            559.82,
+            768.0,
+            768.0
+          ],
+          "raw_label": "chair",
+          "yaw": -52.47,
+          "pitch": -30.03,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-45_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.1896,
+          "bbox_xyxy": [
+            0.0,
+            511.04,
+            27.51,
+            555.55
+          ],
+          "raw_label": "chair",
+          "yaw": -43.96,
+          "pitch": -15.64,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-45_-45",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.3377,
+          "bbox_xyxy": [
+            327.61,
+            730.82,
+            446.12,
+            767.99
+          ],
+          "raw_label": "chair",
+          "yaw": -44.57,
+          "pitch": -43.58,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-40_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1729,
+          "bbox_xyxy": [
+            26.27,
+            450.85,
+            94.58,
+            531.45
+          ],
+          "raw_label": "chair",
+          "yaw": -40.12,
+          "pitch": -12.05,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-40_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.4303,
+          "bbox_xyxy": [
+            7.95,
+            507.01,
+            157.2,
+            725.73
+          ],
+          "raw_label": "chair",
+          "yaw": -38.13,
+          "pitch": -25.45,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-30_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 4,
+          "confidence": 0.3137,
+          "bbox_xyxy": [
+            149.41,
+            444.16,
+            213.08,
+            525.67
+          ],
+          "raw_label": "chair",
+          "yaw": -27.83,
+          "pitch": -13.08,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_-15_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.4576,
+          "bbox_xyxy": [
+            195.78,
+            0.0,
+            274.5,
+            80.39
+          ],
+          "raw_label": "chair",
+          "yaw": -16.91,
+          "pitch": -17.42,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_5_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 6,
+          "confidence": 0.3906,
+          "bbox_xyxy": [
+            33.92,
+            473.24,
+            129.94,
+            596.41
+          ],
+          "raw_label": "chair",
+          "yaw": 6.81,
+          "pitch": -17.16,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_50_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 16,
+          "confidence": 0.5318,
+          "bbox_xyxy": [
+            0.0,
+            577.31,
+            117.36,
+            767.97
+          ],
+          "raw_label": "chair",
+          "yaw": 49.73,
+          "pitch": -29.84,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_30_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2334,
+          "bbox_xyxy": [
+            566.21,
+            451.95,
+            633.4,
+            523.43
+          ],
+          "raw_label": "chair",
+          "yaw": 29.34,
+          "pitch": -13.25,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_35_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2467,
+          "bbox_xyxy": [
+            695.39,
+            6.67,
+            768.0,
+            64.3
+          ],
+          "raw_label": "chair",
+          "yaw": 35.15,
+          "pitch": -14.69,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_40_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2017,
+          "bbox_xyxy": [
+            666.83,
+            440.29,
+            708.35,
+            503.77
+          ],
+          "raw_label": "chair",
+          "yaw": 38.33,
+          "pitch": -10.19,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_45_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1652,
+          "bbox_xyxy": [
+            0.01,
+            497.44,
+            22.89,
+            525.35
+          ],
+          "raw_label": "chair",
+          "yaw": 45.87,
+          "pitch": -13.39,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_45_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.3708,
+          "bbox_xyxy": [
+            0.0,
+            421.55,
+            31.55,
+            476.48
+          ],
+          "raw_label": "chair",
+          "yaw": 46.2,
+          "pitch": -6.97,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_75_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.5167,
+          "bbox_xyxy": [
+            229.18,
+            514.33,
+            364.89,
+            713.53
+          ],
+          "raw_label": "chair",
+          "yaw": 77.24,
+          "pitch": -30.28,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_80_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2386,
+          "bbox_xyxy": [
+            296.96,
+            461.68,
+            357.88,
+            548.73
+          ],
+          "raw_label": "chair",
+          "yaw": 81.62,
+          "pitch": -17.34,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_95_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 5,
+          "confidence": 0.4092,
+          "bbox_xyxy": [
+            34.29,
+            476.48,
+            136.69,
+            507.94
+          ],
+          "raw_label": "chair",
+          "yaw": 97.14,
+          "pitch": -12.54,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_105_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 7,
+          "confidence": 0.6848,
+          "bbox_xyxy": [
+            420.61,
+            536.11,
+            581.83,
+            763.38
+          ],
+          "raw_label": "chair",
+          "yaw": 106.98,
+          "pitch": -33.5,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_chair_165_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4609,
+          "bbox_xyxy": [
+            151.12,
+            584.76,
+            375.45,
+            746.04
+          ],
+          "raw_label": "chair",
+          "yaw": 162.55,
+          "pitch": -34.96,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_sofa_-180_-45",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2046,
+          "bbox_xyxy": [
+            19.45,
+            731.59,
+            766.81,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": -178.64,
+          "pitch": -43.6,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-175_-45",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.3799,
+          "bbox_xyxy": [
+            56.13,
+            735.73,
+            762.59,
+            767.98
+          ],
+          "raw_label": "desk",
+          "yaw": -176.22,
+          "pitch": -43.71,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-115_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.6351,
+          "bbox_xyxy": [
+            0.48,
+            493.79,
+            372.79,
+            767.77
+          ],
+          "raw_label": "desk",
+          "yaw": -117.2,
+          "pitch": -29.75,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-95_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1471,
+          "bbox_xyxy": [
+            602.86,
+            459.86,
+            767.99,
+            538.49
+          ],
+          "raw_label": "desk",
+          "yaw": -96.87,
+          "pitch": -13.28,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-85_-25",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.215,
+          "bbox_xyxy": [
+            0.01,
+            519.13,
+            86.86,
+            767.79
+          ],
+          "raw_label": "desk",
+          "yaw": -86.57,
+          "pitch": -26.82,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-50_-25",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 5,
+          "confidence": 0.3666,
+          "bbox_xyxy": [
+            246.51,
+            485.63,
+            464.26,
+            661.81
+          ],
+          "raw_label": "desk",
+          "yaw": -49.26,
+          "pitch": -26.23,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_-20_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 4,
+          "confidence": 0.2329,
+          "bbox_xyxy": [
+            193.64,
+            454.71,
+            277.07,
+            530.09
+          ],
+          "raw_label": "desk",
+          "yaw": -21.16,
+          "pitch": -14.75,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_35_-25",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 5,
+          "confidence": 0.4087,
+          "bbox_xyxy": [
+            564.72,
+            57.48,
+            767.8,
+            264.94
+          ],
+          "raw_label": "desk",
+          "yaw": 36.25,
+          "pitch": -24.86,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_100_-25",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.5447,
+          "bbox_xyxy": [
+            0.0,
+            500.55,
+            195.09,
+            748.9
+          ],
+          "raw_label": "desk",
+          "yaw": 98.28,
+          "pitch": -26.68,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_175_-40",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2493,
+          "bbox_xyxy": [
+            0.01,
+            654.98,
+            693.1,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 174.43,
+          "pitch": -40.33,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_table_180_-80",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1691,
+          "bbox_xyxy": [
+            2.36,
+            619.1,
+            767.01,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": 179.48,
+          "pitch": -81.13,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "e82029f0f900bfd594d9c908060dacfe__batch_window_180_5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.2598,
+          "bbox_xyxy": [
+            1.58,
+            0.4,
+            766.13,
+            725.52
+          ],
+          "raw_label": "window",
+          "yaw": 179.98,
+          "pitch": 3.14,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "en_suite",
+      "name": "套房卫浴",
+      "filename": "en_suite.jpg",
+      "order": 8,
+      "width": 8192,
+      "height": 4096,
+      "raw_detection_count": 19,
+      "raw_category_counts": {
+        "window": 5,
+        "table": 2,
+        "cabinet": 9,
+        "chair": 2,
+        "door": 1
+      },
+      "group_count": 13,
+      "group_category_counts": {
+        "cabinet": 6,
+        "chair": 2,
+        "door": 1,
+        "table": 1,
+        "window": 3
+      },
+      "groups": [
+        {
+          "id": "en_suite__batch_cabinet_-120_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1776,
+          "bbox_xyxy": [
+            176.08,
+            1.98,
+            766.05,
+            766.68
+          ],
+          "raw_label": "wardrobe",
+          "yaw": -122.23,
+          "pitch": -0.05,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_cabinet_-25_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 3,
+          "confidence": 0.221,
+          "bbox_xyxy": [
+            102.62,
+            0.0,
+            303.35,
+            767.55
+          ],
+          "raw_label": "wardrobe",
+          "yaw": -25.24,
+          "pitch": 0.03,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_cabinet_5_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1319,
+          "bbox_xyxy": [
+            0.0,
+            3.81,
+            82.25,
+            767.53
+          ],
+          "raw_label": "wardrobe",
+          "yaw": 3.24,
+          "pitch": -0.19,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_cabinet_10_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.3191,
+          "bbox_xyxy": [
+            431.22,
+            406.98,
+            500.41,
+            463.73
+          ],
+          "raw_label": "cabinet",
+          "yaw": 12.03,
+          "pitch": -7.45,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_cabinet_55_10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.2045,
+          "bbox_xyxy": [
+            2.18,
+            185.02,
+            263.65,
+            414.2
+          ],
+          "raw_label": "wardrobe",
+          "yaw": 56.82,
+          "pitch": 10.42,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_cabinet_180_30",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1627,
+          "bbox_xyxy": [
+            733.16,
+            0.27,
+            768.0,
+            212.02
+          ],
+          "raw_label": "cabinet",
+          "yaw": 178.67,
+          "pitch": 27.63,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_chair_10_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.4681,
+          "bbox_xyxy": [
+            83.19,
+            442.15,
+            107.56,
+            496.38
+          ],
+          "raw_label": "chair",
+          "yaw": 8.07,
+          "pitch": -10.06,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_chair_15_25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2975,
+          "bbox_xyxy": [
+            425.0,
+            557.97,
+            582.62,
+            713.98
+          ],
+          "raw_label": "chair",
+          "yaw": 16.28,
+          "pitch": 25.8,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_door_-50_-45",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.1765,
+          "bbox_xyxy": [
+            0.0,
+            0.75,
+            310.85,
+            732.3
+          ],
+          "raw_label": "door",
+          "yaw": -47.82,
+          "pitch": -46.39,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_table_10_-5",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.6007,
+          "bbox_xyxy": [
+            82.79,
+            410.28,
+            178.42,
+            477.65
+          ],
+          "raw_label": "desk",
+          "yaw": 11.58,
+          "pitch": -7.43,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_window_10_5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 2,
+          "confidence": 0.6495,
+          "bbox_xyxy": [
+            430.88,
+            335.26,
+            467.06,
+            395.99
+          ],
+          "raw_label": "window",
+          "yaw": 9.6,
+          "pitch": 2.7,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_window_85_30",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1472,
+          "bbox_xyxy": [
+            652.79,
+            0.0,
+            768.0,
+            199.87
+          ],
+          "raw_label": "window",
+          "yaw": 85.36,
+          "pitch": 29.41,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "en_suite__batch_window_115_35",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 2,
+          "confidence": 0.2409,
+          "bbox_xyxy": [
+            0.47,
+            0.0,
+            498.92,
+            184.92
+          ],
+          "raw_label": "window",
+          "yaw": 115.72,
+          "pitch": 35.63,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "hotel_room",
+      "name": "酒店客房",
+      "filename": "hotel_room.jpg",
+      "order": 9,
+      "width": 8192,
+      "height": 4096,
+      "raw_detection_count": 26,
+      "raw_category_counts": {
+        "chair": 9,
+        "table": 5,
+        "cabinet": 7,
+        "window": 1,
+        "door": 3,
+        "sofa": 1
+      },
+      "group_count": 15,
+      "group_category_counts": {
+        "cabinet": 5,
+        "chair": 4,
+        "door": 2,
+        "sofa": 1,
+        "table": 2,
+        "window": 1
+      },
+      "groups": [
+        {
+          "id": "hotel_room__batch_cabinet_-140_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1895,
+          "bbox_xyxy": [
+            692.66,
+            229.29,
+            768.0,
+            654.11
+          ],
+          "raw_label": "wardrobe",
+          "yaw": -137.95,
+          "pitch": -6.37,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_cabinet_-100_-30",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.412,
+          "bbox_xyxy": [
+            558.08,
+            557.49,
+            767.99,
+            767.87
+          ],
+          "raw_label": "cabinet",
+          "yaw": -99.0,
+          "pitch": -30.42,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_cabinet_-50_-40",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.3402,
+          "bbox_xyxy": [
+            0.0,
+            193.0,
+            260.98,
+            485.59
+          ],
+          "raw_label": "cabinet",
+          "yaw": -47.7,
+          "pitch": -42.14,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_cabinet_-40_-35",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.5006,
+          "bbox_xyxy": [
+            0.0,
+            640.72,
+            160.39,
+            768.0
+          ],
+          "raw_label": "cabinet",
+          "yaw": -38.35,
+          "pitch": -33.2,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_cabinet_140_15",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.3845,
+          "bbox_xyxy": [
+            0.11,
+            27.3,
+            131.82,
+            453.32
+          ],
+          "raw_label": "cabinet",
+          "yaw": 140.37,
+          "pitch": 16.08,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_chair_-110_-30",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.5394,
+          "bbox_xyxy": [
+            160.7,
+            544.95,
+            305.06,
+            731.02
+          ],
+          "raw_label": "chair",
+          "yaw": -111.48,
+          "pitch": -31.61,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_chair_-90_-55",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.2219,
+          "bbox_xyxy": [
+            0.02,
+            490.05,
+            172.39,
+            694.42
+          ],
+          "raw_label": "chair",
+          "yaw": -87.76,
+          "pitch": -55.69,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_chair_-85_-40",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.7571,
+          "bbox_xyxy": [
+            283.78,
+            607.27,
+            533.52,
+            767.96
+          ],
+          "raw_label": "chair",
+          "yaw": -86.33,
+          "pitch": -38.27,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_chair_-15_-35",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.8825,
+          "bbox_xyxy": [
+            164.9,
+            51.12,
+            427.06,
+            384.25
+          ],
+          "raw_label": "chair",
+          "yaw": -14.68,
+          "pitch": -35.68,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "hotel_room__batch_door_-140_-5",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.2129,
+          "bbox_xyxy": [
+            692.52,
+            226.66,
+            768.0,
+            648.37
+          ],
+          "raw_label": "door",
+          "yaw": -137.96,
+          "pitch": -5.91,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_door_165_-10",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 2,
+          "confidence": 0.1986,
+          "bbox_xyxy": [
+            235.55,
+            199.91,
+            361.5,
+            684.27
+          ],
+          "raw_label": "door",
+          "yaw": 167.45,
+          "pitch": -8.4,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_sofa_65_-70",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.3935,
+          "bbox_xyxy": [
+            272.33,
+            297.53,
+            767.7,
+            768.0
+          ],
+          "raw_label": "sofa",
+          "yaw": 65.09,
+          "pitch": -69.77,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_table_-75_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 4,
+          "confidence": 0.7898,
+          "bbox_xyxy": [
+            240.57,
+            524.19,
+            768.0,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": -72.61,
+          "pitch": -33.08,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "hotel_room__batch_table_-40_-35",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.5398,
+          "bbox_xyxy": [
+            0.0,
+            640.28,
+            159.25,
+            768.0
+          ],
+          "raw_label": "desk",
+          "yaw": -38.4,
+          "pitch": -33.16,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "hotel_room__batch_window_120_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1206,
+          "bbox_xyxy": [
+            577.41,
+            358.19,
+            659.93,
+            425.93
+          ],
+          "raw_label": "window",
+          "yaw": 121.43,
+          "pitch": -1.03,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "lythwood_lounge",
+      "name": "会客厅",
+      "filename": "lythwood_lounge.jpg",
+      "order": 10,
+      "width": 8192,
+      "height": 4096,
+      "raw_detection_count": 112,
+      "raw_category_counts": {
+        "sofa": 52,
+        "chair": 18,
+        "table": 21,
+        "door": 2,
+        "window": 6,
+        "cabinet": 13
+      },
+      "group_count": 53,
+      "group_category_counts": {
+        "cabinet": 9,
+        "chair": 9,
+        "door": 2,
+        "sofa": 16,
+        "table": 11,
+        "window": 6
+      },
+      "groups": [
+        {
+          "id": "lythwood_lounge__batch_cabinet_-165_0",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.5369,
+          "bbox_xyxy": [
+            470.0,
+            334.86,
+            539.94,
+            463.36
+          ],
+          "raw_label": "cabinet",
+          "yaw": -162.51,
+          "pitch": -2.15,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_-140_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1347,
+          "bbox_xyxy": [
+            673.0,
+            411.88,
+            763.89,
+            461.41
+          ],
+          "raw_label": "cabinet",
+          "yaw": -138.95,
+          "pitch": -5.9,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_-125_-10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.2279,
+          "bbox_xyxy": [
+            45.8,
+            439.6,
+            158.25,
+            493.62
+          ],
+          "raw_label": "cabinet",
+          "yaw": -126.29,
+          "pitch": -9.84,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_-65_-10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.4024,
+          "bbox_xyxy": [
+            540.38,
+            395.83,
+            626.61,
+            526.64
+          ],
+          "raw_label": "cabinet",
+          "yaw": -62.55,
+          "pitch": -10.12,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_-55_-30",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.2546,
+          "bbox_xyxy": [
+            560.98,
+            497.24,
+            768.0,
+            768.0
+          ],
+          "raw_label": "cabinet",
+          "yaw": -53.85,
+          "pitch": -27.6,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_-35_-15",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.1686,
+          "bbox_xyxy": [
+            0.0,
+            0.0,
+            78.15,
+            77.12
+          ],
+          "raw_label": "cabinet",
+          "yaw": -35.08,
+          "pitch": -14.91,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_105_-10",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 2,
+          "confidence": 0.5679,
+          "bbox_xyxy": [
+            108.3,
+            435.88,
+            184.25,
+            517.31
+          ],
+          "raw_label": "cabinet",
+          "yaw": 103.24,
+          "pitch": -11.59,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_155_-30",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.2812,
+          "bbox_xyxy": [
+            427.26,
+            460.66,
+            648.61,
+            767.87
+          ],
+          "raw_label": "cabinet",
+          "yaw": 156.84,
+          "pitch": -29.1,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_cabinet_175_-5",
+          "label": "Cabinet",
+          "category": "cabinet",
+          "detected_count": 1,
+          "confidence": 0.4995,
+          "bbox_xyxy": [
+            670.21,
+            388.93,
+            767.87,
+            512.5
+          ],
+          "raw_label": "cabinet",
+          "yaw": 176.1,
+          "pitch": -7.46,
+          "material": "木材/复合板",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_-95_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1807,
+          "bbox_xyxy": [
+            677.32,
+            422.71,
+            767.95,
+            493.4
+          ],
+          "raw_label": "chair",
+          "yaw": -93.59,
+          "pitch": -8.23,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_-90_-5",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.1492,
+          "bbox_xyxy": [
+            0.02,
+            426.21,
+            27.17,
+            474.21
+          ],
+          "raw_label": "chair",
+          "yaw": -88.97,
+          "pitch": -7.07,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_-70_-15",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.549,
+          "bbox_xyxy": [
+            508.25,
+            437.0,
+            566.1,
+            537.3
+          ],
+          "raw_label": "chair",
+          "yaw": -68.25,
+          "pitch": -14.01,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_-65_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.337,
+          "bbox_xyxy": [
+            221.66,
+            395.74,
+            297.04,
+            523.07
+          ],
+          "raw_label": "chair",
+          "yaw": -62.98,
+          "pitch": -10.58,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_50_-25",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 3,
+          "confidence": 0.5621,
+          "bbox_xyxy": [
+            343.0,
+            483.72,
+            465.33,
+            611.63
+          ],
+          "raw_label": "chair",
+          "yaw": 48.01,
+          "pitch": -23.06,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_45_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.2515,
+          "bbox_xyxy": [
+            722.01,
+            424.95,
+            768.0,
+            500.5
+          ],
+          "raw_label": "chair",
+          "yaw": 43.23,
+          "pitch": -8.5,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_75_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 2,
+          "confidence": 0.4619,
+          "bbox_xyxy": [
+            245.45,
+            410.53,
+            304.64,
+            467.07
+          ],
+          "raw_label": "chair",
+          "yaw": 74.16,
+          "pitch": -7.82,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_85_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 6,
+          "confidence": 0.2212,
+          "bbox_xyxy": [
+            651.48,
+            418.22,
+            768.0,
+            538.75
+          ],
+          "raw_label": "chair",
+          "yaw": 85.31,
+          "pitch": -10.63,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_chair_90_-10",
+          "label": "Chair",
+          "category": "chair",
+          "detected_count": 1,
+          "confidence": 0.5768,
+          "bbox_xyxy": [
+            0.01,
+            420.39,
+            22.14,
+            512.6
+          ],
+          "raw_label": "chair",
+          "yaw": 90.84,
+          "pitch": -8.76,
+          "material": "混合材质",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_door_-35_-5",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.2217,
+          "bbox_xyxy": [
+            34.22,
+            303.21,
+            152.38,
+            532.51
+          ],
+          "raw_label": "door",
+          "yaw": -37.13,
+          "pitch": -4.02,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_door_0_60",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.1982,
+          "bbox_xyxy": [
+            0.0,
+            0.65,
+            767.09,
+            763.67
+          ],
+          "raw_label": "door",
+          "yaw": -0.14,
+          "pitch": 60.27,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-170_-25",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.8664,
+          "bbox_xyxy": [
+            273.49,
+            449.6,
+            601.66,
+            697.36
+          ],
+          "raw_label": "sofa",
+          "yaw": -172.06,
+          "pitch": -26.05,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-150_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 9,
+          "confidence": 0.832,
+          "bbox_xyxy": [
+            507.38,
+            417.13,
+            718.68,
+            503.43
+          ],
+          "raw_label": "sofa",
+          "yaw": -149.19,
+          "pitch": -9.68,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-110_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.8863,
+          "bbox_xyxy": [
+            151.05,
+            414.8,
+            326.81,
+            507.3
+          ],
+          "raw_label": "sofa",
+          "yaw": -110.7,
+          "pitch": -10.63,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-90_-25",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.9392,
+          "bbox_xyxy": [
+            236.37,
+            440.77,
+            512.07,
+            649.35
+          ],
+          "raw_label": "sofa",
+          "yaw": -91.46,
+          "pitch": -22.75,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-95_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2846,
+          "bbox_xyxy": [
+            677.14,
+            422.93,
+            768.0,
+            493.96
+          ],
+          "raw_label": "sofa",
+          "yaw": -93.6,
+          "pitch": -8.27,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-60_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.2092,
+          "bbox_xyxy": [
+            541.15,
+            396.11,
+            626.73,
+            527.9
+          ],
+          "raw_label": "sofa",
+          "yaw": -62.49,
+          "pitch": -10.21,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_-15_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.9436,
+          "bbox_xyxy": [
+            496.92,
+            421.57,
+            736.43,
+            560.41
+          ],
+          "raw_label": "sofa",
+          "yaw": -13.79,
+          "pitch": -13.4,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_25_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.9486,
+          "bbox_xyxy": [
+            144.59,
+            417.89,
+            338.27,
+            555.36
+          ],
+          "raw_label": "sofa",
+          "yaw": 24.63,
+          "pitch": -14.07,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_50_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 6,
+          "confidence": 0.621,
+          "bbox_xyxy": [
+            0.0,
+            473.78,
+            134.14,
+            674.06
+          ],
+          "raw_label": "sofa",
+          "yaw": 50.47,
+          "pitch": -20.88,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_70_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.277,
+          "bbox_xyxy": [
+            198.98,
+            458.66,
+            283.36,
+            514.69
+          ],
+          "raw_label": "sofa",
+          "yaw": 69.6,
+          "pitch": -14.07,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_110_-30",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.8666,
+          "bbox_xyxy": [
+            251.79,
+            480.49,
+            768.0,
+            767.8
+          ],
+          "raw_label": "couch",
+          "yaw": 108.15,
+          "pitch": -30.72,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_85_-10",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 2,
+          "confidence": 0.7775,
+          "bbox_xyxy": [
+            652.79,
+            418.6,
+            767.97,
+            537.03
+          ],
+          "raw_label": "sofa",
+          "yaw": 85.36,
+          "pitch": -10.55,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_95_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.198,
+          "bbox_xyxy": [
+            0.0,
+            497.91,
+            159.67,
+            576.45
+          ],
+          "raw_label": "sofa",
+          "yaw": 96.62,
+          "pitch": -17.36,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_120_-15",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 3,
+          "confidence": 0.8038,
+          "bbox_xyxy": [
+            218.95,
+            422.81,
+            347.58,
+            535.04
+          ],
+          "raw_label": "sofa",
+          "yaw": 120.3,
+          "pitch": -13.45,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_135_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 4,
+          "confidence": 0.2023,
+          "bbox_xyxy": [
+            351.35,
+            467.38,
+            425.29,
+            561.69
+          ],
+          "raw_label": "couch",
+          "yaw": 135.64,
+          "pitch": -18.77,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_sofa_175_-20",
+          "label": "Sofa",
+          "category": "sofa",
+          "detected_count": 1,
+          "confidence": 0.8364,
+          "bbox_xyxy": [
+            595.36,
+            459.05,
+            767.93,
+            705.54
+          ],
+          "raw_label": "sofa",
+          "yaw": 172.78,
+          "pitch": -22.2,
+          "material": "织物与软包",
+          "recommended_pathway": "REFURBISH",
+          "evidence_status": "supported"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-160_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2642,
+          "bbox_xyxy": [
+            111.83,
+            464.04,
+            271.03,
+            530.75
+          ],
+          "raw_label": "table",
+          "yaw": -161.63,
+          "pitch": -14.79,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-105_-15",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.1697,
+          "bbox_xyxy": [
+            257.09,
+            460.48,
+            324.43,
+            503.1
+          ],
+          "raw_label": "table",
+          "yaw": -103.65,
+          "pitch": -13.9,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-90_-5",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.1863,
+          "bbox_xyxy": [
+            705.54,
+            423.22,
+            768.0,
+            469.73
+          ],
+          "raw_label": "desk",
+          "yaw": -92.43,
+          "pitch": -6.83,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-85_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2982,
+          "bbox_xyxy": [
+            2.57,
+            445.99,
+            92.56,
+            473.56
+          ],
+          "raw_label": "desk",
+          "yaw": -86.22,
+          "pitch": -8.44,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-65_-45",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1304,
+          "bbox_xyxy": [
+            0.0,
+            84.83,
+            143.3,
+            762.86
+          ],
+          "raw_label": "desk",
+          "yaw": -63.24,
+          "pitch": -45.22,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_-55_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 1,
+          "confidence": 0.1687,
+          "bbox_xyxy": [
+            237.68,
+            481.12,
+            400.33,
+            729.23
+          ],
+          "raw_label": "desk",
+          "yaw": -54.61,
+          "pitch": -29.59,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_35_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.4174,
+          "bbox_xyxy": [
+            601.75,
+            433.56,
+            674.6,
+            466.62
+          ],
+          "raw_label": "desk",
+          "yaw": 33.5,
+          "pitch": -8.17,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_80_-10",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2223,
+          "bbox_xyxy": [
+            608.06,
+            451.91,
+            674.21,
+            510.61
+          ],
+          "raw_label": "table",
+          "yaw": 78.81,
+          "pitch": -11.88,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_85_-5",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 3,
+          "confidence": 0.3877,
+          "bbox_xyxy": [
+            647.16,
+            428.55,
+            719.81,
+            457.7
+          ],
+          "raw_label": "desk",
+          "yaw": 82.95,
+          "pitch": -6.92,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_115_-20",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.2423,
+          "bbox_xyxy": [
+            151.88,
+            491.79,
+            328.94,
+            572.63
+          ],
+          "raw_label": "table",
+          "yaw": 114.5,
+          "pitch": -19.88,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_table_155_-30",
+          "label": "Table",
+          "category": "table",
+          "detected_count": 2,
+          "confidence": 0.3039,
+          "bbox_xyxy": [
+            427.82,
+            460.97,
+            648.37,
+            767.87
+          ],
+          "raw_label": "desk",
+          "yaw": 156.86,
+          "pitch": -29.11,
+          "material": "木材/金属",
+          "recommended_pathway": "DIRECT_REUSE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_-130_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1304,
+          "bbox_xyxy": [
+            400.16,
+            356.19,
+            468.57,
+            406.74
+          ],
+          "raw_label": "window",
+          "yaw": -127.53,
+          "pitch": 0.38,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_0_60",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1707,
+          "bbox_xyxy": [
+            2.07,
+            0.24,
+            763.81,
+            763.08
+          ],
+          "raw_label": "window",
+          "yaw": -0.32,
+          "pitch": 60.35,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_40_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.3607,
+          "bbox_xyxy": [
+            327.24,
+            356.56,
+            382.61,
+            425.0
+          ],
+          "raw_label": "window",
+          "yaw": 40.67,
+          "pitch": -1.01,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_75_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1782,
+          "bbox_xyxy": [
+            592.75,
+            354.79,
+            636.22,
+            430.11
+          ],
+          "raw_label": "window",
+          "yaw": 75.97,
+          "pitch": -1.08,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_85_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1287,
+          "bbox_xyxy": [
+            689.95,
+            363.16,
+            721.1,
+            436.42
+          ],
+          "raw_label": "window",
+          "yaw": 84.94,
+          "pitch": -1.81,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "lythwood_lounge__batch_window_180_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1735,
+          "bbox_xyxy": [
+            752.92,
+            241.3,
+            768.0,
+            373.19
+          ],
+          "raw_label": "window",
+          "yaw": 179.43,
+          "pitch": 8.12,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    },
+    {
+      "id": "old_room",
+      "name": "历史空置厅",
+      "filename": "old_room.jpg",
+      "order": 11,
+      "width": 8192,
+      "height": 4096,
+      "raw_detection_count": 16,
+      "raw_category_counts": {
+        "window": 15,
+        "door": 1
+      },
+      "group_count": 8,
+      "group_category_counts": {
+        "door": 1,
+        "window": 7
+      },
+      "groups": [
+        {
+          "id": "old_room__batch_door_95_0",
+          "label": "Door",
+          "category": "door",
+          "detected_count": 1,
+          "confidence": 0.1981,
+          "bbox_xyxy": [
+            0.0,
+            184.81,
+            125.18,
+            558.03
+          ],
+          "raw_label": "door",
+          "yaw": 95.07,
+          "pitch": 1.44,
+          "material": "木材",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_-140_0",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 4,
+          "confidence": 0.4867,
+          "bbox_xyxy": [
+            667.48,
+            356.96,
+            697.6,
+            401.77
+          ],
+          "raw_label": "window",
+          "yaw": -142.14,
+          "pitch": 0.55,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_-70_5",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1595,
+          "bbox_xyxy": [
+            485.17,
+            218.13,
+            549.37,
+            445.31
+          ],
+          "raw_label": "window",
+          "yaw": -70.86,
+          "pitch": 7.33,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_-55_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 2,
+          "confidence": 0.2845,
+          "bbox_xyxy": [
+            577.2,
+            123.49,
+            758.45,
+            459.48
+          ],
+          "raw_label": "window",
+          "yaw": -53.53,
+          "pitch": 10.97,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_-40_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1245,
+          "bbox_xyxy": [
+            403.21,
+            216.89,
+            464.81,
+            438.48
+          ],
+          "raw_label": "window",
+          "yaw": -37.58,
+          "pitch": 8.27,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_0_20",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 3,
+          "confidence": 0.2656,
+          "bbox_xyxy": [
+            305.11,
+            618.86,
+            453.98,
+            768.0
+          ],
+          "raw_label": "window",
+          "yaw": -0.55,
+          "pitch": 21.14,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_30_15",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 3,
+          "confidence": 0.2035,
+          "bbox_xyxy": [
+            213.84,
+            111.64,
+            380.71,
+            445.48
+          ],
+          "raw_label": "window",
+          "yaw": 32.27,
+          "pitch": 14.99,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        },
+        {
+          "id": "old_room__batch_window_70_10",
+          "label": "Window",
+          "category": "window",
+          "detected_count": 1,
+          "confidence": 0.1457,
+          "bbox_xyxy": [
+            171.26,
+            146.52,
+            302.12,
+            447.09
+          ],
+          "raw_label": "window",
+          "yaw": 69.01,
+          "pitch": 11.97,
+          "material": "玻璃与金属",
+          "recommended_pathway": "KEEP_IN_PLACE",
+          "evidence_status": "conditional"
+        }
+      ]
+    }
+  ]
+}

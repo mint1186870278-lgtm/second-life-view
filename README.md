@@ -1,6 +1,6 @@
-# Second Life View · Spatial Agent
+# Second Life View · Spatial Agent + React
 
-这是一个面向建筑改造与空间再利用的黑客松后端 demo。它把 **Windows 上的 Insta360 CameraSDK/YOLO** 与 **Linux 上的 LangGraph、VLM、Research、设计和 3D 工具** 解耦：Windows 只负责采集和执行拍摄动作，Linux 负责判断“还缺什么证据”、调度 Agent 并生成可追溯结果。
+这是一个面向建筑改造与空间再利用的全栈黑客松 demo。React 前端已经与 **FastAPI + LangGraph + YOLO-World + Evidence / Research / Design Agent + Aholo Spatial Gen** 融合；Windows 端的 Insta360 CameraSDK 仍保持解耦，后续只需要替换现场素材入口。
 
 ## Demo 故事
 
@@ -14,19 +14,57 @@
 
 ## 运行
 
+### 单服务完整 Demo
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+npm ci
 cp .env.example .env  # 只在本机填写密钥，文件已被 gitignore
-python3 run.py
+npm start
 ```
 
-访问 `http://localhost:8000/docs`。没有任何密钥和相机也可以运行，模型与外部工具会返回可解释的 mock/fixture 结果。
+访问 `http://localhost:8000/create/project`，依次进入“项目设置 → 现场素材接入 → 分析处理完成”。`npm start` 会先构建 React，再由 FastAPI 同时托管 SPA、样例图片和 API。API 文档仍位于 `http://localhost:8000/docs`。
+
+如果 `8000` 已被占用，可运行 `PORT=8011 npm start`。
+
+没有任何密钥和相机也可以运行：
+
+- 第二页读取 `data/samples/pictures` 的 11 张全景图，并默认选择前 5 张作为 Demo 输入；
+- YOLO-World 使用仓库内可复现的跨视角检测/去重 fixture（589 个原始框、263 个构件组）；
+- Evidence Agent 对低置信度与缺失字段设闸，Demo 自动模拟补拍并写入 `verified` 证据；
+- Research / Design Agent 输出本地知识库支撑的翻新草案；
+- Aholo 未启用时返回带预览图的 mock，启用 `AHOLO_API_KEY` 和 `USE_EXTERNAL_TOOLS=true` 后会上传首张场景并提交 Spatial Gen。
+
+### 前后端开发模式
+
+```bash
+# terminal 1
+npm run dev:api
+
+# terminal 2
+npm run dev
+```
+
+Vite 会把 `/api` 和 `/demo-assets` 代理到 `http://127.0.0.1:8000`。
 
 ## API 快速演示
 
 ```bash
+# 查看第二页使用的本地样例素材
+curl -s http://localhost:8000/api/v1/demo/scenes | jq
+
+# 一次执行 Aholo → YOLO/Perception → Evidence → Research/Design 全链路
+curl -s -X POST http://localhost:8000/api/v1/demo/analyze \
+  -H 'content-type: application/json' \
+  -d '{
+    "scene_ids":["hotel_room","en_suite"],
+    "user_goal":"评估空间构件的再利用机会并提出低碳翻新方案",
+    "region":"南京 · 江苏",
+    "spatial_prompt":"保留布局，更新为明亮、低碳、可逆施工的现代空间"
+  }' | jq
+
 # 启动主动感知 run；省略 detections 会载入演示木柜和门
 curl -s -X POST http://localhost:8000/api/v1/runs \
   -H 'content-type: application/json' \

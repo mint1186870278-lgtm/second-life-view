@@ -87,3 +87,48 @@ def test_research_returns_provenance_and_local_opportunities():
     assert any(item["source_type"] == "knowledge_base" for item in sources)
     assert any(item["source_type"] == "local_opportunity" for item in sources)
     assert {item["provenance"] for item in sources}.issubset({"verified", "inferred", "to_confirm"})
+
+
+def test_picture_demo_catalog_and_full_chain():
+    client = TestClient(app)
+    catalog = client.get("/api/v1/demo/scenes")
+    assert catalog.status_code == 200
+    scenes = catalog.json()["scenes"]
+    assert len(scenes) == 11
+    assert all(item["asset_url"].startswith("/demo-assets/") for item in scenes)
+    assert all(item["thumbnail_url"].startswith("/api/v1/demo/scenes/") for item in scenes)
+    assert all(item["annotated_url"].startswith("/api/v1/demo/scenes/") for item in scenes)
+    assert sum(item["group_count"] for item in scenes) == 263
+
+    result = client.post(
+        "/api/v1/demo/analyze",
+        json={
+            "scene_ids": ["hotel_room"],
+            "user_goal": "评估酒店客房构件并提出低碳翻新方案",
+            "region": "南京 · 江苏",
+            "spatial_prompt": "保留布局并升级为明亮低碳客房",
+        },
+    )
+    assert result.status_code == 200
+    body = result.json()
+    assert body["status"] == "completed"
+    assert body["raw_detection_count"] == 26
+    assert body["component_count"] == 26
+    assert body["pending_evidence_count"] == 0
+    assert body["evidence_checked_count"] > 0
+    assert body["design"]["title"]
+    assert body["spatial_generation"]["provider"] == "aholo-spatial-gen"
+    assert {item["agent"] for item in body["events"]} >= {"perception", "evidence", "research", "design"}
+
+
+def test_demo_picture_asset_is_served():
+    response = TestClient(app).get("/demo-assets/hotel_room.jpg")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("image/jpeg")
+    thumbnail = TestClient(app).get("/api/v1/demo/scenes/hotel_room/thumbnail")
+    assert thumbnail.status_code == 200
+    assert thumbnail.headers["content-type"].startswith("image/jpeg")
+    assert len(thumbnail.content) < len(response.content)
+    annotated = TestClient(app).get("/api/v1/demo/scenes/hotel_room/annotated")
+    assert annotated.status_code == 200
+    assert annotated.headers["content-type"].startswith("image/jpeg")

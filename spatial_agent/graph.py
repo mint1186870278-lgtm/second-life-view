@@ -75,7 +75,7 @@ class SpatialAgentGraph:
             state.detections = detections
             self._event(state, "perception", "fixture", "未收到 YOLO JSON，载入演示检测结果")
         vlm_results: list[dict[str, Any]] = []
-        if self.bailian.enabled and state.image_urls:
+        if self.bailian.enabled and state.image_urls and not state.metadata.get("skip_vlm_enrichment"):
             for image_url in state.image_urls[:2]:
                 try:
                     result = await self.bailian.inspect_space(image_url, [d.model_dump(by_alias=True) for d in detections], state.user_goal)

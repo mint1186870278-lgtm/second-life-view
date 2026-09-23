@@ -1,16 +1,20 @@
 from __future__ import annotations
 import asyncio
 import json
+from pathlib import Path
 from typing import AsyncIterator
 import httpx
 from fastapi import File, Form, UploadFile, FastAPI, HTTPException
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, RedirectResponse, Response, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from spatial_agent.config import get_settings
+from spatial_agent.demo import PICTURE_DIR, analyze_demo, list_demo_scenes, load_demo_annotated_preview, load_demo_thumbnail
 from spatial_agent.graph import SpatialAgentGraph
 from spatial_agent.providers.aholo_world import AholoWorldClient
 from spatial_agent.providers.oss import OSSClient, save_upload_to_temp
 from spatial_agent.providers.tripo import TripoClient
-from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest, SpatialGenRequest
+from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DemoAnalyzeRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest, SpatialGenRequest
 from spatial_agent.yolo_adapter import available_scenes, load_scene
 
 settings = get_settings()
@@ -21,6 +25,14 @@ tripo = TripoClient(settings)
 runs: dict[str, RunState] = {}
 
 app = FastAPI(title="Second Life View · Spatial Agent", version="0.1.0", description="Insta360 + YOLO + active perception multi-agent backend")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.mount("/demo-assets", StaticFiles(directory=PICTURE_DIR), name="demo-assets")
 
 @app.get("/health")
 def health() -> dict:
@@ -90,6 +102,43 @@ def yolo_scenes() -> dict:
 @app.get("/api/v1/demo")
 def demo_contract() -> dict:
     return {"story": "发现旧木柜 → 证据闸门 → 相机补拍材质近景 → 再利用评估 → 翻新方案", "agents": ["supervisor", "perception", "evidence", "research", "design"], "windows_bridge": {"input": "POST /api/v1/runs", "resume": "POST /api/v1/runs/{run_id}/capture/complete", "detection_schema": {"class": "wood_cabinet", "bbox": [0.1, 0.2, 0.4, 0.8], "confidence": 0.9}}, "evidence_labels": ["verified", "inferred", "to_confirm"]}
+
+
+@app.get("/api/v1/demo/scenes")
+def demo_scenes() -> dict:
+    return {"scenes": list_demo_scenes(), "source": "data/samples/pictures"}
+
+
+@app.get("/api/v1/demo/scenes/{scene_id}/thumbnail")
+def demo_scene_thumbnail(scene_id: str) -> Response:
+    try:
+        content = load_demo_thumbnail(scene_id)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=3600"})
+
+
+@app.get("/api/v1/demo/scenes/{scene_id}/annotated")
+def demo_scene_annotated(scene_id: str) -> Response:
+    try:
+        content = load_demo_annotated_preview(scene_id)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=3600"})
+
+
+@app.post("/api/v1/demo/analyze")
+async def demo_analyze(request: DemoAnalyzeRequest) -> dict:
+    try:
+        state, result = await analyze_demo(request, agent=agent, aholo_world=aholo_world)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    runs[state.run_id] = state
+    return result
 
 @app.post("/api/v1/runs", response_model=RunState)
 async def create_run(request: AnalyzeRequest) -> RunState:
@@ -507,3 +556,19 @@ async def research(request: ResearchRequest) -> dict:
     await agent.research({"state": state, "enable_research": True, "enable_design": False, "include_web": request.include_web})
     runs[state.run_id] = state
     return {"run_id": state.run_id, "sources": [s.model_dump(mode="json") for s in state.sources]}
+
+
+frontend_dist = Path(__file__).resolve().parents[1] / "dist"
+if frontend_dist.exists():
+    assets_dir = frontend_dist / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="frontend-assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def frontend_app(full_path: str) -> FileResponse:
+        if full_path.startswith("api/"):
+            raise HTTPException(404, "API route not found")
+        candidate = frontend_dist / full_path
+        if candidate.is_file() and frontend_dist in candidate.resolve().parents:
+            return FileResponse(candidate)
+        return FileResponse(frontend_dist / "index.html")

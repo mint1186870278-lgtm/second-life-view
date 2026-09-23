@@ -1,13 +1,15 @@
 # Install this file at ~/.codex/second-life-view-api.config.toml.
 # The key is read from SECOND_LIFE_VIEW_CODEX_API_KEY, never stored here.
-model = "gpt-6-astra"
+model = "evomap-gpt-5.6-terra"
 model_provider = "second-life-view-api"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
+model_reasoning_effort = "max"
 
 [model_providers.second-life-view-api]
-name = "second-life-view API gateway"
-# The gateway's root serves its web UI; OpenAI-compatible endpoints are under /v1.
-base_url = "https://api.openai-next.com/v1"
+name = "EvoMap API gateway"
+# EvoMap exposes Chat Completions at https://api.evomap.ai/v1/chat/completions.
+# Codex custom providers use the Responses protocol, so its base URL remains /v1.
+base_url = "https://api.evomap.ai/v1"
 env_key = "SECOND_LIFE_VIEW_CODEX_API_KEY"
 wire_api = "responses"

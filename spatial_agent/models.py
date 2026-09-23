@@ -202,3 +202,11 @@ class ResearchRequest(BaseModel):
     query: str
     region: str | None = None
     include_web: bool = False
+
+
+class DemoAnalyzeRequest(BaseModel):
+    scene_ids: list[str] = Field(default_factory=list)
+    user_goal: str = "评估已接入空间中的构件再利用机会，并提出低碳翻新方案"
+    region: str | None = None
+    spatial_prompt: str = "保留原空间结构与尺度，更新为明亮、低碳、可逆施工的现代室内空间"
+    include_web: bool = False
