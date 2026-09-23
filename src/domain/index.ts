@@ -1,4 +1,5 @@
 export * from './entities'
 export * from './enums'
 export * from './graph'
+export * from './humanVerification'
 export * from './ids'

@@ -8,7 +8,7 @@ import {
   C01ProjectSetupPage,
   C02SceneIngestionPage,
   C03AnalysisPage,
-  D01PlaceholderPage,
+  D01BatchDetailPage,
   W01RegenerationViewPage,
   W02ProjectReviewPage,
 } from '../pages'
@@ -33,7 +33,7 @@ export function App() {
         </Route>
         <Route path={ImplementationRoutes.w01} element={<W01RegenerationViewPage />} />
         <Route path={ImplementationRoutes.w02} element={<W02ProjectReviewPage />} />
-        <Route path={ImplementationRoutes.d01} element={<D01PlaceholderPage />} />
+        <Route path={ImplementationRoutes.d01} element={<D01BatchDetailPage />} />
         <Route path="*" element={<PlaceholderPage code="404" name="Development route not found" />} />
       </Routes>
     </ProjectSessionProvider>

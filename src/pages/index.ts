@@ -1,6 +1,6 @@
 export * from './C01ProjectSetupPage'
 export * from './C02SceneIngestionPage'
 export * from './C03AnalysisPage'
-export * from './D01PlaceholderPage'
+export * from './D01BatchDetailPage'
 export * from './W01RegenerationViewPage'
 export * from './W02ProjectReviewPage'

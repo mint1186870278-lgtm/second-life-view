@@ -1,11 +1,14 @@
-import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useProjectSession } from '../app/ProjectSessionContext'
 import { ImplementationRoutes } from '../app/routes'
 import { getWorkspaceDestinationRoute, WORKSPACE_NAVIGATION_ITEMS } from '../app/workspaceNavigation'
 import { w02DemoProjection } from '../config'
 import type { AssessmentBatchId, VerificationItem } from '../domain'
-import type { D01NavigationContext, W02DraftSummaryFilter } from '../navigation'
+import type {
+  D01NavigationContext, W02DraftReturnState, W02DraftSummaryFilter,
+  W02VerificationReturnState,
+} from '../navigation'
 import {
   selectW02ASummary,
   selectW02BSummary,
@@ -64,13 +67,28 @@ function W02ProjectReviewContent() {
     verificationItems,
   } = useProjectSession()
   const navigate = useNavigate()
-  const [tab, setTab] = useState<W02Tab>('draft')
-  const [draftFilters, setDraftFilters] = useState<W02DraftFilters>(DEFAULT_DRAFT_FILTERS)
-  const [summaryFilter, setSummaryFilter] = useState<W02DraftSummaryFilter>('all')
-  const [page, setPage] = useState(1)
-  const [verificationFilters, setVerificationFilters] = useState<W02VerificationFilters>(DEFAULT_VERIFICATION_FILTERS)
-  const [expandedMaterial, setExpandedMaterial] = useState<string | null>('木材')
+  const location = useLocation()
+  const returnState = (location.state as { d01ReturnState?: W02DraftReturnState | W02VerificationReturnState } | null)?.d01ReturnState
+  const draftReturn = returnState?.source_tab === 'review-draft' ? returnState : undefined
+  const verificationReturn = returnState?.source_tab === 'review-verification' ? returnState : undefined
+  const [tab, setTab] = useState<W02Tab>(verificationReturn ? 'verification' : 'draft')
+  const [draftFilters, setDraftFilters] = useState<W02DraftFilters>(() => draftReturn ? {
+    material: draftReturn.material_filter, scene: draftReturn.scene_filter,
+    evidence: draftReturn.evidence_filter, review: draftReturn.review_filter, search: draftReturn.search,
+  } : DEFAULT_DRAFT_FILTERS)
+  const [summaryFilter, setSummaryFilter] = useState<W02DraftSummaryFilter>(draftReturn?.summary_filter ?? 'all')
+  const [page, setPage] = useState(draftReturn?.page ?? 1)
+  const [verificationFilters, setVerificationFilters] = useState<W02VerificationFilters>(() => verificationReturn ? {
+    material: verificationReturn.material_filter, scene: verificationReturn.scene_filter,
+    type: verificationReturn.verification_type_filter, status: verificationReturn.verification_status_filter,
+    search: verificationReturn.search,
+  } : DEFAULT_VERIFICATION_FILTERS)
+  const [expandedMaterial, setExpandedMaterial] = useState<string | null>(verificationReturn?.expanded_material ?? '木材')
   const projectId = project!.project_id
+
+  useEffect(() => {
+    if (returnState?.scroll_y) window.scrollTo({ top: returnState.scroll_y })
+  }, [returnState?.scroll_y])
 
   const canonicalDraftRows = useMemo(() => selectW02DraftBatches(
     projectId,

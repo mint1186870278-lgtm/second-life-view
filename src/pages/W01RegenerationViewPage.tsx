@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useProjectSession } from '../app/ProjectSessionContext'
 import { ImplementationRoutes } from '../app/routes'
 import {
@@ -8,7 +8,7 @@ import {
 } from '../app/workspaceNavigation'
 import { w01DemoProjection } from '../config'
 import type { AssessmentBatchId, SceneId } from '../domain'
-import type { D01NavigationContext, W01ViewerMode } from '../navigation'
+import type { D01NavigationContext, W01ReturnState, W01ViewerMode } from '../navigation'
 import { selectW01SceneReadModel, type W01TaskReadModel } from '../selectors'
 import { Button, EmptyState, WorkspaceShell } from '../ui'
 import { ProjectSessionGate } from './ProjectSessionGate'
@@ -32,9 +32,16 @@ function W01RegenerationViewContent() {
     verificationItems,
   } = useProjectSession()
   const navigate = useNavigate()
-  const [selectedSceneId, setSelectedSceneId] = useState<SceneId | undefined>(scenes[0]?.scene_id)
-  const [viewerMode, setViewerMode] = useState<W01ViewerMode>('regeneration')
-  const [zoom, setZoom] = useState(W01_ZOOM_MIN)
+  const location = useLocation()
+  const candidate = (location.state as { d01ReturnState?: W01ReturnState } | null)?.d01ReturnState
+  const returnState = candidate && 'viewer_mode' in candidate ? candidate : undefined
+  const [selectedSceneId, setSelectedSceneId] = useState<SceneId | undefined>(returnState?.scene_id ?? scenes[0]?.scene_id)
+  const [viewerMode, setViewerMode] = useState<W01ViewerMode>(returnState?.viewer_mode ?? 'regeneration')
+  const [zoom, setZoom] = useState(() => Math.min(W01_ZOOM_MAX, Math.max(W01_ZOOM_MIN, returnState?.zoom_level ?? W01_ZOOM_MIN)))
+
+  useEffect(() => {
+    if (returnState?.scroll_y) window.scrollTo({ top: returnState.scroll_y })
+  }, [returnState?.scroll_y])
 
   const readModel = useMemo(() => selectW01SceneReadModel(
     project!.project_id,

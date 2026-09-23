@@ -24,6 +24,7 @@ export function ProjectContextSwitcher({
 interface WorkspaceGlobalHeaderProps {
   projectName: string
   projectContextLabel?: string
+  projectContext?: ReactNode
   center?: ReactNode
   action?: ReactNode
 }
@@ -31,6 +32,7 @@ interface WorkspaceGlobalHeaderProps {
 export function WorkspaceGlobalHeader({
   projectName,
   projectContextLabel,
+  projectContext,
   center,
   action,
 }: WorkspaceGlobalHeaderProps) {
@@ -39,12 +41,12 @@ export function WorkspaceGlobalHeader({
       <BrandLockup />
       <div className="workspace-header__center">{center}</div>
       <div className="workspace-header__actions">
-        <ProjectContextSwitcher projectName={projectName} contextLabel={projectContextLabel} />
-        {action ?? (
+        {projectContext ?? <ProjectContextSwitcher projectName={projectName} contextLabel={projectContextLabel} />}
+        {action === undefined ? (
           <Button variant="primary" disabled title="新建项目入口将在后续阶段连接">
             <Plus size={17} /> 新建项目
           </Button>
-        )}
+        ) : action}
       </div>
     </header>
   )
@@ -92,6 +94,7 @@ interface WorkspaceShellProps extends WorkspaceSidebarProps {
   frameClassName?: string
   projectName: string
   projectContextLabel?: string
+  projectContext?: ReactNode
   headerCenter?: ReactNode
   headerAction?: ReactNode
   sidebarSupplement?: ReactNode
@@ -102,6 +105,7 @@ interface WorkspaceShellProps extends WorkspaceSidebarProps {
 export function WorkspaceShell({
   projectName,
   projectContextLabel,
+  projectContext,
   headerCenter,
   headerAction,
   sidebarSupplement,
@@ -117,6 +121,7 @@ export function WorkspaceShell({
       <WorkspaceGlobalHeader
         projectName={projectName}
         projectContextLabel={projectContextLabel}
+        projectContext={projectContext}
         center={headerCenter}
         action={headerAction}
       />

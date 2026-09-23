@@ -91,7 +91,7 @@ describe('W01 Regeneration View', () => {
     renderW01()
     await user.click(await screen.findByRole('button', { name: '确认固定方式' }))
 
-    expect(screen.getByText('fixing_method')).toBeTruthy()
+    expect(document.getElementById('d01-field-fixing_method')).toBeTruthy()
     expect(screen.getByLabelText('navigation-state').textContent).toContain('"focus_target":"fixing_method"')
   })
 
