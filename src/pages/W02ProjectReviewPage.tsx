@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProjectSession } from '../app/ProjectSessionContext'
 import { ImplementationRoutes } from '../app/routes'
@@ -12,7 +12,7 @@ import {
   selectW02DraftBatches,
   selectW02VerificationRows,
 } from '../selectors'
-import { WorkspaceShell } from '../ui'
+import { Button, WorkspaceShell } from '../ui'
 import { ProjectSessionGate } from './ProjectSessionGate'
 import {
   W02AttentionRail,
@@ -319,7 +319,12 @@ function W02ProjectReviewContent() {
       items={WORKSPACE_NAVIGATION_ITEMS}
       activeDestination="review"
       onNavigate={(destination) => navigate(getWorkspaceDestinationRoute(destination))}
-      headerAction={<Fragment />}
+      headerCenter={<div className="w02-header-title">项目审查</div>}
+      headerAction={(
+        <Button className="workspace-context-action w02-view-entry" onClick={() => navigate(ImplementationRoutes.w01)}>
+          <span>返回再生视图</span>
+        </Button>
+      )}
       frameClassName="w02-frame"
       contentClassName="w02-main"
     >

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
@@ -146,5 +146,17 @@ describe('W02 Dual-view Project Review', () => {
     await user.click(await screen.findByRole('button', { name: '再生视图' }))
     expect(screen.getByLabelText('current-route').textContent).toBe(ImplementationRoutes.w01)
     expect(await screen.findByRole('heading', { name: '再生视图' })).toBeTruthy()
+  })
+
+  it('uses the shared Workspace header action to return to W01', async () => {
+    const user = userEvent.setup()
+    const view = renderW02()
+    await waitFor(() => expect(view.container.querySelector('.workspace-header')).not.toBeNull())
+
+    expect(view.container.querySelectorAll('.workspace-header')).toHaveLength(1)
+    const action = view.container.querySelector('.w02-view-entry') as HTMLButtonElement | null
+    expect(action).not.toBeNull()
+    await user.click(action!)
+    expect(screen.getByLabelText('current-route').textContent).toBe(ImplementationRoutes.w01)
   })
 })

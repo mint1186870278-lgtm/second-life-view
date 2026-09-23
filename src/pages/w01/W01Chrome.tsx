@@ -53,7 +53,7 @@ export function W01SidebarSupplement({
       </div>
       <div className="w01-sidebar-divider w01-sidebar-divider--groups" />
       <div className="w01-sidebar-section-title">构件分组</div>
-      <div className="w01-demo-groups" data-authority="demo-only">
+      <div className="w01-demo-groups" data-authority="demo-only" data-scroll-region="component-groups">
         {demoProjection.group_rows.map((row) => (
           <div className="w01-demo-group" key={row.label}>
             <span className={`w01-group-swatch is-${row.tone}`} />

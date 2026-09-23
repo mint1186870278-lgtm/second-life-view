@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
@@ -108,6 +108,16 @@ describe('W01 Regeneration View', () => {
     expect(card.tagName).toBe('SECTION')
     expect(card.querySelector('button')).toBeNull()
     expect(card.textContent).toContain('30 件构件，值得在拆除前再看一眼。')
+  })
+
+  it('uses the shared Workspace header and isolates component-group overflow', async () => {
+    const view = renderW01()
+    await waitFor(() => expect(view.container.querySelector('.workspace-header')).not.toBeNull())
+
+    expect(view.container.querySelectorAll('.workspace-header')).toHaveLength(1)
+    const groupList = view.container.querySelector('[data-scroll-region=component-groups]')
+    expect(groupList).not.toBeNull()
+    expect(groupList?.parentElement?.classList.contains('w01-sidebar-supplement')).toBe(true)
   })
 
   it('matches the approved W01 CTA and right-stack content', async () => {

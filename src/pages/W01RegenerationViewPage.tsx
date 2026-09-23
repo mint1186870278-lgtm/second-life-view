@@ -102,7 +102,7 @@ function W01RegenerationViewContent() {
       onNavigate={(destination) => navigate(getWorkspaceDestinationRoute(destination))}
       headerCenter={<ViewerModeSwitch mode={viewerMode} onChange={setViewerMode} />}
       headerAction={(
-        <Button className="w01-review-entry" onClick={() => navigate(ImplementationRoutes.w02)}>
+        <Button className="workspace-context-action w01-review-entry" onClick={() => navigate(ImplementationRoutes.w02)}>
           <span>进入项目审查</span>
         </Button>
       )}
