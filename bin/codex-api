@@ -1,22 +1,13 @@
 #!/usr/bin/env bash
-# Start Codex for this repository using its isolated API profile.
-# The credential itself is deliberately kept outside the repository.
+# Start Codex for this repository using the globally signed-in ChatGPT account.
+# Keep YOLO permissions for this repository without loading an API credential.
 set -euo pipefail
 
-credential_file="${HOME}/.codex/second-life-view-api.env"
+codex_binary="$(command -v codex)"
 
-if [[ ! -r "$credential_file" ]]; then
-  printf 'Codex API credential is unavailable: %s\n' "$credential_file" >&2
+if [[ -z "$codex_binary" ]]; then
+  printf 'Codex executable is unavailable on PATH.\n' >&2
   exit 1
 fi
 
-# This file is user-owned, permission-restricted configuration installed by setup.
-# shellcheck source=/dev/null
-source "$credential_file"
-
-if [[ -z "${SECOND_LIFE_VIEW_CODEX_API_KEY:-}" ]]; then
-  printf 'SECOND_LIFE_VIEW_CODEX_API_KEY is empty.\n' >&2
-  exit 1
-fi
-
-exec codex --profile second-life-view-api --dangerously-bypass-approvals-and-sandbox "$@"
+exec "$codex_binary" --dangerously-bypass-approvals-and-sandbox "$@"

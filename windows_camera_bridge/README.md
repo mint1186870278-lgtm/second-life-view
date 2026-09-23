@@ -153,6 +153,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/camera/capture \
 
 - `asset.image_url`：本地 `/camera-assets/...` URL，或配置 OSS 时的私有 OSS 签名 URL；
 - `gateway.remote_paths`：相机内原始素材路径；
+- `yolo`：Linux 实时 YOLO-World 的标注图 URL、检测 JSON URL、检测数和去重组数；
 - `run`：首次拍摄创建的分析状态、证据和后续 `capture_actions`。
 
 下载相机 SD 卡上已有文件：先查询 `/api/v1/camera/files`，然后将其返回的精确路径传入：
@@ -176,7 +177,31 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/camera/capture \
   }' | jq
 ```
 
-## 7. 运维边界
+## 7. Windows 已下载本地 JPEG 时主动上传 Linux
+
+如果 CameraSDK 已经在 Windows 本地生成 ERP JPEG，可以不走反向隧道下载，而是将文件直接推送到 Linux 的 `POST /api/v1/camera/ingest`。YOLO-World 仍只在 Linux 上运行；Windows 不应运行模型或上传检测框。
+
+先在 Linux `.env` 配置：
+
+```dotenv
+CAMERA_INGEST_TOKEN=<独立的高强度随机 token>
+CAMERA_INGEST_MAX_UPLOAD_MB=256
+YOLO_DEVICE=auto
+```
+
+然后在 Windows PowerShell 执行（Linux API 必须使用 HTTPS、VPN 或其他受控网络入口）：
+
+```powershell
+$metadata = '{"frame_id":"x5-20260923-001","camera_model":"Insta360 X5","projection":"equirectangular"}'
+curl.exe -X POST 'https://<linux-host>/api/v1/camera/ingest' `
+  -H 'Authorization: Bearer <CAMERA_INGEST_TOKEN>' `
+  -F 'file=@C:\Insta360Bridge\captures\stitched-room.jpg;type=image/jpeg' `
+  -F "metadata=$metadata"
+```
+
+需恢复证据补拍时，再追加 `-F 'run_id=<run_id>'` 与 `-F 'action_id=<capture_actions 中的 id>'`。响应的 `yolo.annotated_image_url`、`yolo.detections_url` 和 `run` 可直接交给 Windows UI 或上层业务。
+
+## 8. 运维边界
 
 - CameraSDK 桌面端连接相机使用 USB；SSH 是控制数据的传输通道，不会把 USB 设备“穿透”到 Linux。
 - `stitch=true` 需要 Windows 版 MediaSDK；`ImageStitcher` 以 CPU `TEMPLATE` 模式输出 ERP JPEG，优先保证稳定性。若需要 AI 拼接、ColorPlus 或实时预览，可在 Windows 端单独扩展 MediaSDK 处理。

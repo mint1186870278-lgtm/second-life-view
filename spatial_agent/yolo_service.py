@@ -108,9 +108,73 @@ class LiveYoloDetector:
         normalized_projection = self._normalize_projection(projection)
         output_dir.mkdir(parents=True, exist_ok=True)
         device = self._resolve_device()
+        try:
+            return self._detect_with_device(
+                image,
+                artifact_id=artifact_id,
+                output_dir=output_dir,
+                projection=normalized_projection,
+                device=device,
+                cv2=cv2,
+                np=np,
+                category_map=CATEGORY_MAP,
+                classes=CLASSES,
+                default_views=default_views,
+                render_view=render_view,
+                detect_view=detect_view,
+                draw_detections=draw_detections,
+                group_detections=group_detections,
+            )
+        except LiveYoloError:
+            raise
+        except Exception as error:  # noqa: BLE001 - retry only the automatic device choice
+            if not self._can_fallback_to_cpu(device, error):
+                raise LiveYoloError(f"YOLO inference failed: {error}") from error
+            try:
+                return self._detect_with_device(
+                    image,
+                    artifact_id=artifact_id,
+                    output_dir=output_dir,
+                    projection=normalized_projection,
+                    device="cpu",
+                    cv2=cv2,
+                    np=np,
+                    category_map=CATEGORY_MAP,
+                    classes=CLASSES,
+                    default_views=default_views,
+                    render_view=render_view,
+                    detect_view=detect_view,
+                    draw_detections=draw_detections,
+                    group_detections=group_detections,
+                )
+            except LiveYoloError:
+                raise
+            except Exception as fallback_error:  # noqa: BLE001 - preserve both device failures
+                raise LiveYoloError(
+                    f"YOLO failed on {device} ({error}) and CPU fallback ({fallback_error})"
+                ) from fallback_error
+
+    def _detect_with_device(
+        self,
+        image: Any,
+        *,
+        artifact_id: str,
+        output_dir: Path,
+        projection: str,
+        device: str | int,
+        cv2: Any,
+        np: Any,
+        category_map: dict[str, str],
+        classes: list[str],
+        default_views: Any,
+        render_view: Any,
+        detect_view: Any,
+        draw_detections: Any,
+        group_detections: Any,
+    ) -> LiveYoloResult:
         with self._inference_lock:
             model = self._load_model()
-            if normalized_projection == "equirectangular":
+            if projection == "equirectangular":
                 return self._detect_panorama(
                     image,
                     artifact_id=artifact_id,
@@ -131,11 +195,11 @@ class LiveYoloDetector:
                 output_dir=output_dir,
                 device=device,
                 cv2=cv2,
-                category_map=CATEGORY_MAP,
-                classes=CLASSES,
+                category_map=category_map,
+                classes=classes,
                 draw_detections=draw_detections,
                 model=model,
-                projection=normalized_projection,
+                projection=projection,
             )
 
     def _load_model(self) -> Any:
@@ -162,6 +226,14 @@ class LiveYoloDetector:
             return 0 if torch.cuda.is_available() else "cpu"
         except ImportError:  # pragma: no cover - ultralytics needs torch in production
             return "cpu"
+
+    def _can_fallback_to_cpu(self, device: str | int, error: Exception) -> bool:
+        configured = self.settings.yolo_device.strip().lower()
+        return (
+            configured in {"", "auto"}
+            and str(device).lower() != "cpu"
+            and "cuda" in str(error).lower()
+        )
 
     def _detect_panorama(
         self,
@@ -230,15 +302,12 @@ class LiveYoloDetector:
         model: Any,
         projection: str,
     ) -> LiveYoloResult:
-        try:
-            result = model.predict(
-                image,
-                conf=self.settings.yolo_confidence,
-                verbose=False,
-                device=device,
-            )[0]
-        except Exception as exc:  # noqa: BLE001 - normalize backend errors for the API
-            raise LiveYoloError(f"YOLO inference failed: {exc}") from exc
+        result = model.predict(
+            image,
+            conf=self.settings.yolo_confidence,
+            verbose=False,
+            device=device,
+        )[0]
 
         raw_detections: list[dict[str, Any]] = []
         if result.boxes is not None:

@@ -153,11 +153,40 @@ Research Agent 当前采用离线优先的轻量检索：`data/knowledge/materia
 Linux 侧新增接口：
 
 - `GET /api/v1/camera/status`、`GET /api/v1/camera/files`
-- `POST /api/v1/camera/capture`：拍照、下载、可选拼接、保存素材并开始/恢复分析
-- `POST /api/v1/camera/download`：下载相机现有文件并可选拼接分析
+- `POST /api/v1/camera/capture`：拍照、下载、可选拼接、保存素材，随后在 Linux 上实时运行 YOLO-World 并开始/恢复分析
+- `POST /api/v1/camera/download`：下载相机现有文件并可选拼接，在 Linux 上实时检测
+- `POST /api/v1/camera/ingest`：Windows 主动以 HTTPS multipart 上传本地 ERP JPEG；Linux 保存原图、运行 YOLO-World、生成标注图和检测 JSON，并开始/恢复 run
 - `POST /api/v1/camera/frame`：保留给已有 Windows 客户端直接提交图片 URL 和检测 JSON 的兼容入口
 
 完整的 Windows 驱动、构建、SSH 隧道、服务器 `.env` 和 curl 验证步骤位于 `windows_camera_bridge/README.md`。网关始终监听 Windows `127.0.0.1`，服务器端也只接受 `http://127.0.0.1:<反向转发端口>` 作为网关 URL。
+
+### Windows 主动上传到 Linux 实时 YOLO
+
+当 Windows 已通过 CameraSDK 下载并拼接出 ERP JPEG，而 Linux 有 GPU 时，不需要将 Windows 网关暴露到公网。只需将 Linux API 通过 HTTPS、VPN 或受控反向代理提供给 Windows；Windows 主动上传图片，YOLO 始终只运行在 Linux。
+
+Linux `.env`：
+
+```dotenv
+CAMERA_INGEST_TOKEN=<独立的高强度随机 token>
+CAMERA_INGEST_MAX_UPLOAD_MB=256
+YOLO_DEVICE=auto
+```
+
+Windows PowerShell 示例（`$server` 为 Linux 的 HTTPS 地址）：
+
+```powershell
+$server = 'https://your-linux-server.example.com'
+$token = '<与 CAMERA_INGEST_TOKEN 相同的值>'
+$metadata = '{"frame_id":"x5-20260923-001","camera_model":"Insta360 X5","projection":"equirectangular"}'
+
+curl.exe -X POST "$server/api/v1/camera/ingest" `
+  -H "Authorization: Bearer $token" `
+  -F "file=@C:\Insta360Bridge\captures\stitched-room.jpg;type=image/jpeg" `
+  -F "user_goal=评估这个空间的构件再利用机会" `
+  -F "metadata=$metadata"
+```
+
+响应中的 `asset.image_url` 是原图，`yolo.annotated_image_url` 是透视视图标注拼图，`yolo.detections_url` 是实时检测 JSON，`run` 是已进入 Agent 的状态。补拍已有任务时，在同一请求中额外传递 `run_id` 和 `action_id`。接口拒绝未配置或错误的 bearer token；不要公网映射 Windows CameraSDK 网关。
 
 ## 安全与部署
 
