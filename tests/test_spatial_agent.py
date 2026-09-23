@@ -1,5 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
+import spatial_agent.app as app_module
 from spatial_agent.app import app
 
 @pytest.mark.parametrize("path", ["/health", "/api/v1/demo"])
@@ -48,6 +49,121 @@ def test_windows_camera_frame_contract_starts_run():
     state = response.json()
     assert state["image_urls"] == ["https://example.com/room.jpg"]
     assert state["metadata"]["camera"]["camera_model"] == "Insta360 X5"
+
+
+class FakeWindowsCameraGateway:
+    def __init__(self, image: bytes):
+        self.image = image
+        self.capture_payloads: list[dict] = []
+        self.download_payloads: list[dict] = []
+
+    async def status(self) -> dict:
+        return {"ok": True, "sdk_version": "2.2.0", "devices": [{"serial": "X5-TEST"}]}
+
+    async def list_files(self) -> dict:
+        return {"ok": True, "file_count": 1, "files": ["/DCIM/100MEDIA/TEST.insp"]}
+
+    async def capture(self, payload: dict) -> dict:
+        self.capture_payloads.append(payload)
+        return self._result("frame/with unsafe chars")
+
+    async def download(self, payload: dict) -> dict:
+        self.download_payloads.append(payload)
+        return self._result("download-frame")
+
+    async def download_artifact_to(self, artifact_url, destination):
+        assert artifact_url == "/v1/artifacts/fake-artifact"
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(self.image)
+        return "image/jpeg"
+
+    @staticmethod
+    def _result(frame_id: str) -> dict:
+        return {
+            "ok": True,
+            "frame_id": frame_id,
+            "artifact_id": "fake-artifact",
+            "artifact_url": "/v1/artifacts/fake-artifact",
+            "filename": "stitched-room.jpg",
+            "stitched": True,
+            "remote_paths": ["/DCIM/100MEDIA/TEST.insp"],
+            "camera": {
+                "serial": "X5-TEST",
+                "camera_name": "Insta360 X5",
+                "firmware": "1.0.0",
+                "camera_type": 6,
+            },
+        }
+
+
+def test_windows_gateway_capture_transfers_stitched_frame_and_starts_run(monkeypatch, tmp_path):
+    gateway = FakeWindowsCameraGateway(b"\xff\xd8fake-jpeg\xff\xd9")
+    monkeypatch.setattr(app_module, "camera_gateway", gateway)
+    monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
+
+    response = TestClient(app).post(
+        "/api/v1/camera/capture",
+        json={
+            "user_goal": "评估拍摄到的空间",
+            "stitch": True,
+            "output_width": 4096,
+            "output_height": 2048,
+            "detections": [
+                {"class": "wood_cabinet", "bbox": [0.1, 0.2, 0.4, 0.8], "confidence": 0.91}
+            ],
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert gateway.capture_payloads == [
+        {
+            "raw_type": "off",
+            "timeout_ms": 0,
+            "stitch": True,
+            "output_width": 4096,
+            "output_height": 2048,
+        }
+    ]
+    assert body["asset"]["filename"].startswith("frame_with_unsafe_chars-")
+    assert body["asset"]["image_url"].endswith(f"/camera-assets/{body['asset']['filename']}")
+    assert (tmp_path / body["asset"]["filename"]).read_bytes() == b"\xff\xd8fake-jpeg\xff\xd9"
+    assert body["run"]["metadata"]["camera"]["camera_model"] == "Insta360 X5"
+    assert body["run"]["metadata"]["camera"]["projection"] == "equirectangular"
+
+
+def test_windows_gateway_download_resumes_pending_capture(monkeypatch, tmp_path):
+    gateway = FakeWindowsCameraGateway(b"\xff\xd8fake-jpeg\xff\xd9")
+    monkeypatch.setattr(app_module, "camera_gateway", gateway)
+    monkeypatch.setattr(app_module, "CAMERA_ARTIFACT_DIR", tmp_path)
+    client = TestClient(app)
+    created = client.post("/api/v1/runs", json={"user_goal": "评估旧木柜再利用"}).json()
+    action_id = created["capture_actions"][0]["id"]
+
+    response = client.post(
+        "/api/v1/camera/download",
+        json={
+            "run_id": created["run_id"],
+            "action_id": action_id,
+            "remote_path": "/DCIM/100MEDIA/TEST.insp",
+            "stitch": True,
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert gateway.download_payloads[0]["remote_path"] == "/DCIM/100MEDIA/TEST.insp"
+    assert body["run"]["run_id"] == created["run_id"]
+    assert body["run"]["metadata"]["camera"]["camera_serial"] == "X5-TEST"
+
+
+def test_windows_gateway_status_and_files_are_proxied(monkeypatch):
+    gateway = FakeWindowsCameraGateway(b"jpeg")
+    monkeypatch.setattr(app_module, "camera_gateway", gateway)
+    client = TestClient(app)
+
+    assert client.get("/api/v1/camera/status").json()["devices"][0]["serial"] == "X5-TEST"
+    assert client.get("/api/v1/camera/files").json()["files"] == ["/DCIM/100MEDIA/TEST.insp"]
 
 
 def test_tayli_fixture_is_perception_input():

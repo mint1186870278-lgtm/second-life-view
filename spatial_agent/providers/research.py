@@ -11,6 +11,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from hashlib import sha1
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, unquote, urlencode, urlparse
@@ -18,7 +19,7 @@ from urllib.parse import parse_qs, unquote, urlencode, urlparse
 import httpx
 
 from spatial_agent.config import Settings
-from spatial_agent.models import SearchSource
+from spatial_agent.models import LocalOpportunity, ResearchResult, SearchSource
 
 
 class ResearchClient:
@@ -123,3 +124,75 @@ class ResearchClient:
         if use_web:
             sources.extend(await self._web_sources(" ".join([query, *categories])))
         return sources[:12]
+
+    @staticmethod
+    def _provider_type(text: str) -> str:
+        normalized = text.lower()
+        refurbish = any(token in normalized for token in ("翻新", "维修", "修复", "再制造"))
+        recycle = any(token in normalized for token in ("回收", "分拣", "拆除"))
+        if refurbish and recycle:
+            return "mixed"
+        if refurbish:
+            return "refurbisher"
+        if recycle:
+            return "recycler"
+        if "再利用" in normalized or "reuse" in normalized:
+            return "reuse"
+        return "unknown"
+
+    @staticmethod
+    def _extract_price(text: str) -> tuple[float | None, float | None, str | None, str | None]:
+        match = re.search(r"[¥￥]\s*(\d+(?:\.\d+)?)\s*(?:[-~至]\s*[¥￥]?\s*(\d+(?:\.\d+)?))?\s*(/[^，。；,\s]+)?", text)
+        if not match:
+            return None, None, None, None
+        minimum = float(match.group(1))
+        maximum = float(match.group(2)) if match.group(2) else minimum
+        return minimum, maximum, "CNY", "quote"
+
+    def _normalize_opportunity(self, source: SearchSource, region: str | None) -> LocalOpportunity:
+        source_id = sha1(f"{source.source_type}|{source.url}|{source.title}".encode("utf-8")).hexdigest()[:16]
+        price_min, price_max, currency, price_unit = self._extract_price(" ".join([source.title, source.snippet]))
+        opportunity = LocalOpportunity(
+            id=f"opp_{source_id}",
+            name=source.title,
+            description=source.snippet,
+            source_url=source.url,
+            source_type="web" if source.source_type == "web" else "local_opportunity",
+            provenance=source.provenance,
+            provider_type=self._provider_type(" ".join([source.title, source.snippet])),
+            region=region,
+            price_min=price_min,
+            price_max=price_max,
+            currency=currency,
+            price_unit=price_unit,
+            distance_km=None,
+        )
+        source.opportunity_id = opportunity.id
+        return opportunity
+
+    async def retrieve_with_opportunities(
+        self,
+        query: str,
+        categories: list[str] | None = None,
+        *,
+        region: str | None = None,
+        include_web: bool | None = None,
+    ) -> ResearchResult:
+        """Return knowledge sources plus explicit, provenance-labelled service leads."""
+        categories = categories or []
+        local_sources = self._local_sources(query, categories, region)
+        knowledge_sources = [source for source in local_sources if source.source_type == "knowledge_base"]
+        fallback_sources = [source for source in local_sources if source.source_type == "local_opportunity"]
+        use_web = self.settings.research_web_enabled if include_web is None else include_web
+        web_sources: list[SearchSource] = []
+        if use_web:
+            web_sources = await self._web_sources(" ".join([query, *categories]))
+        opportunity_sources = web_sources if web_sources else fallback_sources
+        opportunities = [self._normalize_opportunity(source, region) for source in opportunity_sources]
+        return ResearchResult(
+            sources=[*knowledge_sources, *opportunity_sources][:12],
+            opportunities=opportunities[:6],
+            web_attempted=use_web,
+            web_results_count=len(web_sources),
+            used_fallback=bool(use_web and not web_sources),
+        )

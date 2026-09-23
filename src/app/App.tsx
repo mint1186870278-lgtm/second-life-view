@@ -8,8 +8,9 @@ import {
   C01ProjectSetupPage,
   C02SceneIngestionPage,
   C03AnalysisPage,
-  D01PlaceholderPage,
+  D01BatchDetailPage,
   W01RegenerationViewPage,
+  W02ProjectReviewPage,
 } from '../pages'
 import { CreationFlowProvider } from './CreationFlowContext'
 import { PlaceholderPage } from './PlaceholderPage'
@@ -30,8 +31,8 @@ export function App() {
           <Route path={ImplementationRoutes.c02} element={<C02SceneIngestionPage />} />
           <Route path={ImplementationRoutes.c03} element={<C03AnalysisPage />} />
           <Route path={ImplementationRoutes.w01} element={<W01RegenerationViewPage />} />
-          <Route path={ImplementationRoutes.w02} element={<PlaceholderPage code="W02" name="项目审查（W02-A / W02-B 为内部视图）" />} />
-          <Route path={ImplementationRoutes.d01} element={<D01PlaceholderPage />} />
+          <Route path={ImplementationRoutes.w02} element={<W02ProjectReviewPage />} />
+          <Route path={ImplementationRoutes.d01} element={<D01BatchDetailPage />} />
           <Route path="*" element={<PlaceholderPage code="404" name="Development route not found" />} />
         </Routes>
       </CreationFlowProvider>

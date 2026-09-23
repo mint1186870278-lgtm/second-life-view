@@ -20,12 +20,93 @@ export interface DemoGroup {
   group_name?: string
   label: string
   category: string
+  material?: string
   scene_id: string
   scene_name: string
   confidence: number
   detected_count: number
   recommended_pathway?: string | null
   evidence_status?: string | null
+  crop_url?: string
+  can_generate_preview?: boolean
+}
+
+export interface DemoComponentEvidence {
+  id: string
+  note?: string | null
+  image_url?: string | null
+  filename?: string | null
+  source: string
+}
+
+export interface DemoComponentLink {
+  title: string
+  description: string
+  source_url: string
+  provenance: 'verified' | 'inferred' | 'to_confirm'
+}
+
+export interface DemoComponentDetail {
+  component: {
+    id: string
+    name: string
+    category: string
+    category_name: string
+    material: string
+    confidence: number
+    detected_count: number
+    evidence_status: string
+    evidence_label: string
+    recommended_pathway: string
+    pathway_label: string
+    crop_url: string
+    preview_url: string
+    can_generate_preview: boolean
+  }
+  scene: {
+    id: string
+    name: string
+    asset_url: string
+    annotated_url: string
+  }
+  region: string
+  assessment: {
+    title: string
+    description: string
+    pathway_label: string
+    evidence_label: string
+  }
+  verification_questions: Array<{ title: string; description: string }>
+  observable_facts: string[]
+  reference_pathways: DemoComponentLink[]
+  local_opportunities: DemoComponentLink[]
+  three_d_url: string
+  evidence: DemoComponentEvidence[]
+}
+
+export interface DemoComponentDesignAdvice {
+  component_id: string
+  crop_url: string
+  scene_name: string
+  title: string
+  material: string
+  color: string
+  surface: string
+  construction: string
+  rationale: string
+  provider: string
+  status: string
+  warning?: string
+}
+
+export interface DemoComponentPreview {
+  component_id: string
+  status: string
+  provider: string
+  prompt: string
+  image_url: string
+  is_offline_fallback: boolean
+  generation_task_id?: string | null
 }
 
 export interface DemoStage {
@@ -170,4 +251,56 @@ export async function runDemoAnalysis(input: DemoAnalyzeInput): Promise<DemoAnal
     body: JSON.stringify(input),
   })
   return readJson<DemoAnalysisResult>(response)
+}
+
+export async function fetchDemoReviewGroups(sceneIds: readonly string[] = []): Promise<DemoGroup[]> {
+  const search = new URLSearchParams()
+  sceneIds.forEach((sceneId) => search.append('scene_ids', sceneId))
+  const suffix = search.size ? `?${search.toString()}` : ''
+  const response = await fetch(`/api/v1/demo/components${suffix}`)
+  const payload = await readJson<{ groups: DemoGroup[] }>(response)
+  return payload.groups
+}
+
+export async function fetchDemoComponentDetail(groupId: string, region?: string): Promise<DemoComponentDetail> {
+  const search = region ? `?${new URLSearchParams({ region }).toString()}` : ''
+  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/detail${search}`)
+  return readJson<DemoComponentDetail>(response)
+}
+
+export async function requestDemoComponentDesignAdvice(groupId: string, region?: string): Promise<DemoComponentDesignAdvice> {
+  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/design-advice`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ region }),
+  })
+  return readJson<DemoComponentDesignAdvice>(response)
+}
+
+export async function generateDemoComponentPreview(
+  groupId: string,
+  advice: Pick<DemoComponentDesignAdvice, 'material' | 'color' | 'surface' | 'construction' | 'rationale'>,
+  region?: string,
+): Promise<DemoComponentPreview> {
+  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/preview`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ region, advice }),
+  })
+  return readJson<DemoComponentPreview>(response)
+}
+
+export async function uploadDemoComponentEvidence(
+  groupId: string,
+  input: { file?: File; imageUrl?: string; note?: string },
+): Promise<{ evidence: DemoComponentEvidence; count: number }> {
+  const form = new FormData()
+  if (input.file) form.append('file', input.file)
+  if (input.imageUrl?.trim()) form.append('image_url', input.imageUrl.trim())
+  if (input.note?.trim()) form.append('note', input.note.trim())
+  const response = await fetch(`/api/v1/demo/components/${encodeURIComponent(groupId)}/evidence`, {
+    method: 'POST',
+    body: form,
+  })
+  return readJson<{ evidence: DemoComponentEvidence; count: number }>(response)
 }

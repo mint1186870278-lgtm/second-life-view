@@ -29,6 +29,9 @@ class Settings(BaseSettings):
     oss_prefix: str = "second-life-view"
     oss_signed_url_ttl: int = 3600
     oss_max_upload_mb: int = 1024
+    windows_camera_gateway_url: str = ""
+    windows_camera_gateway_token: str = ""
+    windows_camera_gateway_timeout: float = 720.0
     lux3d_region: str = "cn"
     lux3d_base_url: str = "https://api.aholo3d.cn"
     use_llm: bool = False

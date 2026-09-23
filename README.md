@@ -146,19 +146,18 @@ Research Agent 当前采用离线优先的轻量检索：`data/knowledge/materia
 
 默认关闭外部调用。配置 `DASHSCOPE_API_KEY`/`LUX3D_API_KEY` 后，再显式设置 `USE_LLM=true` 或 `USE_EXTERNAL_TOOLS=true`。
 
-## Windows bridge 契约
+## Windows + SSH 真机桥接
 
-相机不应通过 SSH 让 Linux 加载 Windows DLL。建议 Windows 进程暴露：
+相机 USB 线连接 Windows，不通过 SSH 让 Linux 加载 Windows DLL。仓库现在提供了可运行的 `windows_camera_bridge/`：它在 Windows 使用 `DeviceDiscovery → Open → TakePhoto → DownloadCameraFile → Close`，可选用 MediaSDK 把 `.insp` 拼接为 ERP JPEG；Linux 通过 SSH **反向**隧道调用该网关、拉取图片并直接创建或恢复 LangGraph run。
 
-黑客松最短路径也可以直接调用 Linux 的 `POST /api/v1/camera/frame`：首帧只需
-`image_url` 和 `detections[]`，补拍帧再携带 `run_id` 与 `action_id`，服务会自动恢复同一个
-LangGraph run。这样 CameraSDK/MediaSDK 只存在于 Windows bridge，Linux 只接收稳定的 JSON。
+Linux 侧新增接口：
 
-- `GET /health`、`GET /camera/status`
-- `POST /capture`：接收 `action_type`、`target_bbox`、分辨率和任务 ID，调用 CameraSDK `TakePhoto`/`StartLiveStreaming`。
-- `GET /capture/{id}` 或上传回调：返回 `frame_id`、`capture_time_ms`、`asset_uri`、相机型号、投影类型和 `detections[]`。
+- `GET /api/v1/camera/status`、`GET /api/v1/camera/files`
+- `POST /api/v1/camera/capture`：拍照、下载、可选拼接、保存素材并开始/恢复分析
+- `POST /api/v1/camera/download`：下载相机现有文件并可选拼接分析
+- `POST /api/v1/camera/frame`：保留给已有 Windows 客户端直接提交图片 URL 和检测 JSON 的兼容入口
 
-Linux 只依赖这个 JSON 协议，不依赖 CameraSDK ABI。MediaSDK 的 realtime stitcher 可放在 Windows bridge，或后续单独部署 Linux media worker；第一版用关键帧/短视频上传更适合黑客松稳定演示。
+完整的 Windows 驱动、构建、SSH 隧道、服务器 `.env` 和 curl 验证步骤位于 `windows_camera_bridge/README.md`。网关始终监听 Windows `127.0.0.1`，服务器端也只接受 `http://127.0.0.1:<反向转发端口>` 作为网关 URL。
 
 ## 安全与部署
 

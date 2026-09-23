@@ -94,10 +94,37 @@ class SearchSource(BaseModel):
     snippet: str
     source_type: Literal["knowledge_base", "web", "local_opportunity"]
     confidence: float = 0.0
+    opportunity_id: str | None = None
     # verified: curated or directly cited fact; inferred: search lead or
     # model-supported interpretation; to_confirm: live opportunity or claim
     # that still needs field confirmation.
     provenance: Literal["verified", "inferred", "to_confirm"] = "inferred"
+
+
+class LocalOpportunity(BaseModel):
+    """A reviewable local repair/reuse lead rather than a verified quote."""
+
+    id: str
+    name: str
+    description: str
+    source_url: str
+    source_type: Literal["web", "local_opportunity"]
+    provenance: Literal["verified", "inferred", "to_confirm"]
+    provider_type: Literal["refurbisher", "recycler", "mixed", "reuse", "unknown"] = "unknown"
+    region: str | None = None
+    price_min: float | None = None
+    price_max: float | None = None
+    currency: str | None = None
+    price_unit: str | None = None
+    distance_km: float | None = None
+
+
+class ResearchResult(BaseModel):
+    sources: list[SearchSource] = Field(default_factory=list)
+    opportunities: list[LocalOpportunity] = Field(default_factory=list)
+    web_attempted: bool = False
+    web_results_count: int = 0
+    used_fallback: bool = False
 
 class DesignProposal(BaseModel):
     title: str
@@ -184,6 +211,24 @@ class CameraFrameRequest(BaseModel):
     detections: list[Detection] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 
+
+class WindowsCameraCaptureRequest(BaseModel):
+    """A Linux-side request forwarded to the CameraSDK bridge on Windows."""
+
+    run_id: str | None = None
+    action_id: str | None = None
+    user_goal: str = "评估空间构件的再利用机会，并提出下一步需要采集的证据"
+    detections: list[Detection] = Field(default_factory=list)
+    raw_type: Literal["off", "dng", "pureshot", "pureshot_raw"] = "off"
+    timeout_ms: int = Field(default=0, ge=0, le=600_000)
+    stitch: bool = True
+    output_width: int = Field(default=4096, ge=512, le=15_520)
+    output_height: int = Field(default=2048, ge=256, le=7_760)
+
+
+class WindowsCameraDownloadRequest(WindowsCameraCaptureRequest):
+    remote_path: str = Field(min_length=1, max_length=2048)
+
 class WorldRequest(BaseModel):
     run_id: str | None = None
     resources: list[str] = Field(default_factory=list)
@@ -201,6 +246,9 @@ class ResearchRequest(BaseModel):
     run_id: str
     query: str
     region: str | None = None
+    furniture_type: str | None = None
+    location: str | None = None
+    radius_km: float | None = Field(default=None, ge=0)
     include_web: bool = False
 
 
@@ -210,3 +258,12 @@ class DemoAnalyzeRequest(BaseModel):
     region: str | None = None
     spatial_prompt: str = "保留原空间结构与尺度，更新为明亮、低碳、可逆施工的现代室内空间"
     include_web: bool = False
+
+
+class DemoComponentDesignAdviceRequest(BaseModel):
+    region: str | None = None
+
+
+class DemoComponentPreviewRequest(BaseModel):
+    region: str | None = None
+    advice: dict[str, str] = Field(default_factory=dict)

@@ -3,18 +3,34 @@ import asyncio
 import json
 from pathlib import Path
 from typing import AsyncIterator
+from uuid import uuid4
 import httpx
-from fastapi import File, Form, UploadFile, FastAPI, HTTPException
+from fastapi import File, Form, Request, UploadFile, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from spatial_agent.config import get_settings
-from spatial_agent.demo import PICTURE_DIR, analyze_demo, list_demo_scenes, load_demo_annotated_preview, load_demo_thumbnail
+from spatial_agent.camera_gateway import CameraGatewayError, CameraGatewayNotConfigured, WindowsCameraGateway
+from spatial_agent.demo import (
+    PICTURE_DIR,
+    analyze_demo,
+    build_demo_component_design_advice,
+    build_demo_component_detail,
+    build_demo_component_preview_prompt,
+    demo_component_crop_path,
+    find_demo_group,
+    list_demo_component_groups,
+    list_demo_scenes,
+    load_demo_annotated_preview,
+    load_demo_component_crop,
+    load_demo_component_preview,
+    load_demo_thumbnail,
+)
 from spatial_agent.graph import SpatialAgentGraph
 from spatial_agent.providers.aholo_world import AholoWorldClient
 from spatial_agent.providers.oss import OSSClient, save_upload_to_temp
 from spatial_agent.providers.tripo import TripoClient
-from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DemoAnalyzeRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WorldRequest, SpatialGenRequest
+from spatial_agent.models import AnalyzeRequest, CameraFrameRequest, CaptureRequest, DemoAnalyzeRequest, DemoComponentDesignAdviceRequest, DemoComponentPreviewRequest, DesignRequest, Evidence, ReconstructRequest, ResearchRequest, RunState, WindowsCameraCaptureRequest, WindowsCameraDownloadRequest, WorldRequest, SpatialGenRequest
 from spatial_agent.yolo_adapter import available_scenes, load_scene
 
 settings = get_settings()
@@ -22,7 +38,14 @@ agent = SpatialAgentGraph(settings)
 aholo_world = AholoWorldClient(settings)
 oss = OSSClient(settings)
 tripo = TripoClient(settings)
+camera_gateway = WindowsCameraGateway(settings)
 runs: dict[str, RunState] = {}
+CAMERA_ARTIFACT_DIR = Path(__file__).resolve().parents[1] / "run_artifacts" / "camera"
+CAMERA_ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+DEMO_COMPONENT_EVIDENCE_DIR = Path(__file__).resolve().parents[1] / "run_artifacts" / "demo_component_evidence"
+DEMO_COMPONENT_EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+demo_component_evidence: dict[str, list[dict]] = {}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 app = FastAPI(title="Second Life View · Spatial Agent", version="0.1.0", description="Insta360 + YOLO + active perception multi-agent backend")
 app.add_middleware(
@@ -33,10 +56,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.mount("/demo-assets", StaticFiles(directory=PICTURE_DIR), name="demo-assets")
+app.mount("/camera-assets", StaticFiles(directory=CAMERA_ARTIFACT_DIR), name="camera-assets")
+app.mount("/demo-evidence", StaticFiles(directory=DEMO_COMPONENT_EVIDENCE_DIR), name="demo-evidence")
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
+    return {"status": "ok", "service": "second-life-spatial-agent", "langgraph": True, "bailian_enabled": agent.bailian.enabled, "lux3d_enabled": agent.lux3d.enabled, "aholo_world_enabled": aholo_world.enabled, "tripo_enabled": tripo.enabled, "oss_enabled": oss.enabled, "windows_camera_gateway_configured": camera_gateway.configured, "lux3d_region": settings.lux3d_region, "aholo_region": "cn"}
 
 
 @app.get("/api/v1/assets/config")
@@ -109,6 +134,14 @@ def demo_scenes() -> dict:
     return {"scenes": list_demo_scenes(), "source": "data/samples/pictures"}
 
 
+@app.get("/api/v1/demo/components")
+def demo_components(scene_ids: list[str] | None = None) -> dict:
+    try:
+        return {"groups": list_demo_component_groups(scene_ids), "source": "Pipeline B cached YOLO groups"}
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+
 @app.get("/api/v1/demo/scenes/{scene_id}/thumbnail")
 def demo_scene_thumbnail(scene_id: str) -> Response:
     try:
@@ -121,14 +154,142 @@ def demo_scene_thumbnail(scene_id: str) -> Response:
 
 
 @app.get("/api/v1/demo/scenes/{scene_id}/annotated")
-def demo_scene_annotated(scene_id: str) -> Response:
+def demo_scene_annotated(scene_id: str, width: int = 2880) -> Response:
     try:
-        content = load_demo_annotated_preview(scene_id)
+        content = load_demo_annotated_preview(scene_id, width)
     except ValueError as exc:
         raise HTTPException(404, str(exc)) from exc
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
     return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=3600"})
+
+
+@app.get("/api/v1/demo/components/{group_id}/crop")
+def demo_component_crop(group_id: str) -> Response:
+    try:
+        content = load_demo_component_crop(group_id)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"})
+
+
+@app.get("/api/v1/demo/components/{group_id}/preview-image")
+def demo_component_preview_image(group_id: str) -> Response:
+    try:
+        content = load_demo_component_preview(group_id)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return Response(content=content, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=3600"})
+
+
+@app.get("/api/v1/demo/components/{group_id}/detail")
+async def demo_component_detail(group_id: str, region: str | None = None) -> dict:
+    try:
+        return await build_demo_component_detail(
+            group_id,
+            region=region,
+            research_client=agent.research_client,
+            supplemental_evidence=demo_component_evidence.get(group_id, []),
+        )
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+def demo_component_can_generate_preview(group_id: str) -> bool:
+    _, group, _ = find_demo_group(group_id)
+    return bool(
+        group.get("evidence_status") == "supported"
+        and group.get("recommended_pathway") in {"REFURBISH", "REPURPOSE"}
+    )
+
+
+@app.post("/api/v1/demo/components/{group_id}/design-advice")
+async def demo_component_design_advice(group_id: str, request: DemoComponentDesignAdviceRequest) -> dict:
+    try:
+        if not demo_component_can_generate_preview(group_id):
+            raise HTTPException(409, "仅有依据且建议为修复翻新或改造再利用的构件可生成再生预览")
+        return await build_demo_component_design_advice(group_id, region=request.region, agent=agent)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/demo/components/{group_id}/preview")
+async def demo_component_preview(group_id: str, request: DemoComponentPreviewRequest) -> dict:
+    try:
+        if not demo_component_can_generate_preview(group_id):
+            raise HTTPException(409, "仅有依据且建议为修复翻新或改造再利用的构件可生成再生预览")
+        prompt = build_demo_component_preview_prompt(group_id, request.advice, request.region)
+        fallback_url = f"/api/v1/demo/components/{group_id}/preview-image"
+        result: dict = {}
+        image_url: str | None = None
+        generation_task_id: str | None = None
+        provider = "qwen-image-3.0-pro"
+        status = "generated"
+        if settings.dashscope_api_key and settings.use_external_tools:
+            try:
+                result = await agent.bailian.generate_image(prompt, str(demo_component_crop_path(group_id)))
+                image_url = result.get("image_url") if isinstance(result, dict) else None
+                output = result.get("output") if isinstance(result, dict) else None
+                if isinstance(output, dict):
+                    generation_task_id = output.get("task_id")
+                if not image_url:
+                    status = "submitted" if generation_task_id else "fallback"
+            except Exception as exc:
+                status = "fallback"
+                result = {"error": str(exc)}
+        else:
+            provider = "qwen-image-3.0-pro (offline preview)"
+            status = "fallback"
+        return {
+            "component_id": group_id,
+            "status": status,
+            "provider": provider,
+            "prompt": prompt,
+            "image_url": image_url or fallback_url,
+            "is_offline_fallback": image_url is None,
+            "generation_task_id": generation_task_id,
+            "raw": result if result else None,
+        }
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/demo/components/{group_id}/evidence")
+async def demo_component_evidence_upload(
+    group_id: str,
+    file: UploadFile | None = File(default=None),
+    image_url: str | None = Form(default=None),
+    note: str | None = Form(default=None),
+) -> dict:
+    try:
+        find_demo_group(group_id)
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    if not file and not (image_url or "").strip() and not (note or "").strip():
+        raise HTTPException(400, "请至少上传照片、填写图片地址或补充说明")
+    evidence_item: dict = {
+        "id": f"demo_evidence_{uuid4().hex[:12]}",
+        "note": (note or "").strip() or None,
+        "image_url": (image_url or "").strip() or None,
+        "source": "user-supplement",
+    }
+    if file:
+        extension = Path(file.filename or "evidence.jpg").suffix.lower()
+        if extension not in IMAGE_EXTENSIONS:
+            raise HTTPException(400, "补充照片仅支持 JPG、PNG、WEBP 格式")
+        content = await file.read()
+        if len(content) > 12 * 1024 * 1024:
+            raise HTTPException(413, "补充照片不能超过 12MB")
+        filename = f"{uuid4().hex}{extension}"
+        (DEMO_COMPONENT_EVIDENCE_DIR / filename).write_bytes(content)
+        evidence_item["image_url"] = f"/demo-evidence/{filename}"
+        evidence_item["filename"] = file.filename
+    demo_component_evidence.setdefault(group_id, []).append(evidence_item)
+    return {"evidence": evidence_item, "count": len(demo_component_evidence[group_id])}
 
 
 @app.post("/api/v1/demo/analyze")
@@ -162,8 +323,7 @@ async def create_run(request: AnalyzeRequest) -> RunState:
     return result
 
 
-@app.post("/api/v1/camera/frame", response_model=RunState)
-async def camera_frame(request: CameraFrameRequest) -> RunState:
+async def accept_camera_frame(request: CameraFrameRequest) -> RunState:
     """Accept a frame and YOLO JSON from the Windows CameraSDK bridge.
 
     The bridge never needs to import CameraSDK on Linux.  A first frame starts
@@ -200,6 +360,160 @@ async def camera_frame(request: CameraFrameRequest) -> RunState:
     result.metadata["camera"] = request.metadata
     runs[result.run_id] = result
     return result
+
+
+def camera_gateway_exception(error: CameraGatewayError) -> HTTPException:
+    if isinstance(error, CameraGatewayNotConfigured):
+        return HTTPException(503, str(error))
+    return HTTPException(502, str(error))
+
+
+def camera_artifact_extension(gateway_result: dict) -> str:
+    candidate = str(gateway_result.get("filename") or "")
+    extension = Path(candidate).suffix.lower()
+    return extension if extension in IMAGE_EXTENSIONS | {".insp", ".insv", ".dng"} else ".bin"
+
+
+def safe_camera_frame_id(value: object) -> str:
+    raw = str(value or "camera-frame")
+    normalized = "".join(character if character.isalnum() or character in {"-", "_"} else "_" for character in raw)
+    return normalized.strip("._-")[:120] or "camera-frame"
+
+
+async def persist_camera_artifact(request: Request, gateway_result: dict) -> tuple[str, dict]:
+    artifact_url = gateway_result.get("artifact_url")
+    if not isinstance(artifact_url, str) or not artifact_url:
+        raise HTTPException(502, "Windows camera gateway did not return an artifact URL")
+
+    frame_id = safe_camera_frame_id(gateway_result.get("frame_id"))
+    extension = camera_artifact_extension(gateway_result)
+    local_name = f"{frame_id}-{uuid4().hex[:12]}{extension}"
+    local_path = CAMERA_ARTIFACT_DIR / local_name
+    try:
+        content_type = await camera_gateway.download_artifact_to(artifact_url, local_path)
+    except CameraGatewayError as error:
+        raise camera_gateway_exception(error) from error
+
+    metadata = {
+        "frame_id": frame_id,
+        "filename": local_name,
+        "content_type": content_type,
+        "gateway_artifact_id": gateway_result.get("artifact_id"),
+        "remote_paths": gateway_result.get("remote_paths", []),
+        "stitched": bool(gateway_result.get("stitched")),
+    }
+    if oss.enabled:
+        try:
+            upload = await asyncio.to_thread(
+                oss.upload_file,
+                local_path,
+                session_id=frame_id,
+                filename=local_name,
+                content_type=content_type,
+            )
+        except Exception as error:
+            raise HTTPException(502, f"failed to upload camera artifact to OSS: {error}") from error
+        metadata["oss"] = upload
+        return upload["url"], metadata
+
+    return str(request.url_for("camera-assets", path=local_name)), metadata
+
+
+def camera_metadata(gateway_result: dict, artifact: dict) -> dict:
+    camera = gateway_result.get("camera")
+    details = camera if isinstance(camera, dict) else {}
+    return {
+        "source": "windows_camera_gateway",
+        "camera_model": details.get("camera_name"),
+        "camera_serial": details.get("serial"),
+        "camera_firmware": details.get("firmware"),
+        "camera_type": details.get("camera_type"),
+        "frame_id": artifact["frame_id"],
+        "projection": "equirectangular" if artifact["stitched"] else "insta360_native",
+        "artifact": artifact,
+    }
+
+
+async def run_windows_camera_operation(
+    request: Request,
+    payload: WindowsCameraCaptureRequest,
+    *,
+    remote_path: str | None = None,
+) -> dict:
+    gateway_payload = {
+        "raw_type": payload.raw_type,
+        "timeout_ms": payload.timeout_ms,
+        "stitch": payload.stitch,
+        "output_width": payload.output_width,
+        "output_height": payload.output_height,
+    }
+    try:
+        gateway_result = (
+            await camera_gateway.download({**gateway_payload, "remote_path": remote_path})
+            if remote_path
+            else await camera_gateway.capture(gateway_payload)
+        )
+    except CameraGatewayError as error:
+        raise camera_gateway_exception(error) from error
+
+    image_url, artifact = await persist_camera_artifact(request, gateway_result)
+    response: dict = {
+        "gateway": {
+            "frame_id": gateway_result.get("frame_id"),
+            "camera": gateway_result.get("camera"),
+            "remote_paths": gateway_result.get("remote_paths", []),
+        },
+        "asset": {"image_url": image_url, **artifact},
+    }
+    if Path(artifact["filename"]).suffix.lower() not in IMAGE_EXTENSIONS:
+        response["message"] = "已下载相机原始文件；请以 stitch=true 生成全景图后再提交分析。"
+        return response
+
+    state = await accept_camera_frame(
+        CameraFrameRequest(
+            run_id=payload.run_id,
+            action_id=payload.action_id,
+            user_goal=payload.user_goal,
+            image_url=image_url,
+            detections=payload.detections,
+            metadata=camera_metadata(gateway_result, artifact),
+        )
+    )
+    response["run"] = state.model_dump(mode="json")
+    return response
+
+
+@app.get("/api/v1/camera/status")
+async def windows_camera_status() -> dict:
+    try:
+        return await camera_gateway.status()
+    except CameraGatewayError as error:
+        raise camera_gateway_exception(error) from error
+
+
+@app.get("/api/v1/camera/files")
+async def windows_camera_files() -> dict:
+    try:
+        return await camera_gateway.list_files()
+    except CameraGatewayError as error:
+        raise camera_gateway_exception(error) from error
+
+
+@app.post("/api/v1/camera/capture")
+async def windows_camera_capture(request: Request, payload: WindowsCameraCaptureRequest) -> dict:
+    """Capture on Windows, transfer it through the tunnel, and start/resume a run."""
+    return await run_windows_camera_operation(request, payload)
+
+
+@app.post("/api/v1/camera/download")
+async def windows_camera_download(request: Request, payload: WindowsCameraDownloadRequest) -> dict:
+    """Transfer an existing camera file and optionally stitch it before analysis."""
+    return await run_windows_camera_operation(request, payload, remote_path=payload.remote_path)
+
+
+@app.post("/api/v1/camera/frame", response_model=RunState)
+async def camera_frame(request: CameraFrameRequest) -> RunState:
+    return await accept_camera_frame(request)
 
 @app.get("/api/v1/runs/{run_id}", response_model=RunState)
 def get_run(run_id: str) -> RunState:
@@ -549,13 +863,28 @@ async def research(request: ResearchRequest) -> dict:
         raise HTTPException(404, "run not found")
     state.sources = []
     state.user_goal = request.query
-    if request.region:
-        state.metadata["region"] = request.region
-    # Explicit request-level web opt-in keeps the default demo offline and
-    # prevents accidental outbound search calls.
-    await agent.research({"state": state, "enable_research": True, "enable_design": False, "include_web": request.include_web})
+    region = request.region or request.location
+    if region:
+        state.metadata["region"] = region
+    categories = [value for value in (request.furniture_type, request.location) if value]
+    result = await agent.research_client.retrieve_with_opportunities(
+        request.query,
+        categories,
+        region=region,
+        include_web=request.include_web,
+    )
+    state.sources = result.sources
     runs[state.run_id] = state
-    return {"run_id": state.run_id, "sources": [s.model_dump(mode="json") for s in state.sources]}
+    return {
+        "run_id": state.run_id,
+        "sources": [source.model_dump(mode="json") for source in state.sources],
+        "opportunities": [item.model_dump(mode="json") for item in result.opportunities],
+        "research": {
+            "web_attempted": result.web_attempted,
+            "web_results_count": result.web_results_count,
+            "used_fallback": result.used_fallback,
+        },
+    }
 
 
 frontend_dist = Path(__file__).resolve().parents[1] / "dist"

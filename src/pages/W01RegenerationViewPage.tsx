@@ -198,9 +198,11 @@ function buildAnalysisFilmstrip(result: DemoAnalysisResult): W01FilmstripItem[] 
     name: scene.name,
     ingestion_status: 'received',
     visual_tone: sceneIndex % 4,
-    image_url: scene.thumbnail_url,
+    image_url: scene.asset_url,
     annotated_image_url: scene.annotated_url,
-    annotation_groups: buildAnnotationGroups(groupsByScene.get(scene.id) ?? []),
+    annotation_groups: buildAnnotationGroups(
+      (groupsByScene.get(scene.id) ?? []).filter((group) => group.confidence >= 0.2),
+    ),
   }))
 }
 
