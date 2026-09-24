@@ -26,7 +26,8 @@ ANNOTATION_MAX_WIDTH = 4096
 ANNOTATION_CONFIDENCE_THRESHOLD = 0.20
 COMPONENT_CROP_VIEW_SIZE = 2048
 COMPONENT_CROP_OUTPUT_SIZE = 1280
-AHOLO_EDITOR_URL = "https://studio.aholo3d.cn/editor?projectId=3FO4K4XJJ82N"
+AHOLO_FALLBACK_STUDIO_URL = "https://studio.aholo3d.cn/editor?projectId=3FO4K4XJJ82N"
+AHOLO_STUDIO_VIEWER_URL = "https://studio.aholo3d.cn/viewer?projectId="
 COMPONENT_ARTIFACT_DIR = ROOT / "run_artifacts" / "demo_component_crops"
 DEMO_ARTIFACTS = DemoArtifactStore()
 
@@ -87,6 +88,15 @@ _REVIEW_PATHWAYS_BY_CATEGORY: dict[str, tuple[str, ...]] = {
     "window": ("KEEP_IN_PLACE", "REFURBISH", "MATERIAL_RECOVERY"),
 }
 _DEFAULT_REVIEW_PATHWAYS = ("DIRECT_REUSE", "REFURBISH", "REPURPOSE")
+
+# Keep the presentation's normal first-run request stable.  Its previous
+# wording was used when the retained demo artifacts were warmed; accepting it
+# as a compatibility key avoids spending time and provider quota merely
+# because the UI copy was refined.
+PRESENTATION_DEFAULT_USER_GOAL = "评估空间构件的再利用机会，并提出低碳翻新方案"
+LEGACY_PRECOMPUTED_DEFAULT_USER_GOAL = (
+    "对现有构件进行 360° 审计，识别可能被保留、复用或再生的构件，为后续改造与资源循环提供依据。"
+)
 
 
 def _review_assessment(group: dict[str, Any]) -> dict[str, Any]:
@@ -160,6 +170,21 @@ def demo_analysis_cache_key(request: DemoAnalyzeRequest, scenes: list[dict[str, 
     })
 
 
+def demo_analysis_cache_keys(request: DemoAnalyzeRequest, scenes: list[dict[str, Any]]) -> tuple[str, ...]:
+    """Return the exact request key plus safe presentation-cache aliases.
+
+    A custom goal remains a genuine new analysis.  Only the current canned UI
+    goal is equivalent to the wording used for the existing five-scene warm
+    artifact, so it may reuse that retained response.
+    """
+    primary = demo_analysis_cache_key(request, scenes)
+    if request.user_goal != PRESENTATION_DEFAULT_USER_GOAL:
+        return (primary,)
+    legacy_request = request.model_copy(update={"user_goal": LEGACY_PRECOMPUTED_DEFAULT_USER_GOAL})
+    legacy = demo_analysis_cache_key(legacy_request, scenes)
+    return (primary,) if legacy == primary else (primary, legacy)
+
+
 def _scene_asset_url(filename: str) -> str:
     return f"/demo-assets/{filename}"
 
@@ -186,10 +211,12 @@ def _public_three_d(scene: dict[str, Any]) -> dict[str, Any] | None:
     if not record:
         return None
     viewer_urls = record.get("viewer_urls")
+    world_id = str(record.get("world_id") or "")
     return {
         "provider": record.get("provider", "aholo-spatial-gen"),
         "status": record.get("status"),
-        "world_id": record.get("world_id"),
+        "world_id": world_id or None,
+        "studio_url": f"{AHOLO_STUDIO_VIEWER_URL}{world_id}" if world_id else AHOLO_FALLBACK_STUDIO_URL,
         "viewer_urls": viewer_urls if isinstance(viewer_urls, dict) else {},
         "imagery_url": record.get("imagery_url"),
         "cache_hit": True,
@@ -672,7 +699,9 @@ async def build_demo_component_detail(
         "observable_facts": _observable_facts(group, scene, ordinal),
         "reference_pathways": references[:3],
         "local_opportunities": opportunities[:3],
-        "three_d_url": AHOLO_EDITOR_URL,
+        "three_d_url": (
+            _public_three_d(scene) or {"studio_url": AHOLO_FALLBACK_STUDIO_URL}
+        )["studio_url"],
         "evidence": support_items,
     }
 
@@ -986,30 +1015,33 @@ async def analyze_demo(
     if not scenes:
         raise ValueError("select at least one demo scene")
     analysis_key = demo_analysis_cache_key(request, scenes)
-    cached_analysis = DEMO_ARTIFACTS.cached_analysis(analysis_key)
-    if cached_analysis and cached_analysis.get("fingerprint") == analysis_key:
+    for cached_key in demo_analysis_cache_keys(request, scenes):
+        cached_analysis = DEMO_ARTIFACTS.cached_analysis(cached_key)
+        if not cached_analysis or cached_analysis.get("fingerprint") != cached_key:
+            continue
         cached_state = cached_analysis.get("state")
         cached_response = cached_analysis.get("response")
-        if isinstance(cached_state, dict) and isinstance(cached_response, dict):
-            state = RunState.model_validate(cached_state)
-            # A warm response is a new user run, not a pointer to a stale run
-            # that happened during the overnight precompute.
-            state.run_id = f"run_{uuid4().hex[:10]}"
-            state.metadata["demo_precompute_cache_hit"] = True
-            response = json.loads(json.dumps(cached_response))
-            response["run_id"] = state.run_id
-            response["cache_hit"] = True
-            # The analysis narrative is immutable for this request, while an
-            # Aholo task may complete after it was cached.  Refresh only the
-            # safe 3D status/viewer projection so W01 can expose the finished
-            # Viewer link without rerunning the whole pipeline.
-            for public_scene in response.get("scenes", []):
-                if isinstance(public_scene, dict) and isinstance(public_scene.get("id"), str):
-                    try:
-                        public_scene["three_d"] = _public_three_d(_find_demo_scene(public_scene["id"]))
-                    except ValueError:
-                        continue
-            return state, response
+        if not isinstance(cached_state, dict) or not isinstance(cached_response, dict):
+            continue
+        state = RunState.model_validate(cached_state)
+        # A warm response is a new user run, not a pointer to a stale run
+        # that happened during the overnight precompute.
+        state.run_id = f"run_{uuid4().hex[:10]}"
+        state.metadata["demo_precompute_cache_hit"] = True
+        response = json.loads(json.dumps(cached_response))
+        response["run_id"] = state.run_id
+        response["cache_hit"] = True
+        # The analysis narrative is immutable for this request, while an
+        # Aholo task may complete after it was cached.  Refresh only the
+        # safe 3D status/viewer projection so W01 can expose the finished
+        # Viewer link without rerunning the whole pipeline.
+        for public_scene in response.get("scenes", []):
+            if isinstance(public_scene, dict) and isinstance(public_scene.get("id"), str):
+                try:
+                    public_scene["three_d"] = _public_three_d(_find_demo_scene(public_scene["id"]))
+                except ValueError:
+                    continue
+        return state, response
     image_paths = [str(PICTURE_DIR / scene["filename"]) for scene in scenes]
     state = RunState(
         user_goal=request.user_goal,

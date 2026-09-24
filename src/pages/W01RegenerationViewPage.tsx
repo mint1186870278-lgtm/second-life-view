@@ -26,7 +26,7 @@ import { SceneFilmstrip, SceneViewer } from './w01/W01Viewer'
 const W01_ZOOM_MIN = 1
 const W01_ZOOM_MAX = 2.2
 const W01_ZOOM_STEP = 0.15
-const AHOLO_EDITOR_URL = 'https://studio.aholo3d.cn/editor?projectId=3FO4K4XJJ82N'
+const AHOLO_FALLBACK_STUDIO_URL = 'https://studio.aholo3d.cn/editor?projectId=3FO4K4XJJ82N'
 
 const categoryNames: Record<string, string> = {
   cabinet: '柜体',
@@ -92,8 +92,20 @@ function W01RegenerationViewContent() {
 
   const selectedFilmstripItem = filmstrip.find((scene) => scene.scene_id === selectedSceneId) ?? filmstrip[0]
   const selectedThreeD = analysisResult?.scenes.find((scene) => scene.id === selectedFilmstripItem?.scene_id)?.three_d
+  // These sidebar totals describe the complete set selected for the current
+  // analysis run, rather than a hard-coded demo or only the scene currently
+  // open in the viewer.  They are derived from the per-scene YOLO payload so
+  // they stay correct even if an aggregate response field becomes stale.
+  const selectedComponentCount = analysisResult?.scenes.reduce(
+    (total, scene) => total + scene.detection_count,
+    0,
+  ) ?? 0
+  const selectedGroupCount = analysisResult?.scenes.reduce(
+    (total, scene) => total + scene.group_count,
+    0,
+  ) ?? 0
   const analysisGroupRows = useMemo(
-    () => analysisResult ? buildSidebarGroupRows(analysisResult.groups, analysisResult.group_count) : undefined,
+    () => analysisResult ? buildSidebarGroupRows(analysisResult.groups) : undefined,
     [analysisResult],
   )
 
@@ -150,8 +162,8 @@ function W01RegenerationViewContent() {
         sidebarSupplement={(
           <W01SidebarSupplement
             demoProjection={w01DemoProjection}
-            componentCount={hasAnalysisProjection ? analysisResult?.component_count : undefined}
-            groupCount={hasAnalysisProjection ? analysisResult?.group_count : undefined}
+            componentCount={hasAnalysisProjection ? selectedComponentCount : undefined}
+            groupCount={hasAnalysisProjection ? selectedGroupCount : undefined}
             groupRows={analysisGroupRows}
             summaryRows={hasAnalysisProjection ? [] : w01DemoProjection.coarse_summary}
             isDemoProjection={!hasAnalysisProjection}
@@ -223,20 +235,17 @@ function buildAnnotationGroups(groups: readonly DemoGroup[]): W01AnnotationGroup
     })
 }
 
-function buildSidebarGroupRows(groups: readonly DemoGroup[], groupCount: number): W01DemoGroupRow[] {
-  const rows = buildAnnotationGroups(groups).slice(0, 7).map((group) => ({
+function buildSidebarGroupRows(groups: readonly DemoGroup[]): W01DemoGroupRow[] {
+  return buildAnnotationGroups(groups).slice(0, 7).map((group) => ({
     label: group.name,
     quantity_label: `× ${group.quantity}`,
     tone: group.category,
   }))
-  const hiddenCount = Math.max(0, groupCount - rows.length)
-  return hiddenCount > 0
-    ? [...rows, { label: '其余构件组', quantity_label: `+ ${hiddenCount}`, tone: 'more' }]
-    : rows
 }
 
 function ThreeDRegenerationDialog({ threeD, onClose }: { threeD?: DemoPrecomputedThreeD | null; onClose: () => void }) {
   const viewerUrl = threeD?.viewer_urls.spz ?? threeD?.viewer_urls.ply ?? threeD?.viewer_urls.lod
+  const studioUrl = threeD?.studio_url ?? AHOLO_FALLBACK_STUDIO_URL
   return (
     <div className="w01-3d-modal-backdrop" role="presentation" onMouseDown={onClose}>
       <section className="w01-3d-modal" role="dialog" aria-modal="true" aria-labelledby="w01-3d-modal-title" onMouseDown={(event) => event.stopPropagation()}>
@@ -246,7 +255,7 @@ function ThreeDRegenerationDialog({ threeD, onClose }: { threeD?: DemoPrecompute
         <p>{viewerUrl ? '该场景的 3D 再生已预先完成，可直接打开 Aholo Viewer；也可继续进入 Studio 编辑。' : '当前场景可在 Aholo Studio 中继续进行 3D 再生与空间编辑。'}</p>
         {viewerUrl && <a href={viewerUrl} target="_blank" rel="noreferrer">打开已预生成的 Aholo 3D 模型</a>}
         {threeD?.imagery_url && <a href={threeD.imagery_url} target="_blank" rel="noreferrer">查看预生成空间改造图</a>}
-        <a href={AHOLO_EDITOR_URL} target="_blank" rel="noreferrer">{AHOLO_EDITOR_URL}</a>
+        <a href={studioUrl} target="_blank" rel="noreferrer">{studioUrl}</a>
       </section>
     </div>
   )

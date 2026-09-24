@@ -231,12 +231,15 @@ describe('Phase 1B Creation Flow', () => {
 
     const annotatedImage = await screen.findByRole('img', { name: '屋顶露台 YOLO 标注图' })
     expect(annotatedImage.getAttribute('src')).toBe(fallbackDemoScenes[0].annotated_url)
-    expect(screen.getByText('39')).toBeTruthy()
-    expect(screen.getAllByText('2 组').length).toBeGreaterThan(0)
+    expect(screen.getByText('85')).toBeTruthy()
+    expect(screen.getAllByText('39 组').length).toBeGreaterThan(0)
     expect(screen.getAllByText('柜体组 01').length).toBeGreaterThan(0)
 
     await user.click(screen.getByRole('button', { name: /场景 02.*大堂休息区/ }))
     expect(screen.getByRole('img', { name: '大堂休息区 YOLO 标注图' }).getAttribute('src')).toBe(fallbackDemoScenes[1].annotated_url)
+    expect(screen.getByText('85')).toBeTruthy()
+    expect(screen.getAllByText('39 组').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('座椅组 01').length).toBeGreaterThan(0)
 
     await user.click(screen.getByRole('button', { name: '3d再生' }))
     const dialog = screen.getByRole('dialog', { name: '3D再生' })

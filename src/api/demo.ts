@@ -22,6 +22,7 @@ export interface DemoPrecomputedThreeD {
   provider: string
   status?: string | null
   world_id?: string | null
+  studio_url?: string | null
   viewer_urls: Record<string, string>
   imagery_url?: string | null
   cache_hit?: boolean

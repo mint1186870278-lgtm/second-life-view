@@ -34,6 +34,7 @@ from spatial_agent.demo import (
     list_demo_component_groups,
     load_demo_annotated_preview,
     load_demo_component_crop,
+    PRESENTATION_DEFAULT_USER_GOAL,
 )
 from spatial_agent.graph import SpatialAgentGraph
 from spatial_agent.models import DemoAnalyzeRequest, DemoComponentPreviewRequest
@@ -41,7 +42,7 @@ from spatial_agent.providers.aholo_world import AholoWorldClient
 
 
 DEFAULT_REGION = "南京 · 江苏"
-DEFAULT_GOAL = "对现有构件进行 360° 审计，识别可能被保留、复用或再生的构件，为后续改造与资源循环提供依据。"
+DEFAULT_GOAL = PRESENTATION_DEFAULT_USER_GOAL
 DEFAULT_SPATIAL_PROMPT = "保留原空间结构与尺度，更新为明亮、低碳、可逆施工的现代室内空间"
 
 
